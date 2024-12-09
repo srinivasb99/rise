@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { Button } from './Button';
 import { useNavigate } from 'react-router-dom';
 
-// Import icons as React components (requires something like vite-plugin-svgr or similar setup)
-import { ReactComponent as CalendarIcon } from '../assets/icons/calendar.svg';
-import { ReactComponent as ArrowRightIcon } from '../assets/icons/arrow-right.svg';
+// Using "?component" so Vite knows to treat these as React components
+import CalendarIcon from '../assets/icons/calendar.svg?component';
+import ArrowRightIcon from '../assets/icons/arrow-right.svg?component';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -44,7 +44,6 @@ export function Hero() {
         animate="visible"
         variants={containerVariants}
       >
-        {/* Subtle scale/float of the entire hero content */}
         <motion.div
           className="text-center"
           initial={{ scale: 0.95 }}
@@ -96,7 +95,6 @@ export function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Decorative SVG Wave */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg className="w-full h-12 fill-current text-white" viewBox="0 0 1440 48">
           <path d="M0 48h1440V0c-624 23-936 23-1440 0v48z" />
