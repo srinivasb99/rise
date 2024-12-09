@@ -10,17 +10,18 @@ export function Navbar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-<Link to="/" aria-label="Home" className="flex items-center">
-  <svg
-    className="h-8 w-auto" // Adjust the h-8 to h-6 or h-10 as needed
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1796.000000 1004.000000"
-    preserveAspectRatio="xMidYMid meet"
-
+<nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-between h-16">
+      <div className="flex items-center">
+        <Link to="/" aria-label="Home" className="flex items-center">
+          <svg
+            className="h-8 w-auto"
+            version="1.0"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1796.000000 1004.000000"
+            preserveAspectRatio="xMidYMid meet"
+          >
 <g transform="translate(0.000000,1004.000000) scale(0.100000,-0.100000)"
 fill="#000000" stroke="none">
 <path d="M7525 6501 c-130 -23 -159 -33 -282 -97 -222 -115 -327 -204 -449
