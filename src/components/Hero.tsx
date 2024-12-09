@@ -38,21 +38,25 @@ export function Hero() {
             transition={{ delay: 0.6, duration: 0.5 }}
             className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8"
           >
-            <div className="rounded-md shadow">
+            <div className="rounded-md shadow mb-3 sm:mb-0">
               <Button
                 size="lg"
+                className="rounded-full inline-flex items-center gap-2"
                 onClick={() => navigate('/consultation')}
               >
+                <span role="img" aria-label="calendar">🗓️</span>
                 Schedule a Consultation
               </Button>
             </div>
-            <div className="mt-3 sm:mt-0 sm:ml-3">
+            <div className="sm:ml-3">
               <Button
                 variant="outline"
                 size="lg"
+                className="rounded-full inline-flex items-center gap-2"
                 onClick={() => navigate('/services')}
               >
                 Learn More
+                <span role="img" aria-label="arrow">➡️</span>
               </Button>
             </div>
           </motion.div>
