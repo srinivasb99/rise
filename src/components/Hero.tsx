@@ -4,8 +4,9 @@ import { Button } from './Button';
 import { useNavigate } from 'react-router-dom';
 
 // Using "?component" so Vite knows to treat these as React components
-import CalendarIcon from '../assets/icons/calendar.svg?component';
-import ArrowRightIcon from '../assets/icons/arrow-right.svg?component';
+import { ReactComponent as CalendarIcon } from '../assets/icons/calendar.svg';
+import { ReactComponent as ArrowRightIcon } from '../assets/icons/arrow-right.svg';
+
 
 const containerVariants = {
   hidden: { opacity: 0, y: 30 },
