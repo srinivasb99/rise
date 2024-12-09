@@ -245,9 +245,11 @@ l-218 2 3 -27z"/>
               Contact
             </Link>
             <div className="px-3 py-2">
-              <Link to="/contact">
-                <Button className="w-full">Get Started</Button>
-              </Link>
+        <Link to="/contact">
+          <Button className="rounded-full px-6 py-2 text-white bg-[#002B5B] hover:bg-[#001F4D]">
+            Get Started
+          </Button>
+        </Link>
             </div>
           </div>
         </div>
