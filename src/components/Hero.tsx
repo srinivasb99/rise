@@ -28,7 +28,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="mt-3 max-w-md mx-auto text-base text-gray-600 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"
+            className="mt-3 mx-auto text-base text-gray-600 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"
           >
             Transform your business with cutting-edge web solutions. We deliver innovative digital strategies that drive growth and engagement.
           </motion.p>
@@ -36,23 +36,24 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8"
+            // Remove max-w-md so text doesn't wrap onto two lines
+            className="mt-5 mx-auto sm:flex sm:justify-center md:mt-8 max-w-none"
           >
-            <div className="rounded-md shadow mb-3 sm:mb-0">
-              <Button
-                size="lg"
-                className="rounded-full inline-flex items-center gap-2"
-                onClick={() => navigate('/consultation')}
-              >
-                <span role="img" aria-label="calendar">🗓️</span>
-                Schedule a Consultation
-              </Button>
-            </div>
-            <div className="sm:ml-3">
+            {/* Removed rounded-md shadow wrapper */}
+            <Button
+              size="lg"
+              className="rounded-full inline-flex items-center gap-2 whitespace-nowrap"
+              onClick={() => navigate('/consultation')}
+            >
+              <span role="img" aria-label="calendar">🗓️</span>
+              Schedule a Consultation
+            </Button>
+            {/* Add spacing between buttons using margin classes on the button or wrapper */}
+            <div className="sm:ml-3 mt-3 sm:mt-0">
               <Button
                 variant="outline"
                 size="lg"
-                className="rounded-full inline-flex items-center gap-2"
+                className="rounded-full inline-flex items-center gap-2 whitespace-nowrap"
                 onClick={() => navigate('/services')}
               >
                 Learn More
