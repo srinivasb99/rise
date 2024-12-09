@@ -16,7 +16,7 @@ export function Navbar() {
       <div className="flex items-center">
         <Link to="/" aria-label="Home" className="flex items-center">
           <svg
-            className="h-18 w-auto"
+            className="h-16 w-auto"
             version="1.0"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1796.000000 1004.000000"
