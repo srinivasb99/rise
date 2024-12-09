@@ -14,14 +14,14 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" aria-label="Home" className="flex items-center">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="1796.000000pt" height="1004.000000pt" viewBox="0 0 1796.000000 1004.000000"
- preserveAspectRatio="xMidYMid meet">
-
-<g transform="translate(0.000000,1004.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
-<path d="M7525 6501 c-130 -23 -159 -33 -282 -97 -222 -115 -327 -204 -449
+ <Link to="/" aria-label="Home" className="flex items-center">
+  <svg
+    className="h-8 w-auto" // Adjust the h-8 to h-6 or h-10 as needed
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 1796.000000 1004.000000"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    {<path d="M7525 6501 c-130 -23 -159 -33 -282 -97 -222 -115 -327 -204 -449
 -378 -96 -139 -115 -174 -156 -285 -67 -183 -73 -222 -73 -451 1 -198 2 -209
 32 -322 42 -153 128 -324 221 -433 234 -278 501 -421 828 -445 77 -5 151 -10
 166 -10 26 0 28 6 114 267 64 192 85 268 76 271 -7 2 -45 28 -85 58 -40 29
@@ -153,9 +153,10 @@ l-38 3 3 -250 c3 -137 3 -249 2 -248 -1 1 -25 47 -54 102 -78 151 -210 378
 l-218 2 3 -27z"/>
 <path d="M9658 3528 c-7 -96 -8 -490 -1 -515 4 -18 12 -23 39 -23 l34 0 0 300
 0 300 -34 0 -34 0 -4 -62z"/>
-</g>
-</svg>
-            </Link>
+</g>}
+  </svg>
+</Link>
+
           </div>
 
           {/* Desktop Navigation */}
