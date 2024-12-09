@@ -15,9 +15,6 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" aria-label="Home" className="flex items-center">
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="1796.000000pt" height="1004.000000pt" viewBox="0 0 1796.000000 1004.000000"
  preserveAspectRatio="xMidYMid meet">
@@ -158,7 +155,6 @@ l-218 2 3 -27z"/>
 0 300 -34 0 -34 0 -4 -62z"/>
 </g>
 </svg>
-
             </Link>
           </div>
 
