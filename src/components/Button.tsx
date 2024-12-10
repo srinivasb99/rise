@@ -10,12 +10,13 @@ export function Button({
   className,
   variant = 'primary',
   size = 'md',
+  children,
   ...props
 }: ButtonProps) {
   return (
     <button
       className={cn(
-        'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+        'inline-flex items-center justify-center rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap overflow-hidden text-ellipsis',
         {
           'bg-[#002B5B] text-white hover:bg-[#003872] focus-visible:ring-[#002B5B]':
             variant === 'primary',
@@ -30,6 +31,10 @@ export function Button({
         className
       )}
       {...props}
-    />
+    >
+      <span className="inline-flex items-center gap-2">
+        {children}
+      </span>
+    </button>
   );
 }
