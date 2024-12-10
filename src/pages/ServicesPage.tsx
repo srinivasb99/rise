@@ -1,6 +1,10 @@
 import React from 'react';
 import { Code, Search, PenTool, MessageSquare, MonitorSmartphone, ShieldCheck, BarChart, Rocket } from 'lucide-react';
 import { Button } from '../components/Button';
+import { useNavigate } from 'react-router-dom';
+
+export default function ConsultationSection() {
+  const navigate = useNavigate();
 
 const services = [
   {
@@ -104,16 +108,19 @@ export function ServicesPage() {
         </div>
       </div>
 
-      <div className="bg-[#002B5B] py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Ready to Get Started?</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Let's discuss how we can help transform your business
-          </p>
-          <Button variant="secondary" size="lg">
-            Schedule a Consultation
-          </Button>
-        </div>
+    <div className="bg-[#002B5B] py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="text-3xl font-bold text-white mb-6">Ready to Get Started?</h2>
+        <p className="text-xl text-gray-300 mb-8">
+          Let's discuss how we can help transform your business
+        </p>
+        <Button
+          variant="secondary"
+          size="lg"
+          onClick={() => navigate('/consultation')}
+        >
+          Schedule a Consultation
+        </Button>
       </div>
     </div>
   );
