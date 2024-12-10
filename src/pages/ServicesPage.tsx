@@ -3,60 +3,60 @@ import { Code, Search, PenTool, MessageSquare, MonitorSmartphone, ShieldCheck, B
 import { Button } from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 
-const navigate = useNavigate();
-
-const services = [
-  {
-    title: 'Website Development',
-    description: 'Custom websites that are fast, secure, and built to convert visitors into customers.',
-    icon: Code,
-    features: ['Responsive Design', 'SEO Optimization', 'Custom Functionality', 'Performance Focused'],
-  },
-  {
-    title: 'SEO & Digital Marketing',
-    description: 'Drive organic traffic and improve your online visibility with our proven SEO strategies.',
-    icon: Search,
-    features: ['Keyword Research', 'Content Strategy', 'Link Building', 'Analytics & Reporting'],
-  },
-  {
-    title: 'Branding & Strategy',
-    description: 'Create a memorable brand identity that resonates with your target audience.',
-    icon: PenTool,
-    features: ['Logo Design', 'Brand Guidelines', 'Visual Identity', 'Brand Strategy'],
-  },
-  {
-    title: 'Content & Social Media',
-    description: 'Engage your audience with compelling content and social media management.',
-    icon: MessageSquare,
-    features: ['Content Creation', 'Social Media Management', 'Community Building', 'Engagement Strategy'],
-  },
-  {
-    title: 'Mobile App Development',
-    description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.',
-    icon: MonitorSmartphone,
-    features: ['iOS & Android', 'Cross-platform', 'UI/UX Design', 'App Store Optimization'],
-  },
-  {
-    title: 'Cybersecurity',
-    description: 'Protect your digital assets with our comprehensive security solutions.',
-    icon: ShieldCheck,
-    features: ['Security Audits', 'SSL Certificates', 'Data Protection', 'Regular Monitoring'],
-  },
-  {
-    title: 'Analytics & Reporting',
-    description: 'Make data-driven decisions with our detailed analytics and reporting services.',
-    icon: BarChart,
-    features: ['Custom Dashboards', 'Performance Metrics', 'User Behavior', 'Conversion Tracking'],
-  },
-  {
-    title: 'Digital Transformation',
-    description: 'Transform your business processes with cutting-edge digital solutions.',
-    icon: Rocket,
-    features: ['Process Automation', 'Cloud Solutions', 'Digital Strategy', 'Technology Integration'],
-  },
-];
-
 export function ServicesPage() {
+  const navigate = useNavigate(); // Move this inside the functional component
+
+  const services = [
+    {
+      title: 'Website Development',
+      description: 'Custom websites that are fast, secure, and built to convert visitors into customers.',
+      icon: Code,
+      features: ['Responsive Design', 'SEO Optimization', 'Custom Functionality', 'Performance Focused'],
+    },
+    {
+      title: 'SEO & Digital Marketing',
+      description: 'Drive organic traffic and improve your online visibility with our proven SEO strategies.',
+      icon: Search,
+      features: ['Keyword Research', 'Content Strategy', 'Link Building', 'Analytics & Reporting'],
+    },
+    {
+      title: 'Branding & Strategy',
+      description: 'Create a memorable brand identity that resonates with your target audience.',
+      icon: PenTool,
+      features: ['Logo Design', 'Brand Guidelines', 'Visual Identity', 'Brand Strategy'],
+    },
+    {
+      title: 'Content & Social Media',
+      description: 'Engage your audience with compelling content and social media management.',
+      icon: MessageSquare,
+      features: ['Content Creation', 'Social Media Management', 'Community Building', 'Engagement Strategy'],
+    },
+    {
+      title: 'Mobile App Development',
+      description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.',
+      icon: MonitorSmartphone,
+      features: ['iOS & Android', 'Cross-platform', 'UI/UX Design', 'App Store Optimization'],
+    },
+    {
+      title: 'Cybersecurity',
+      description: 'Protect your digital assets with our comprehensive security solutions.',
+      icon: ShieldCheck,
+      features: ['Security Audits', 'SSL Certificates', 'Data Protection', 'Regular Monitoring'],
+    },
+    {
+      title: 'Analytics & Reporting',
+      description: 'Make data-driven decisions with our detailed analytics and reporting services.',
+      icon: BarChart,
+      features: ['Custom Dashboards', 'Performance Metrics', 'User Behavior', 'Conversion Tracking'],
+    },
+    {
+      title: 'Digital Transformation',
+      description: 'Transform your business processes with cutting-edge digital solutions.',
+      icon: Rocket,
+      features: ['Process Automation', 'Cloud Solutions', 'Digital Strategy', 'Technology Integration'],
+    },
+  ];
+
   return (
     <div className="pt-16">
       <div className="bg-[#E0F0FF] py-24">
@@ -107,19 +107,20 @@ export function ServicesPage() {
         </div>
       </div>
 
-    <div className="bg-[#002B5B] py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl font-bold text-white mb-6">Ready to Get Started?</h2>
-        <p className="text-xl text-gray-300 mb-8">
-          Let's discuss how we can help transform your business
-        </p>
-        <Button
-          variant="secondary"
-          size="lg"
-          onClick={() => navigate('/consultation')}
-        >
-          Schedule a Consultation
-        </Button>
+      <div className="bg-[#002B5B] py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">Ready to Get Started?</h2>
+          <p className="text-xl text-gray-300 mb-8">
+            Let's discuss how we can help transform your business
+          </p>
+          <Button
+            variant="secondary"
+            size="lg"
+            onClick={() => navigate('/consultation')}
+          >
+            Schedule a Consultation
+          </Button>
+        </div>
       </div>
     </div>
   );
