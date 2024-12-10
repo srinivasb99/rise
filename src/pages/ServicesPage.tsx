@@ -3,8 +3,7 @@ import { Code, Search, PenTool, MessageSquare, MonitorSmartphone, ShieldCheck, B
 import { Button } from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 
-export default function ConsultationSection() {
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
 const services = [
   {
