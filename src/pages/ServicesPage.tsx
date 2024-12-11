@@ -1,118 +1,142 @@
 import React from 'react';
-import { Code, Search, PenTool, MessageSquare, MonitorSmartphone, ShieldCheck, BarChart, Rocket } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Sparkles, Heart } from 'lucide-react';
 import { Button } from '../components/Button';
+import { PageWrapper } from '../components/PageWrapper';
+import { itemVariants, containerVariants, floatingAnimation } from '../utils/animations';
+import { services } from '../data/services';
 import { useNavigate } from 'react-router-dom';
 
 export function ServicesPage() {
   const navigate = useNavigate(); // Move this inside the functional component
 
-  const services = [
-    {
-      title: 'Website Development',
-      description: 'Custom websites that are fast, secure, and built to convert visitors into customers.',
-      icon: Code,
-      features: ['Responsive Design', 'SEO Optimization', 'Custom Functionality', 'Performance Focused'],
-    },
-    {
-      title: 'SEO & Digital Marketing',
-      description: 'Drive organic traffic and improve your online visibility with our proven SEO strategies.',
-      icon: Search,
-      features: ['Keyword Research', 'Content Strategy', 'Link Building', 'Analytics & Reporting'],
-    },
-    {
-      title: 'Branding & Strategy',
-      description: 'Create a memorable brand identity that resonates with your target audience.',
-      icon: PenTool,
-      features: ['Logo Design', 'Brand Guidelines', 'Visual Identity', 'Brand Strategy'],
-    },
-    {
-      title: 'Content & Social Media',
-      description: 'Engage your audience with compelling content and social media management.',
-      icon: MessageSquare,
-      features: ['Content Creation', 'Social Media Management', 'Community Building', 'Engagement Strategy'],
-    },
-    {
-      title: 'Mobile App Development',
-      description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.',
-      icon: MonitorSmartphone,
-      features: ['iOS & Android', 'Cross-platform', 'UI/UX Design', 'App Store Optimization'],
-    },
-    {
-      title: 'Cybersecurity',
-      description: 'Protect your digital assets with our comprehensive security solutions.',
-      icon: ShieldCheck,
-      features: ['Security Audits', 'SSL Certificates', 'Data Protection', 'Regular Monitoring'],
-    },
-    {
-      title: 'Analytics & Reporting',
-      description: 'Make data-driven decisions with our detailed analytics and reporting services.',
-      icon: BarChart,
-      features: ['Custom Dashboards', 'Performance Metrics', 'User Behavior', 'Conversion Tracking'],
-    },
-    {
-      title: 'Digital Transformation',
-      description: 'Transform your business processes with cutting-edge digital solutions.',
-      icon: Rocket,
-      features: ['Process Automation', 'Cloud Solutions', 'Digital Strategy', 'Technology Integration'],
-    },
-  ];
-
+export function ServicesPage() {
   return (
-    <div className="pt-16">
-      <div className="bg-[#E0F0FF] py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-[#002B5B]">Our Services</h1>
-            <p className="mt-4 text-xl text-gray-600">
-              Comprehensive digital solutions tailored to your business needs
-            </p>
+    <PageWrapper>
+      <div className="pt-16">
+        <div className="bg-[#E0F0FF] py-24 relative overflow-hidden">
+          <motion.div
+            variants={floatingAnimation}
+            initial="initial"
+            animate="animate"
+            className="absolute top-10 right-10 text-[#002B5B] opacity-10"
+          >
+            <Sparkles className="w-32 h-32" />
+          </motion.div>
+          
+          <motion.div
+            variants={floatingAnimation}
+            initial="initial"
+            animate="animate"
+            className="absolute bottom-10 left-10 text-[#002B5B] opacity-10"
+          >
+            <Heart className="w-24 h-24" />
+          </motion.div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              variants={containerVariants}
+              initial="initial"
+              animate="animate"
+              className="text-center"
+            >
+              <motion.h1 variants={itemVariants} className="text-4xl font-bold text-[#002B5B]">
+                Our Services
+              </motion.h1>
+              <motion.p variants={itemVariants} className="mt-4 text-xl text-gray-600">
+                Comprehensive digital solutions tailored to your business needs
+              </motion.p>
+            </motion.div>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-          {services.map((service) => {
-            const Icon = service.icon;
-            return (
-              <div
-                key={service.title}
-                className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-              >
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <span className="rounded-lg inline-flex p-3 bg-[#E0F0FF] text-[#002B5B]">
-                      <Icon className="h-6 w-6" />
-                    </span>
-                  </div>
-                  <div className="ml-5">
-                    <h3 className="text-xl font-semibold text-[#002B5B]">{service.title}</h3>
-                  </div>
-                </div>
-                <p className="mt-4 text-gray-600">{service.description}</p>
-                <ul className="mt-6 space-y-3">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-center text-gray-600">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#002B5B] mr-2"></div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-8">
-                  <Button variant="outline">Learn More</Button>
-                </div>
-              </div>
-            );
-          })}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <motion.div
+            variants={containerVariants}
+            initial="initial"
+            animate="animate"
+            className="grid grid-cols-1 gap-12 lg:grid-cols-2"
+          >
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <motion.div
+                  key={service.title}
+                  variants={itemVariants}
+                  whileHover={{ y: -10 }}
+                  className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                >
+                  <motion.div 
+                    className="flex items-center"
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <motion.div
+                      className="flex-shrink-0"
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                    >
+                      <span className="rounded-lg inline-flex p-3 bg-[#E0F0FF] text-[#002B5B]">
+                        <Icon className="h-6 w-6" />
+                      </span>
+                    </motion.div>
+                    <div className="ml-5">
+                      <h3 className="text-xl font-semibold text-[#002B5B]">{service.title}</h3>
+                    </div>
+                  </motion.div>
+                  <p className="mt-4 text-gray-600">{service.description}</p>
+                  <motion.ul className="mt-6 space-y-3">
+                    {service.features.map((feature, featureIndex) => (
+                      <motion.li
+                        key={feature}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: (index * 0.1) + (featureIndex * 0.1) }}
+                        className="flex items-center text-gray-600"
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#002B5B] mr-2"></div>
+                        {feature}
+                      </motion.li>
+                    ))}
+                  </motion.ul>
+                  <motion.div
+                    className="mt-8"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button variant="outline" className="whitespace-nowrap">Learn More</Button>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
-      </div>
 
-      <div className="bg-[#002B5B] py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">Ready to Get Started?</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Let's discuss how we can help transform your business
-          </p>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="bg-[#002B5B] py-24"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.h2
+              variants={itemVariants}
+              className="text-3xl font-bold text-white mb-6"
+            >
+              Ready to Get Started?
+            </motion.h2>
+            <motion.p
+              variants={itemVariants}
+              className="text-xl text-gray-300 mb-8"
+            >
+              Let's discuss how we can help transform your business
+            </motion.p>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
           <Button
             variant="secondary"
             size="lg"
@@ -120,8 +144,10 @@ export function ServicesPage() {
           >
             Schedule a Consultation
           </Button>
-        </div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }
