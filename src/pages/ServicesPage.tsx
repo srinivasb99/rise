@@ -7,10 +7,9 @@ import { itemVariants, containerVariants, floatingAnimation } from '../utils/ani
 import { services } from '../data/services';
 import { useNavigate } from 'react-router-dom';
 
-export function ServicesPage() {
-  const navigate = useNavigate(); // Move this inside the functional component
 
 export function ServicesPage() {
+const navigate = useNavigate(); // Move this inside the functional component
   return (
     <PageWrapper>
       <div className="pt-16">
