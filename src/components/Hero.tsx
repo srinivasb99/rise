@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './Button';
+import { useNavigate } from 'react-router-dom';
 import { Calendar, ArrowRight, Sparkles, Rocket, Target } from 'lucide-react';
 
 const floatingAnimation = {
