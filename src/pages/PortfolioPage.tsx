@@ -1,5 +1,7 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import { containerVariants, itemVariants, floatingAnimation } from '../utils/animations';
 
 const projects = [
   {
@@ -49,23 +51,61 @@ const projects = [
 export function PortfolioPage() {
   return (
     <div className="pt-16">
-      <div className="bg-[#E0F0FF] py-24">
+      <div className="bg-[#E0F0FF] py-24 relative overflow-hidden">
+        <motion.div
+          variants={floatingAnimation}
+          initial="initial"
+          animate="animate"
+          className="absolute top-10 right-10 text-[#002B5B] opacity-10"
+        >
+          <Zap className="w-32 h-32" />
+        </motion.div>
+
+        <motion.div
+          variants={floatingAnimation}
+          initial="initial"
+          animate="animate"
+          className="absolute bottom-10 left-10 text-[#002B5B] opacity-10"
+        >
+          <Heart className="w-24 h-24" />
+        </motion.div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-[#002B5B]">Our Portfolio</h1>
-            <p className="mt-4 text-xl text-gray-600">
+          <motion.div
+            className="text-center"
+            variants={containerVariants}
+            initial="initial"
+            animate="animate"
+          >
+            <motion.h1
+              variants={itemVariants}
+              className="text-4xl font-bold text-[#002B5B]"
+            >
+              Our Portfolio
+            </motion.h1>
+            <motion.p
+              variants={itemVariants}
+              className="mt-4 text-xl text-gray-600"
+            >
               Showcasing our best work and successful projects
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="initial"
+          animate="animate"
+        >
           {projects.map((project) => (
-            <div
+            <motion.div
               key={project.title}
               className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+              variants={itemVariants}
+              whileHover={{ y: -10 }}
             >
               <div className="relative h-48 overflow-hidden">
                 <img
@@ -96,9 +136,9 @@ export function PortfolioPage() {
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
