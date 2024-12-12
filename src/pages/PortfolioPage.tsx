@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Heart } from 'lucide-react';
 import { containerVariants, itemVariants, floatingAnimation } from '../utils/animations';
 
 const projects = [
@@ -58,7 +58,7 @@ export function PortfolioPage() {
           animate="animate"
           className="absolute top-10 right-10 text-[#002B5B] opacity-10"
         >
-          <Zap className="w-32 h-32" />
+          <Heart className="w-32 h-32" />
         </motion.div>
 
         <motion.div
