@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './Button';
-import { useNavigate } from 'react-router-dom';
 import { Calendar, ArrowRight, Sparkles, Rocket, Target } from 'lucide-react';
 
 const floatingAnimation = {
@@ -17,8 +16,6 @@ const floatingAnimation = {
 };
 
 export function Hero() {
-  const navigate = useNavigate();
-
   return (
     <div className="relative bg-[#E0F0FF] pt-24 overflow-hidden">
       <motion.div
@@ -92,7 +89,7 @@ export function Hero() {
               <Button
                 size="lg"
                 className="w-full sm:w-auto"
-                onClick={() => navigate('/consultation')}
+                onClick={() => window.location.href = 'https://calendly.com/riseonlinesolutions'}
               >
                 <Calendar className="h-5 w-5" />
                 <span>Schedule Now</span>
