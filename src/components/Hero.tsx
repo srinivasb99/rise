@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './Button';
-import { useNavigate } from 'react-router-dom';
 import { Calendar, ArrowRight, Sparkles, Rocket, Target } from 'lucide-react';
 
 const floatingAnimation = {
@@ -105,7 +104,7 @@ export function Hero() {
                 variant="outline"
                 size="lg"
                 className="w-full sm:w-auto mt-3 sm:mt-0"
-                onClick={() => navigate('/services')}
+                onClick={() => window.location.href = '/services'}
               >
                 <span>Learn More</span>
                 <ArrowRight className="h-5 w-5" />
