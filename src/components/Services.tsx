@@ -5,7 +5,6 @@ import {
   CheckCircle, Users, Briefcase, LineChart, Rocket, Award, ShieldCheck, Layers,
   X
 } from 'lucide-react';
-import { Link } from 'react-router-dom'; // Ensure you have react-router-dom installed
 
 // Animation Variants
 const containerVariants = {
@@ -110,11 +109,11 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
                   <p>{content.serviceFocus}</p>
                 </div>
               )}
-              <Link to="/services">
+              <a href="/services">
                 <button className="mt-4 bg-[#002B5B] text-white px-6 py-3 rounded-full hover:bg-[#003C75] transition-colors duration-300">
                   Get Started
                 </button>
-              </Link>
+              </a>
             </div>
           </motion.div>
         </motion.div>
@@ -349,7 +348,7 @@ export function Services() {
         variants={containerVariants}
         transition={{ duration: 0.6 }}
       >
-        {/* "Our Services" Section */}
+        {/* Section Title */}
         <motion.div
           className="text-center mb-16"
           variants={itemVariants}
@@ -401,7 +400,7 @@ export function Services() {
           })}
         </motion.div>
 
-        {/* "Our Workflow" Section */}
+        {/* Our Workflow Section */}
         <motion.div
           className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
           initial="hidden"
@@ -438,7 +437,7 @@ export function Services() {
           </motion.div>
         </motion.div>
 
-        {/* "Our Achievements" Section */}
+        {/* Our Achievements Section */}
         <motion.div
           className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
           initial="hidden"
@@ -475,7 +474,7 @@ export function Services() {
           </motion.div>
         </motion.div>
 
-        {/* "What Our Clients Say" Section */}
+        {/* What Our Clients Say Section */}
         <motion.div
           className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
           initial="hidden"
