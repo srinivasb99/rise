@@ -5,6 +5,7 @@ import {
   CheckCircle, ArrowRight, Users, Briefcase, Star, LineChart, Rocket, Award, ShieldCheck, Layers
 } from 'lucide-react';
 
+// Animation Variants
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -40,6 +41,7 @@ const iconAnimation = {
   }
 };
 
+// Data Arrays
 const services = [
   {
     title: 'Website Development',
@@ -101,31 +103,31 @@ const workflowSteps = [
 
 export function Services() {
   return (
-    <div className="py-24 bg-white">
+    <div className="py-24 bg-gray-50"> {/* Changed background to light gray for better contrast */}
       <motion.div
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24"
+        initial="hidden"
+        animate="show"
+        variants={container}
         transition={{ duration: 0.6 }}
       >
         {/* Section Title */}
-        <div className="text-center">
+        <motion.div
+          className="text-center"
+          variants={item}
+        >
           <motion.h2 className="text-3xl font-extrabold text-[#002B5B] sm:text-4xl">
             Our Services
           </motion.h2>
           <motion.p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
             Comprehensive digital solutions to help your business thrive online.
           </motion.p>
-        </div>
+        </motion.div>
 
         {/* Services Section */}
         <motion.div
-          className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
           variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
         >
           {services.map((service) => {
             const Icon = service.icon;
@@ -161,49 +163,104 @@ export function Services() {
         </motion.div>
 
         {/* Workflow Section */}
-        <div className="mt-24">
-          <h3 className="text-2xl font-extrabold text-[#002B5B] text-center">Our Workflow</h3>
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+        <motion.div
+          className="bg-white p-12 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+          variants={container}
+        >
+          <motion.h3 className="text-2xl font-extrabold text-[#002B5B] text-center mb-8" variants={item}>
+            Our Workflow
+          </motion.h3>
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12"
+            variants={container}
+          >
             {workflowSteps.map((step) => (
-              <div key={step.step} className="flex flex-col items-center text-center">
-                <step.icon className="w-12 h-12 text-[#002B5B] mb-4" />
+              <motion.div
+                key={step.step}
+                variants={item}
+                whileHover={{ y: -5 }}
+                className="flex flex-col items-center text-center p-4 rounded-lg bg-gray-50 transition-transform duration-300"
+              >
+                <motion.span
+                  variants={iconAnimation}
+                  whileHover="hover"
+                  className="rounded-full bg-[#E0F0FF] p-3 mb-4"
+                >
+                  <step.icon className="w-12 h-12 text-[#002B5B]" />
+                </motion.span>
                 <h4 className="text-lg font-bold text-[#002B5B]">{step.step}</h4>
                 <p className="text-gray-600 mt-2">{step.description}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Stats Section */}
-        <div className="mt-24 bg-[#E0F0FF] py-12 rounded-lg">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <motion.div
+          className="bg-white p-12 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+          variants={container}
+        >
+          <motion.h3 className="text-2xl font-extrabold text-[#002B5B] text-center mb-8" variants={item}>
+            Our Achievements
+          </motion.h3>
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
+            variants={container}
+          >
             {stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col items-center">
-                <stat.icon className="w-16 h-16 text-[#002B5B] mb-4" />
+              <motion.div
+                key={stat.label}
+                variants={item}
+                whileHover={{ y: -5 }}
+                className="flex flex-col items-center p-4 rounded-lg bg-gray-50 transition-transform duration-300"
+              >
+                <motion.span
+                  variants={iconAnimation}
+                  whileHover="hover"
+                  className="rounded-full bg-[#E0F0FF] p-3 mb-4"
+                >
+                  <stat.icon className="w-16 h-16 text-[#002B5B]" />
+                </motion.span>
                 <h4 className="text-3xl font-extrabold text-[#002B5B]">{stat.value}</h4>
                 <p className="text-gray-700 mt-2">{stat.label}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Testimonials */}
-        <div className="mt-24 text-center">
-          <h3 className="text-2xl font-extrabold text-[#002B5B]">What Our Clients Say</h3>
-          <div className="mt-10 flex flex-wrap justify-center gap-8">
+        <motion.div
+          className="bg-white p-12 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+          variants={container}
+        >
+          <motion.h3 className="text-2xl font-extrabold text-[#002B5B] text-center mb-8" variants={item}>
+            What Our Clients Say
+          </motion.h3>
+          <motion.div
+            className="flex flex-wrap justify-center gap-8"
+            variants={container}
+          >
             {testimonials.map((testimonial, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="p-8 bg-white rounded-lg shadow-md max-w-md text-left"
+                variants={item}
+                whileHover={{ scale: 1.05 }}
+                className="p-8 bg-gray-50 rounded-lg shadow-sm max-w-md text-left transition-transform duration-300"
               >
-                <p className="text-gray-600 italic">"{testimonial.quote}"</p>
+                <motion.p
+                  className="text-gray-600 italic"
+                  variants={iconAnimation}
+                  whileHover="hover"
+                >
+                  "{testimonial.quote}"
+                </motion.p>
                 <h4 className="mt-4 font-semibold text-[#002B5B]">
                   {testimonial.name}, {testimonial.company}
                 </h4>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </motion.div>
     </div>
   );
