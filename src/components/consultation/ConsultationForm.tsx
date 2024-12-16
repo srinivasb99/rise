@@ -4,12 +4,14 @@ import { Button } from '../Button';
 import type { Service } from '../../data/services';
 
 interface ConsultationFormProps {
+  services: Service[]; // Accept services as a prop
   selectedServices: string[];
   onServiceToggle: (service: string) => void;
   onNext: () => void;
 }
 
 export function ConsultationForm({
+  services,
   selectedServices,
   onServiceToggle,
   onNext
