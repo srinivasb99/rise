@@ -6,7 +6,7 @@ import { ConsultationForm } from '../components/consultation/ConsultationForm';
 import { DateTimePicker } from '../components/consultation/DateTimePicker';
 import { UserDetailsForm } from '../components/consultation/UserDetailsForm';
 import { scheduleEvent } from '../utils/calendly';
-import { services } from '../data/services'; // Import services from the data folder
+import { services } from '../data/services'; // Import services
 
 export function ConsultationPage() {
   const [step, setStep] = useState<number>(1);
@@ -112,10 +112,10 @@ export function ConsultationPage() {
             {step === 1 && (
               <ConsultationForm
                 key="step1"
+                services={services}
                 selectedServices={selectedServices}
                 onServiceToggle={handleServiceToggle}
                 onNext={handleNextStep}
-                services={services}
               />
             )}
             {step === 2 && (
