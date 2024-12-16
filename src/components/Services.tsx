@@ -19,7 +19,6 @@ import {
   Smartphone,
   Lock,
   BarChart,
-  Transform,
   X
 } from 'lucide-react';
 
