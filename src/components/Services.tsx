@@ -356,7 +356,7 @@ export function Services() {
   };
 
   return (
-    <div className="py-24 bg-white w-full">
+    <div className="py-24 bg-[#E0F0FF] w-full">
       <motion.div
         className="w-full px-4 sm:px-6 lg:px-8 space-y-24"
         initial="hidden"
