@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Code, Search, PenTool, MessageSquare, Globe, BarChart3, Zap,
-  CheckCircle, Users, Briefcase, LineChart, Rocket, Award, ShieldCheck, Layers,
+  Code,
+  Search,
+  PenTool,
+  MessageSquare,
+  Globe,
+  BarChart3,
+  Zap,
+  CheckCircle,
+  Users,
+  Briefcase,
+  LineChart,
+  Rocket,
+  Award,
+  ShieldCheck,
+  Layers,
   X
 } from 'lucide-react';
 
@@ -69,6 +82,9 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
           exit={{ opacity: 0 }}
         >
           <motion.div 
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
             className="bg-white rounded-lg shadow-lg relative max-w-lg w-full p-6"
             variants={modalVariants}
             initial="hidden"
@@ -84,7 +100,7 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
             </button>
             <div className="flex items-center mb-4">
               {Icon && <Icon className="w-8 h-8 text-[#002B5B] mr-2" />}
-              <h2 className="text-2xl font-bold text-[#002B5B]">{title}</h2>
+              <h2 id="modal-title" className="text-2xl font-bold text-[#002B5B]">{title}</h2>
             </div>
             <div className="text-gray-700 space-y-4">
               {content.details && (
@@ -340,7 +356,7 @@ export function Services() {
   };
 
   return (
-    <div className="py-24 bg-white w-full">
+    <div className="py-24 bg-[#001F3F] w-full">
       <motion.div
         className="w-full px-4 sm:px-6 lg:px-8 space-y-24"
         initial="hidden"
@@ -353,10 +369,10 @@ export function Services() {
           className="text-center mb-16"
           variants={itemVariants}
         >
-          <h2 className="text-3xl font-extrabold text-[#002B5B] sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
             Our Services
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-300">
             Comprehensive digital solutions to help your business thrive online.
           </p>
         </motion.div>
@@ -374,24 +390,24 @@ export function Services() {
                 key={service.title}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="relative group bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="relative group bg-[#003366] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(service.title, service.detailed, service.icon)}
               >
                 <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <SecondaryIcon className="w-20 h-20 text-[#002B5B]" />
+                  <SecondaryIcon className="w-20 h-20 text-[#FFFFFF]" />
                 </div>
                 <motion.span
-                  className="rounded-lg inline-flex p-3 bg-[#E0F0FF] text-[#002B5B] group-hover:bg-[#002B5B] group-hover:text-white transition-colors duration-300 mb-4 block"
+                  className="rounded-lg inline-flex p-3 bg-[#004080] text-[#FFFFFF] group-hover:bg-[#00509E] group-hover:text-white transition-colors duration-300 mb-4 block"
                   variants={iconHover}
                   whileHover="hover"
                 >
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </motion.span>
                 <div>
-                  <h3 className="text-xl font-bold text-[#002B5B]">
+                  <h3 className="text-xl font-bold text-white">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-base text-gray-600">
+                  <p className="mt-2 text-base text-gray-300">
                     {service.description}
                   </p>
                 </div>
@@ -420,15 +436,15 @@ export function Services() {
                 key={step.step}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="flex flex-col items-center text-center bg-[#003366] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="flex flex-col items-center text-center bg-[#004080] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(step.step, step.detailed, step.icon)}
               >
                 <motion.span
-                  className="rounded-full bg-[#E0F0FF] p-3 mb-4"
+                  className="rounded-full bg-[#00509E] p-3 mb-4"
                   variants={iconHover}
                   whileHover="hover"
                 >
-                  <step.icon className="w-12 h-12 text-[#002B5B]" />
+                  <step.icon className="w-12 h-12 text-[#FFFFFF]" />
                 </motion.span>
                 <h4 className="text-lg font-bold text-white">{step.step}</h4>
                 <p className="text-gray-300 mt-2">{step.description}</p>
@@ -457,15 +473,15 @@ export function Services() {
                 key={stat.label}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="flex flex-col items-center bg-[#004080] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="flex flex-col items-center text-center bg-[#00509E] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(stat.label, stat.detailed, stat.icon)}
               >
                 <motion.span
-                  className="rounded-full bg-[#E0F0FF] p-3 mb-4"
+                  className="rounded-full bg-[#0066CC] p-3 mb-4"
                   variants={iconHover}
                   whileHover="hover"
                 >
-                  <stat.icon className="w-16 h-16 text-[#002B5B]" />
+                  <stat.icon className="w-16 h-16 text-[#FFFFFF]" />
                 </motion.span>
                 <h4 className="text-3xl font-extrabold text-white">{stat.value}</h4>
                 <p className="text-gray-300 mt-2">{stat.label}</p>
@@ -494,7 +510,7 @@ export function Services() {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
-                className="p-8 bg-[#004080] rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer max-w-md"
+                className="p-8 bg-[#00509E] rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer max-w-md"
                 onClick={() => openModal(`${testimonial.name}, ${testimonial.company}`, testimonial.detailed, null)}
               >
                 <p className="text-gray-300 italic">"{testimonial.quote}"</p>
