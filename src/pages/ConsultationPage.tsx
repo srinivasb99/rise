@@ -2,32 +2,33 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Users, MessageSquare } from 'lucide-react';
 import { Button } from '../components/Button';
+import { ConsultationForm } from '../components/consultation/ConsultationForm';
+import { DateTimePicker } from '../components/consultation/DateTimePicker';
+import { UserDetailsForm } from '../components/consultation/UserDetailsForm';
+import { scheduleEvent } from '../utils/calendly';
 
 const services = [
-  'Website Development',
-  'SEO & Digital Marketing',
-  'Branding & Strategy',
-  'Content & Social Media',
-  'Mobile App Development',
-  'Cybersecurity',
-  'Analytics & Reporting',
-  'Digital Transformation',
-];
-
-const timeSlots = [
-  '9:00 AM',
-  '10:00 AM',
-  '11:00 AM',
-  '2:00 PM',
-  '3:00 PM',
-  '4:00 PM',
+  { title: 'Website Development' },
+  { title: 'SEO & Digital Marketing' },
+  { title: 'Branding & Strategy' },
+  { title: 'Content & Social Media' },
+  { title: 'Mobile App Development' },
+  { title: 'Cybersecurity' },
+  { title: 'Analytics & Reporting' },
+  { title: 'Digital Transformation' },
 ];
 
 export function ConsultationPage() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<number>(1);
+
+  // State for the steps
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedTime, setSelectedTime] = useState<string>('');
+
+  // Loading and error states for final scheduling
+  const [isScheduling, setIsScheduling] = useState(false);
+  const [error, setError] = useState<string>('');
 
   const handleServiceToggle = (service: string) => {
     setSelectedServices((prev) =>
@@ -37,14 +38,58 @@ export function ConsultationPage() {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log({
-      services: selectedServices,
-      date: selectedDate,
-      time: selectedTime,
-    });
+  const handleNextStep = () => setStep((prev) => prev + 1);
+  const handlePreviousStep = () => setStep((prev) => prev - 1);
+
+  const handleUserDetailsSubmit = async ({
+    name,
+    email,
+    phone,
+    notes,
+  }: {
+    name: string;
+    email: string;
+    phone: string;
+    notes: string;
+  }) => {
+    // Final step: schedule the event via Calendly API
+    setIsScheduling(true);
+    setError('');
+
+    try {
+      // Here we assume `selectedDate` is in YYYY-MM-DD format and `selectedTime` is in HH:MM (24-hour)
+      // If `selectedTime` is not in 24-hour format, you may need to convert it.
+      // The scheduleEvent function expects "start_time" in ISO (dateTtimeZ).
+      // If `selectedTime` is a full ISO date-time string from the DateTimePicker,
+      // you can parse it accordingly.
+      
+      // Example: If DateTimePicker returns `selectedTime` as a full ISO datetime, 
+      // you might do:
+      // const [datePart, timePart] = selectedTime.split('T');
+      // In this example, we trust `selectedDate` and `selectedTime` are correct formats.
+      
+      await scheduleEvent({
+        email,
+        name,
+        date: selectedDate,      // e.g. "2024-12-31"
+        time: selectedTime,      // e.g. "09:00"
+        notes,
+        selectedServices,
+      });
+
+      // If successful, you can reset the form or show a confirmation message
+      alert('Consultation scheduled successfully!');
+      // Optionally reset states or redirect:
+      // setStep(1);
+      // setSelectedServices([]);
+      // setSelectedDate('');
+      // setSelectedTime('');
+    } catch (err: any) {
+      console.error(err);
+      setError('Failed to schedule consultation. Please try again.');
+    } finally {
+      setIsScheduling(false);
+    }
   };
 
   return (
@@ -66,6 +111,7 @@ export function ConsultationPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="bg-white rounded-lg shadow-lg p-8">
+          {/* Step indicators */}
           <div className="flex justify-between mb-8">
             {[1, 2, 3].map((i) => (
               <motion.div
@@ -91,164 +137,39 @@ export function ConsultationPage() {
             ))}
           </div>
 
-          <form onSubmit={handleSubmit}>
-            {step === 1 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <h2 className="text-2xl font-semibold text-[#002B5B] mb-6">
-                  Select Services
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {services.map((service) => (
-                    <motion.div
-                      key={service}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <label className="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-[#E0F0FF] transition-colors">
-                        <input
-                          type="checkbox"
-                          className="form-checkbox text-[#002B5B]"
-                          checked={selectedServices.includes(service)}
-                          onChange={() => handleServiceToggle(service)}
-                        />
-                        <span className="ml-3">{service}</span>
-                      </label>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
+          {/* Step content */}
+          {step === 1 && (
+            <ConsultationForm
+              selectedServices={selectedServices}
+              onServiceToggle={handleServiceToggle}
+              onNext={handleNextStep}
+              services={services}
+            />
+          )}
+          {step === 2 && (
+            <DateTimePicker
+              selectedDate={selectedDate}
+              selectedTime={selectedTime}
+              onDateChange={setSelectedDate}
+              onTimeChange={setSelectedTime}
+              onNext={handleNextStep}
+              onBack={handlePreviousStep}
+            />
+          )}
+          {step === 3 && (
+            <UserDetailsForm
+              onSubmit={handleUserDetailsSubmit}
+              onBack={handlePreviousStep}
+            />
+          )}
 
-            {step === 2 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <h2 className="text-2xl font-semibold text-[#002B5B] mb-6">
-                  Choose Date & Time
-                </h2>
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Select Date
-                    </label>
-                    <input
-                      type="date"
-                      className="w-full p-3 border rounded-lg focus:ring-[#002B5B] focus:border-[#002B5B]"
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Select Time
-                    </label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {timeSlots.map((time) => (
-                        <motion.button
-                          key={time}
-                          type="button"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className={`p-3 rounded-lg border ${
-                            selectedTime === time
-                              ? 'bg-[#002B5B] text-white'
-                              : 'hover:bg-[#E0F0FF]'
-                          }`}
-                          onClick={() => setSelectedTime(time)}
-                        >
-                          <Clock className="w-4 h-4 inline-block mr-2" />
-                          {time}
-                        </motion.button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {step === 3 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <h2 className="text-2xl font-semibold text-[#002B5B] mb-6">
-                  Your Information
-                </h2>
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full p-3 border rounded-lg focus:ring-[#002B5B] focus:border-[#002B5B]"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="w-full p-3 border rounded-lg focus:ring-[#002B5B] focus:border-[#002B5B]"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone
-                    </label>
-                    <input
-                      type="tel"
-                      className="w-full p-3 border rounded-lg focus:ring-[#002B5B] focus:border-[#002B5B]"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Additional Notes
-                    </label>
-                    <textarea
-                      className="w-full p-3 border rounded-lg focus:ring-[#002B5B] focus:border-[#002B5B]"
-                      rows={4}
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            <div className="mt-8 flex justify-between">
-              {step > 1 && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setStep((prev) => prev - 1)}
-                >
-                  Previous
-                </Button>
-              )}
-              <Button
-                type="button"
-                onClick={() => {
-                  if (step < 3) {
-                    setStep((prev) => prev + 1);
-                  } else {
-                    handleSubmit;
-                  }
-                }}
-              >
-                {step === 3 ? 'Schedule Consultation' : 'Next'}
-              </Button>
+          {/* Error and loading states */}
+          {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
+          {isScheduling && (
+            <div className="mt-4 text-center">
+              Scheduling your consultation...
             </div>
-          </form>
+          )}
         </div>
       </div>
     </div>
