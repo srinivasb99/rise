@@ -93,9 +93,13 @@ export function ServicesPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button variant="secondary" size="lg" className="whitespace-nowrap">
-                Schedule a Consultation
-              </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+            onClick={() => navigate('/consultation')}
+          >
+            Schedule a Consultation
+          </Button>
             </motion.div>
           </div>
         </motion.div>
