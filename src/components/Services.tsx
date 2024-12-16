@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Code, Search, PenTool, MessageSquare, Globe, BarChart3, Zap,
-  CheckCircle, ArrowRight, Users, Briefcase, Star, LineChart, Rocket, Award, ShieldCheck, Layers,
+  CheckCircle, Users, Briefcase, LineChart, Rocket, Award, ShieldCheck, Layers,
   X
 } from 'lucide-react';
 
@@ -43,7 +43,13 @@ const iconHover = {
 };
 
 // Modal Animation Variants
-const modalVariants = {
+const modalBackdrop = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+  exit: { opacity: 0 }
+};
+
+const modalContent = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: { 
     opacity: 1, 
@@ -58,19 +64,20 @@ const modalVariants = {
 };
 
 // Reusable Modal Component
-const Modal = ({ isOpen, onClose, title, content, Icon }) => {
+const Modal = ({ isOpen, onClose, title, details, onGetStarted }) => {
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div 
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          variants={modalBackdrop}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
         >
           <motion.div 
             className="bg-white rounded-lg shadow-lg relative max-w-lg w-full p-6"
-            variants={modalVariants}
+            variants={modalContent}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -83,11 +90,28 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
               <X className="w-6 h-6" />
             </button>
             <div className="flex items-center mb-4">
-              {Icon && <Icon className="w-8 h-8 text-[#002B5B] mr-2" />}
+              {/* Optionally, you can include an icon here */}
               <h2 className="text-2xl font-bold text-[#002B5B]">{title}</h2>
             </div>
-            <div className="text-gray-700">
-              {content}
+            <div className="text-gray-700 space-y-4">
+              {details.map((detail, index) => (
+                <div key={index}>
+                  <p className="font-semibold">{detail.title}</p>
+                  <ul className="list-disc list-inside text-gray-600">
+                    {detail.items.map((item, idx) => (
+                      <li key={idx}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 text-right">
+              <button 
+                onClick={onGetStarted}
+                className="bg-[#002B5B] text-white px-4 py-2 rounded hover:bg-[#001A3D] transition-colors duration-300"
+              >
+                Get Started
+              </button>
             </div>
           </motion.div>
         </motion.div>
@@ -96,35 +120,209 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
   );
 };
 
-// Data Arrays
+// Data Arrays with Detailed Content
 const services = [
   {
     title: 'Website Development',
-    description: 'Custom websites that are fast, secure, and built to convert visitors into customers.',
+    description: 'Custom websites tailored to meet your business needs.',
     icon: Code,
     secondaryIcon: Globe,
-    detailed: 'Detailed information about Website Development services...'
+    details: [
+      {
+        title: 'Custom websites tailored to meet your business needs:',
+        items: [
+          'Fast, secure, and user-friendly websites optimized for SEO.',
+          'Mobile and desktop responsiveness to ensure a seamless user experience.',
+          'Built to convert visitors into customers with intuitive design.',
+          'Features include eCommerce integration, custom forms, and CMS setups.',
+          'Post-launch maintenance to ensure long-term website performance.'
+        ]
+      }
+    ]
   },
   {
     title: 'SEO & Digital Marketing',
-    description: 'Drive organic traffic and improve your online visibility with our proven SEO strategies.',
+    description: 'Enhance your online visibility and drive organic growth.',
     icon: Search,
     secondaryIcon: BarChart3,
-    detailed: 'Detailed information about SEO & Digital Marketing services...'
+    details: [
+      {
+        title: 'Enhance your online visibility and drive organic growth:',
+        items: [
+          'Advanced Search Engine Optimization (SEO) to improve rankings on Google.',
+          'Keyword research and content strategies tailored to your audience.',
+          'Paid advertising (PPC campaigns) for targeted outreach and ROI.',
+          'Analytics and reporting to track growth, user behavior, and conversions.',
+          'Social media advertising to engage new audiences and retain customers.'
+        ]
+      }
+    ]
   },
   {
     title: 'Branding & Strategy',
-    description: 'Create a memorable brand identity that resonates with your target audience.',
+    description: 'Build a strong and unique brand identity.',
     icon: PenTool,
     secondaryIcon: Zap,
-    detailed: 'Detailed information about Branding & Strategy services...'
+    details: [
+      {
+        title: 'Build a strong and unique brand identity:',
+        items: [
+          'Custom logo creation and branding assets (colors, typography, etc.).',
+          'Brand messaging strategies to align with business goals and audience.',
+          'Market research and competitor analysis for strategic positioning.',
+          'Storytelling techniques to foster emotional connections with customers.',
+          'Comprehensive brand guidelines to maintain consistency across platforms.'
+        ]
+      }
+    ]
   },
   {
     title: 'Content & Social Media',
-    description: 'Engage your audience with compelling content and social media management.',
+    description: 'Grow your audience with engaging content and managed campaigns.',
     icon: MessageSquare,
     secondaryIcon: CheckCircle,
-    detailed: 'Detailed information about Content & Social Media services...'
+    details: [
+      {
+        title: 'Grow your audience with engaging content and managed campaigns:',
+        items: [
+          'Custom social media calendars to ensure consistent posting.',
+          'High-quality content creation: blogs, videos, infographics, and more.',
+          'Engagement strategies to connect with followers and build brand loyalty.',
+          'Influencer collaborations to expand brand visibility.',
+          'Analytics and reports to measure content performance and audience impact.'
+        ]
+      }
+    ]
+  }
+];
+
+const workflowSteps = [
+  {
+    step: 'Consultation',
+    description: 'Understand your goals and requirements.',
+    icon: Briefcase,
+    details: [
+      {
+        title: 'In this initial phase, we work to understand your vision and requirements:',
+        items: [
+          'A deep-dive consultation to identify pain points and opportunities.',
+          'Business goals aligned with project objectives.',
+          'Clear timelines, milestones, and deliverables set for accountability.',
+          'Personalized approach to ensure a smooth workflow.'
+        ]
+      }
+    ]
+  },
+  {
+    step: 'Strategy',
+    description: 'Develop a tailored plan for your success.',
+    icon: LineChart,
+    details: [
+      {
+        title: 'We develop a tailored and actionable plan for success:',
+        items: [
+          'Comprehensive research on target audiences and market trends.',
+          'Data-driven strategies to achieve measurable outcomes.',
+          'Detailed project roadmap with milestones and KPIs.',
+          'Flexible plans that allow room for feedback and adjustments.'
+        ]
+      }
+    ]
+  },
+  {
+    step: 'Execution',
+    description: 'Implement solutions with precision.',
+    icon: Rocket,
+    details: [
+      {
+        title: 'This is where we bring your project to life with precision:',
+        items: [
+          'Step-by-step implementation following the approved strategy.',
+          'Development, testing, and refinement to meet quality standards.',
+          'Constant communication with stakeholders for project alignment.',
+          'Agile methodology for adaptability during the process.'
+        ]
+      }
+    ]
+  },
+  {
+    step: 'Delivery & Support',
+    description: 'Deliver results and offer ongoing support.',
+    icon: ShieldCheck,
+    details: [
+      {
+        title: 'We deliver results and provide ongoing support to ensure long-term success:',
+        items: [
+          'Final project delivery with documentation and training (if needed).',
+          'Post-launch support for monitoring and troubleshooting.',
+          'Maintenance plans to keep websites, campaigns, or content optimized.',
+          'Continuous evaluation to identify areas for further improvement.'
+        ]
+      }
+    ]
+  }
+];
+
+const stats = [
+  {
+    label: 'Projects Completed',
+    value: '120+',
+    icon: Layers,
+    details: [
+      {
+        title: 'Our team has successfully completed over 120 projects across multiple industries:',
+        items: [
+          'Tailored solutions for local businesses, global enterprises, and startups.',
+          'Projects include web design, digital campaigns, branding, and content strategies.',
+          'Proven track record of exceeding goals and delivering transformative results.'
+        ]
+      }
+    ]
+  },
+  {
+    label: 'Satisfied Clients',
+    value: '95%',
+    icon: ShieldCheck,
+    details: [
+      {
+        title: 'We are proud to maintain a 95% client satisfaction rate:',
+        items: [
+          'Personalized attention to every client’s unique needs and challenges.',
+          'Regular updates, clear communication, and top-notch execution.',
+          'Results-driven approach to achieve measurable growth and ROI.'
+        ]
+      }
+    ]
+  },
+  {
+    label: 'Years of Experience',
+    value: '10+',
+    icon: Award,
+    details: [
+      {
+        title: 'With over a decade of experience, we combine creativity with expertise:',
+        items: [
+          'Diverse portfolio of solutions spanning industries like retail, tech, and healthcare.',
+          'Skilled professionals who stay updated with the latest trends and technologies.',
+          'Long-lasting partnerships built on trust, results, and innovation.'
+        ]
+      }
+    ]
+  },
+  {
+    label: 'Team Members',
+    value: '50+',
+    icon: Users,
+    details: [
+      {
+        title: 'A growing team of over 50 experts committed to your success:',
+        items: [
+          'Professionals specializing in development, strategy, design, and marketing.',
+          'Collaborative workflows to deliver high-quality solutions efficiently.',
+          'Regular team development and learning to stay at the forefront of innovation.'
+        ]
+      }
+    ]
   }
 ];
 
@@ -133,50 +331,69 @@ const testimonials = [
     quote: "Rise Online Solutions transformed our business presence. Their team is professional and results-driven!",
     name: "John Doe",
     company: "Acme Corp",
-    detailed: "Detailed testimonial from John Doe..."
+    details: [
+      {
+        title: `"Rise Online Solutions transformed our business presence. Their team is professional and results-driven!"`,
+        items: [
+          'Company: Acme Corp',
+          'Outcome: Increased business visibility and measurable results.',
+          'Service Focus: Website development and digital strategy.'
+        ]
+      }
+    ]
   },
   {
     quote: "Excellent service and support! We saw a significant increase in organic traffic within months.",
     name: "Jane Smith",
     company: "Tech Innovators",
-    detailed: "Detailed testimonial from Jane Smith..."
+    details: [
+      {
+        title: `"Excellent service and support! We saw a significant increase in organic traffic within months."`,
+        items: [
+          'Company: Tech Innovators',
+          'Outcome: Boosted organic traffic with SEO strategies.',
+          'Service Focus: SEO & Digital Marketing.'
+        ]
+      }
+    ]
   },
   {
     quote: "Highly skilled team with a clear understanding of our business needs. Top-notch delivery!",
     name: "Michael Johnson",
     company: "Visionary Brands",
-    detailed: "Detailed testimonial from Michael Johnson..."
+    details: [
+      {
+        title: `"Highly skilled team with a clear understanding of our business needs. Top-notch delivery!"`,
+        items: [
+          'Company: Visionary Brands',
+          'Outcome: Precise and effective delivery tailored to business goals.',
+          'Service Focus: Branding & Strategy.'
+        ]
+      }
+    ]
   }
-];
-
-const stats = [
-  { label: 'Projects Completed', value: '120+', icon: Layers, detailed: 'We have successfully completed over 120 projects...' },
-  { label: 'Satisfied Clients', value: '95%', icon: ShieldCheck, detailed: '95% of our clients are satisfied with our services...' },
-  { label: 'Years of Experience', value: '10+', icon: Award, detailed: 'With over 10 years of experience in the industry...' },
-  { label: 'Team Members', value: '50+', icon: Users, detailed: 'Our team consists of over 50 dedicated professionals...' }
-];
-
-const workflowSteps = [
-  { step: 'Consultation', description: 'Understand your goals and requirements.', icon: Briefcase, detailed: 'In the consultation phase, we...' },
-  { step: 'Strategy', description: 'Develop a tailored plan for your success.', icon: LineChart, detailed: 'During the strategy phase, we...' },
-  { step: 'Execution', description: 'Implement solutions with precision.', icon: Rocket, detailed: 'In the execution phase, our team...' },
-  { step: 'Delivery & Support', description: 'Deliver results and offer ongoing support.', icon: ShieldCheck, detailed: 'After delivery, we provide ongoing support...' }
 ];
 
 export function Services() {
   // Modal State Management
-  const [modalData, setModalData] = useState({ isOpen: false, title: '', content: '', Icon: null });
+  const [modalData, setModalData] = useState({ isOpen: false, title: '', details: [], onGetStarted: null });
 
-  const openModal = (title, content, Icon) => {
-    setModalData({ isOpen: true, title, content, Icon });
+  const openModal = (title, details, onGetStarted) => {
+    setModalData({ isOpen: true, title, details, onGetStarted });
   };
 
   const closeModal = () => {
-    setModalData({ isOpen: false, title: '', content: '', Icon: null });
+    setModalData({ isOpen: false, title: '', details: [], onGetStarted: null });
+  };
+
+  // Placeholder function for Get Started button
+  const handleGetStarted = () => {
+    // Implement your desired action here, e.g., navigate to contact page
+    alert('Get Started clicked!');
   };
 
   return (
-    <div className="py-24 bg-white w-full">
+    <div className="w-full bg-white">
       <motion.div
         className="w-full px-4 sm:px-6 lg:px-8"
         initial="hidden"
@@ -184,61 +401,62 @@ export function Services() {
         viewport={{ once: true, amount: 0.2 }}
         variants={containerVariants}
       >
-        {/* Section Title */}
-        <motion.div
-          className="text-center mb-16"
-          variants={itemVariants}
-        >
-          <h2 className="text-3xl font-extrabold text-[#002B5B] sm:text-4xl">
-            Our Services
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
-            Comprehensive digital solutions to help your business thrive online.
-          </p>
-        </motion.div>
+        {/* Services Section (Always Visible) */}
+        <div className="py-24">
+          <motion.div
+            className="text-center mb-16"
+            variants={itemVariants}
+          >
+            <h2 className="text-3xl font-extrabold text-[#002B5B] sm:text-4xl">
+              Our Services
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
+              Comprehensive digital solutions to help your business thrive online.
+            </p>
+          </motion.div>
 
-        {/* Services Section */}
-        <motion.div
-          className="w-full grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
-          variants={containerVariants}
-        >
-          {services.map((service) => {
-            const Icon = service.icon;
-            const SecondaryIcon = service.secondaryIcon;
-            return (
-              <motion.div
-                key={service.title}
-                variants={itemVariants}
-                whileHover={{ y: -5 }}
-                className="relative group bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                onClick={() => openModal(service.title, service.detailed, service.icon)}
-              >
-                <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <SecondaryIcon className="w-20 h-20 text-[#002B5B]" />
-                </div>
-                <motion.span
-                  className="rounded-lg inline-flex p-3 bg-[#E0F0FF] text-[#002B5B] group-hover:bg-[#002B5B] group-hover:text-white transition-colors duration-300 mb-4 block"
-                  variants={iconHover}
-                  whileHover="hover"
+          <motion.div
+            className="w-full grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
+            variants={containerVariants}
+          >
+            {services.map((service) => {
+              const Icon = service.icon;
+              const SecondaryIcon = service.secondaryIcon;
+              return (
+                <motion.div
+                  key={service.title}
+                  variants={itemVariants}
+                  whileHover={{ y: -5 }}
+                  className="relative group bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                  onClick={() => openModal(service.title, service.details, handleGetStarted)}
                 >
-                  <Icon className="h-6 w-6" aria-hidden="true" />
-                </motion.span>
-                <div>
-                  <h3 className="text-xl font-bold text-[#002B5B]">
-                    {service.title}
-                  </h3>
-                  <p className="mt-2 text-base text-gray-600">
-                    {service.description}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                  <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <SecondaryIcon className="w-20 h-20 text-[#002B5B]" />
+                  </div>
+                  <motion.span
+                    className="rounded-lg inline-flex p-3 bg-[#E0F0FF] text-[#002B5B] group-hover:bg-[#002B5B] group-hover:text-white transition-colors duration-300 mb-4 block"
+                    variants={iconHover}
+                    whileHover="hover"
+                  >
+                    <Icon className="h-6 w-6" aria-hidden="true" />
+                  </motion.span>
+                  <div>
+                    <h3 className="text-xl font-bold text-[#002B5B]">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2 text-base text-gray-600">
+                      {service.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
 
         {/* Workflow Section */}
         <motion.div
-          className="w-full mt-24 px-4 sm:px-6 lg:px-8"
+          className="py-24"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -257,7 +475,7 @@ export function Services() {
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
                 className="flex flex-col items-center text-center bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                onClick={() => openModal(step.step, step.detailed, step.icon)}
+                onClick={() => openModal(step.step, step.details, handleGetStarted)}
               >
                 <motion.span
                   className="rounded-full bg-[#E0F0FF] p-3 mb-4"
@@ -275,7 +493,7 @@ export function Services() {
 
         {/* Stats Section */}
         <motion.div
-          className="w-full mt-24 px-4 sm:px-6 lg:px-8 bg-[#F9FAFB] py-12"
+          className="py-24 bg-[#F9FAFB]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -285,7 +503,7 @@ export function Services() {
             Our Achievements
           </motion.h3>
           <motion.div
-            className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
+            className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-full mx-auto"
             variants={containerVariants}
           >
             {stats.map((stat) => (
@@ -294,7 +512,7 @@ export function Services() {
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
                 className="flex flex-col items-center bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                onClick={() => openModal(stat.label, stat.detailed, stat.icon)}
+                onClick={() => openModal(stat.label, stat.details, handleGetStarted)}
               >
                 <motion.span
                   className="rounded-full bg-[#E0F0FF] p-3 mb-4"
@@ -312,7 +530,7 @@ export function Services() {
 
         {/* Testimonials Section */}
         <motion.div
-          className="w-full mt-24 px-4 sm:px-6 lg:px-8"
+          className="py-24"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -331,7 +549,7 @@ export function Services() {
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
                 className="p-8 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer max-w-md"
-                onClick={() => openModal(`${testimonial.name} from ${testimonial.company}`, testimonial.detailed, null)}
+                onClick={() => openModal(`${testimonial.name}, ${testimonial.company}`, testimonial.details, handleGetStarted)}
               >
                 <p className="text-gray-600 italic">"{testimonial.quote}"</p>
                 <h4 className="mt-4 font-semibold text-[#002B5B]">
@@ -348,8 +566,8 @@ export function Services() {
         isOpen={modalData.isOpen}
         onClose={closeModal}
         title={modalData.title}
-        content={modalData.content}
-        Icon={modalData.Icon}
+        details={modalData.details}
+        onGetStarted={modalData.onGetStarted}
       />
     </div>
   );
