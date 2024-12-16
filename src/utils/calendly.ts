@@ -1,16 +1,19 @@
-// src/utils/calendly.ts
 import axios from 'axios';
 
 const CALENDLY_API_URL = 'https://api.calendly.com';
 const PERSONAL_TOKEN = 'eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzM0MzEwNzIxLCJqdGkiOiI0YmNmOTMxNS1hNjIxLTQzYTItYjQwZC0wMmRiNjM2OGE3NmYiLCJ1c2VyX3V1aWQiOiI2MzZiNmM3MC0yYTg2LTQ0OWEtOTgwMy1kM2MwZTA0MGQxM2QifQ.tzD5_NA1KPAgOXbqmediWOPpm6Ppla_YTnvI-8jBObR98cnT82CqDtRda2P_alVg1jw72gQmhG34t9p1mizmWQ';
+
+// Your 30-minute event type UUID:
 const EVENT_TYPE_UUID = 'bfac17e0-1586-41e2-a087-6e45557d6c42';
-const USER_URI = 'https://api.calendly.com/users/636b6c70-2a86-449a-9803-d3c0e040d13d';
+
+// Replace this with the `current_organization` URI from your user data
+const ORGANIZATION_URI = 'https://api.calendly.com/organizations/0abc0aed-104a-45e5-9dcb-48a16f66daee';
 
 interface ScheduleEventParams {
   email: string;
   name: string;
-  date: string;
-  time: string;
+  date: string;   // format: YYYY-MM-DD
+  time: string;   // ISO datetime string (e.g. "2024-12-19T09:00:00Z")
   notes?: string;
   selectedServices: string[];
 }
@@ -18,11 +21,10 @@ interface ScheduleEventParams {
 async function createSchedulingLink(): Promise<string> {
   const payload = {
     event_type: `${CALENDLY_API_URL}/event_types/${EVENT_TYPE_UUID}`,
-    owner: USER_URI,
-    owner_type: 'User' // Must match the type of resource in `owner`
+    owner: ORGANIZATION_URI,
+    owner_type: 'Organization'
   };
-  
-  // Try without max_event_count to avoid extra complexity
+
   const response = await axios.post(
     `${CALENDLY_API_URL}/scheduling_links`,
     payload,
@@ -51,7 +53,10 @@ export async function getAvailableTimeSlots(date: string): Promise<string[]> {
         headers: {
           Authorization: `Bearer ${PERSONAL_TOKEN}`
         },
-        params: { start_time: startTime, end_time: endTime }
+        params: {
+          start_time: startTime,
+          end_time: endTime
+        }
       }
     );
 
@@ -74,7 +79,7 @@ export async function scheduleEvent({
   const payload = {
     event: {
       event_type: `${CALENDLY_API_URL}/event_types/${EVENT_TYPE_UUID}`,
-      start_time: time, // should already be ISO from available times
+      start_time: time, // `time` should be an ISO string returned from getAvailableTimeSlots
       invitees: [
         {
           email,
