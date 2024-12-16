@@ -23,14 +23,24 @@ export function DateTimePicker({
 }: DateTimePickerProps) {
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     if (selectedDate) {
       setLoading(true);
+      setError('');
       getAvailableTimeSlots(selectedDate)
-        .then(slots => setAvailableSlots(slots))
-        .catch(error => console.error('Error fetching time slots:', error))
+        .then(slots => {
+          setAvailableSlots(slots);
+        })
+        .catch(error => {
+          console.error('Error fetching time slots:', error);
+          setError('Could not fetch available times. Please try another date.');
+        })
         .finally(() => setLoading(false));
+    } else {
+      // Reset when date is cleared
+      setAvailableSlots([]);
     }
   }, [selectedDate]);
 
@@ -58,34 +68,45 @@ export function DateTimePicker({
           />
         </div>
         
-        {loading ? (
+        {loading && (
           <div className="text-center py-4">Loading available times...</div>
-        ) : (
+        )}
+        {error && !loading && (
+          <div className="text-center py-4 text-red-500">{error}</div>
+        )}
+        {!loading && !error && selectedDate && availableSlots.length === 0 && (
+          <div className="text-center py-4">No available times for this date.</div>
+        )}
+        {!loading && !error && availableSlots.length > 0 && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Select Time
             </label>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {availableSlots.map((time) => (
-                <motion.button
-                  key={time}
-                  type="button"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`p-3 rounded-lg border ${
-                    selectedTime === time
-                      ? 'bg-[#002B5B] text-white'
-                      : 'hover:bg-[#E0F0FF]'
-                  }`}
-                  onClick={() => onTimeChange(time)}
-                >
-                  <Clock className="w-4 h-4 inline-block mr-2" />
-                  {new Date(time).toLocaleTimeString([], { 
-                    hour: '2-digit', 
-                    minute: '2-digit'
-                  })}
-                </motion.button>
-              ))}
+              {availableSlots.map((time) => {
+                const timeString = new Date(time).toLocaleTimeString([], { 
+                  hour: '2-digit', 
+                  minute: '2-digit' 
+                });
+
+                return (
+                  <motion.button
+                    key={time}
+                    type="button"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`p-3 rounded-lg border ${
+                      selectedTime === time
+                        ? 'bg-[#002B5B] text-white'
+                        : 'hover:bg-[#E0F0FF]'
+                    }`}
+                    onClick={() => onTimeChange(time)}
+                  >
+                    <Clock className="w-4 h-4 inline-block mr-2" />
+                    {timeString}
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
         )}
