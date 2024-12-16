@@ -24,7 +24,6 @@ function AppWrapper() {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/consultation" element={<ConsultationPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
