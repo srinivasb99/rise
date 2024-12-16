@@ -356,7 +356,7 @@ export function Services() {
   };
 
   return (
-    <div className="py-24 bg-[#001F3F] w-full">
+    <div className="py-24 bg-white w-full">
       <motion.div
         className="w-full px-4 sm:px-6 lg:px-8 space-y-24"
         initial="hidden"
@@ -369,10 +369,10 @@ export function Services() {
           className="text-center mb-16"
           variants={itemVariants}
         >
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-[#002B5B] sm:text-4xl">
             Our Services
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-300">
+           <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
             Comprehensive digital solutions to help your business thrive online.
           </p>
         </motion.div>
@@ -390,24 +390,24 @@ export function Services() {
                 key={service.title}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="relative group bg-[#003366] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="relative group bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(service.title, service.detailed, service.icon)}
               >
                 <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <SecondaryIcon className="w-20 h-20 text-[#FFFFFF]" />
+                  <SecondaryIcon className="w-20 h-20 text-[#002B5B]" />
                 </div>
                 <motion.span
-                  className="rounded-lg inline-flex p-3 bg-[#004080] text-[#FFFFFF] group-hover:bg-[#00509E] group-hover:text-white transition-colors duration-300 mb-4 block"
+                  className="rounded-lg inline-flex p-3 bg-[#E0F0FF] text-[#002B5B] group-hover:bg-[#002B5B] group-hover:text-white transition-colors duration-300 mb-4 block"
                   variants={iconHover}
                   whileHover="hover"
                 >
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </motion.span>
                 <div>
-                  <h3 className="text-xl font-bold text-white">
+                  <h3 className="text-xl font-bold text-[#002B5B]">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-base text-gray-300">
+                  <p className="mt-2 text-base text-gray-600">
                     {service.description}
                   </p>
                 </div>
