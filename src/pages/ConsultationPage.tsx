@@ -6,17 +6,7 @@ import { ConsultationForm } from '../components/consultation/ConsultationForm';
 import { DateTimePicker } from '../components/consultation/DateTimePicker';
 import { UserDetailsForm } from '../components/consultation/UserDetailsForm';
 import { scheduleEvent } from '../utils/calendly';
-
-const services = [
-  { title: 'Website Development' },
-  { title: 'SEO & Digital Marketing' },
-  { title: 'Branding & Strategy' },
-  { title: 'Content & Social Media' },
-  { title: 'Mobile App Development' },
-  { title: 'Cybersecurity' },
-  { title: 'Analytics & Reporting' },
-  { title: 'Digital Transformation' },
-];
+import { services } from '../data/services'; // Import services from the data folder
 
 export function ConsultationPage() {
   const [step, setStep] = useState<number>(1);
@@ -65,11 +55,6 @@ export function ConsultationPage() {
         selectedServices,
       });
       alert('Consultation scheduled successfully!');
-      // Optionally reset states or redirect:
-      // setStep(1);
-      // setSelectedServices([]);
-      // setSelectedDate('');
-      // setSelectedTime('');
     } catch (err: any) {
       console.error(err);
       setError('Failed to schedule consultation. Please try again.');
@@ -123,7 +108,6 @@ export function ConsultationPage() {
             ))}
           </div>
 
-          {/* Step content */}
           <AnimatePresence mode="wait">
             {step === 1 && (
               <ConsultationForm
@@ -134,7 +118,6 @@ export function ConsultationPage() {
                 services={services}
               />
             )}
-
             {step === 2 && (
               <DateTimePicker
                 key="step2"
@@ -146,7 +129,6 @@ export function ConsultationPage() {
                 onBack={handlePreviousStep}
               />
             )}
-
             {step === 3 && (
               <UserDetailsForm
                 key="step3"
