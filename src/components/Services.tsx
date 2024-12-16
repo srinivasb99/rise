@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import {
   Code, Search, PenTool, MessageSquare, Globe, BarChart3, Zap,
-  CheckCircle, ArrowRight, Users, Briefcase, Star, LineChart, Rocket
+  CheckCircle, ArrowRight, Users, Briefcase, Star, LineChart, Rocket, Award, ShieldCheck, Layers
 } from 'lucide-react';
 
 const container = {
@@ -77,7 +77,26 @@ const testimonials = [
     quote: "Excellent service and support! We saw a significant increase in organic traffic within months.",
     name: "Jane Smith",
     company: "Tech Innovators"
+  },
+  {
+    quote: "Highly skilled team with a clear understanding of our business needs. Top-notch delivery!",
+    name: "Michael Johnson",
+    company: "Visionary Brands"
   }
+];
+
+const stats = [
+  { label: 'Projects Completed', value: '120+', icon: Layers },
+  { label: 'Satisfied Clients', value: '95%', icon: ShieldCheck },
+  { label: 'Years of Experience', value: '10+', icon: Award },
+  { label: 'Team Members', value: '50+', icon: Users }
+];
+
+const workflowSteps = [
+  { step: 'Consultation', description: 'Understand your goals and requirements.', icon: Briefcase },
+  { step: 'Strategy', description: 'Develop a tailored plan for your success.', icon: LineChart },
+  { step: 'Execution', description: 'Implement solutions with precision.', icon: Rocket },
+  { step: 'Delivery & Support', description: 'Deliver results and offer ongoing support.', icon: ShieldCheck }
 ];
 
 export function Services() {
@@ -116,25 +135,23 @@ export function Services() {
                 key={service.title}
                 variants={item}
                 whileHover={{ y: -10 }}
-                className="relative group bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+                className="relative group bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
               >
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <SecondaryIcon className="w-20 h-20 text-[#002B5B]" />
+                  <SecondaryIcon className="w-24 h-24 text-[#002B5B]" />
                 </div>
-                <div>
-                  <motion.span
-                    className="rounded-lg inline-flex p-3 bg-[#E0F0FF] text-[#002B5B] group-hover:bg-[#002B5B] group-hover:text-white transition-colors duration-300"
-                    variants={iconAnimation}
-                    whileHover="hover"
-                  >
-                    <Icon className="h-6 w-6" aria-hidden="true" />
-                  </motion.span>
-                </div>
-                <div className="mt-8">
-                  <h3 className="text-lg font-medium text-[#002B5B] group-hover:text-[#002B5B]">
+                <motion.span
+                  className="rounded-lg inline-flex p-4 bg-[#E0F0FF] text-[#002B5B] group-hover:bg-[#002B5B] group-hover:text-white transition-colors duration-300"
+                  variants={iconAnimation}
+                  whileHover="hover"
+                >
+                  <Icon className="h-8 w-8" aria-hidden="true" />
+                </motion.span>
+                <div className="mt-6">
+                  <h3 className="text-xl font-bold text-[#002B5B] group-hover:text-[#002B5B]">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-sm text-gray-600 group-hover:text-gray-700">
+                  <p className="mt-3 text-base text-gray-600 group-hover:text-gray-700">
                     {service.description}
                   </p>
                 </div>
@@ -143,36 +160,41 @@ export function Services() {
           })}
         </motion.div>
 
-        {/* Value Proposition */}
-        <div className="mt-24 text-center">
-          <h3 className="text-2xl font-bold text-[#002B5B]">Why Choose Us?</h3>
-          <p className="mt-4 text-gray-600">
-            We deliver professional, scalable, and tailored solutions to meet your business needs.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-8">
-            <div className="p-4 bg-[#E0F0FF] rounded-lg shadow-md w-48">
-              <LineChart className="w-12 h-12 text-[#002B5B] mb-4" />
-              <p className="font-medium text-[#002B5B]">Results-Oriented</p>
-            </div>
-            <div className="p-4 bg-[#E0F0FF] rounded-lg shadow-md w-48">
-              <Users className="w-12 h-12 text-[#002B5B] mb-4" />
-              <p className="font-medium text-[#002B5B]">Expert Team</p>
-            </div>
-            <div className="p-4 bg-[#E0F0FF] rounded-lg shadow-md w-48">
-              <Rocket className="w-12 h-12 text-[#002B5B] mb-4" />
-              <p className="font-medium text-[#002B5B]">Fast Delivery</p>
-            </div>
+        {/* Workflow Section */}
+        <div className="mt-24">
+          <h3 className="text-2xl font-extrabold text-[#002B5B] text-center">Our Workflow</h3>
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+            {workflowSteps.map((step) => (
+              <div key={step.step} className="flex flex-col items-center text-center">
+                <step.icon className="w-12 h-12 text-[#002B5B] mb-4" />
+                <h4 className="text-lg font-bold text-[#002B5B]">{step.step}</h4>
+                <p className="text-gray-600 mt-2">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Stats Section */}
+        <div className="mt-24 bg-[#E0F0FF] py-12 rounded-lg">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {stats.map((stat) => (
+              <div key={stat.label} className="flex flex-col items-center">
+                <stat.icon className="w-16 h-16 text-[#002B5B] mb-4" />
+                <h4 className="text-3xl font-extrabold text-[#002B5B]">{stat.value}</h4>
+                <p className="text-gray-700 mt-2">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Testimonials */}
         <div className="mt-24 text-center">
-          <h3 className="text-2xl font-bold text-[#002B5B]">What Our Clients Say</h3>
-          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-8">
+          <h3 className="text-2xl font-extrabold text-[#002B5B]">What Our Clients Say</h3>
+          <div className="mt-10 flex flex-wrap justify-center gap-8">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="p-6 bg-white rounded-lg shadow-md max-w-sm"
+                className="p-8 bg-white rounded-lg shadow-md max-w-md text-left"
               >
                 <p className="text-gray-600 italic">"{testimonial.quote}"</p>
                 <h4 className="mt-4 font-semibold text-[#002B5B]">
