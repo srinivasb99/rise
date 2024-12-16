@@ -109,9 +109,11 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
                   <p>{content.serviceFocus}</p>
                 </div>
               )}
-              <button className="mt-4 bg-[#002B5B] text-white px-4 py-2 rounded hover:bg-[#003C75] transition-colors duration-300">
-                Get Started
-              </button>
+              <a href="/services">
+                <button className="mt-4 bg-[#002B5B] text-white px-6 py-3 rounded-full hover:bg-[#003C75] transition-colors duration-300">
+                  Get Started
+                </button>
+              </a>
             </div>
           </motion.div>
         </motion.div>
@@ -418,7 +420,7 @@ export function Services() {
                 key={step.step}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="flex flex-col items-center text-center bg-[#003366] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="flex flex-col items-center text-center bg-[#001F3F] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(step.step, step.detailed, step.icon)}
               >
                 <motion.span
@@ -455,7 +457,7 @@ export function Services() {
                 key={stat.label}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="flex flex-col items-center bg-[#003366] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="flex flex-col items-center bg-[#001F3F] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(stat.label, stat.detailed, stat.icon)}
               >
                 <motion.span
@@ -492,7 +494,7 @@ export function Services() {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
-                className="p-8 bg-[#003366] rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer max-w-md"
+                className="p-8 bg-[#001F3F] rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer max-w-md"
                 onClick={() => openModal(`${testimonial.name}, ${testimonial.company}`, testimonial.detailed, null)}
               >
                 <p className="text-gray-300 italic">"{testimonial.quote}"</p>
