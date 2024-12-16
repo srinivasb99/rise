@@ -16,6 +16,10 @@ import {
   Award,
   ShieldCheck,
   Layers,
+  Smartphone,
+  Lock,
+  BarChart,
+  Transform,
   X
 } from 'lucide-react';
 
@@ -197,6 +201,63 @@ const services = [
         'Engagement strategies to connect with followers and build brand loyalty.',
         'Influencer collaborations to expand brand visibility.',
         'Analytics and reports to measure content performance and audience impact.'
+      ]
+    }
+  },
+  // New Services
+  {
+    title: 'Mobile App Development',
+    description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.',
+    icon: Smartphone,
+    secondaryIcon: Rocket, // Using Rocket as a secondary icon; feel free to choose another if preferred
+    detailed: {
+      details: [
+        'iOS & Android',
+        'Cross-platform',
+        'UI/UX Design',
+        'App Store Optimization'
+      ]
+    }
+  },
+  {
+    title: 'Cybersecurity',
+    description: 'Protect your digital assets with our comprehensive security solutions.',
+    icon: Lock,
+    secondaryIcon: ShieldCheck,
+    detailed: {
+      details: [
+        'Security Audits',
+        'SSL Certificates',
+        'Data Protection',
+        'Regular Monitoring'
+      ]
+    }
+  },
+  {
+    title: 'Analytics & Reporting',
+    description: 'Make data-driven decisions with our detailed analytics and reporting services.',
+    icon: BarChart,
+    secondaryIcon: LineChart,
+    detailed: {
+      details: [
+        'Custom Dashboards',
+        'Performance Metrics',
+        'User Behavior',
+        'Conversion Tracking'
+      ]
+    }
+  },
+  {
+    title: 'Digital Transformation',
+    description: 'Transform your business processes with cutting-edge digital solutions.',
+    icon: Transform,
+    secondaryIcon: Rocket,
+    detailed: {
+      details: [
+        'Process Automation',
+        'Cloud Solutions',
+        'Digital Strategy',
+        'Technology Integration'
       ]
     }
   }
