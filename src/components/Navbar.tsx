@@ -182,12 +182,6 @@ l-218 2 3 -27z"/>
               Services
             </Link>
             <Link
-              to="/portfolio"
-              className={`${isActive('/portfolio') ? 'text-[#002B5B]' : 'text-gray-700'} hover:text-[#002B5B]`}
-            >
-              Portfolio
-            </Link>
-            <Link
               to="/contact"
               className={`${isActive('/contact') ? 'text-[#002B5B]' : 'text-gray-700'} hover:text-[#002B5B]`}
             >
