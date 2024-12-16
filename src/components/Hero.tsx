@@ -115,7 +115,7 @@ export function Hero() {
       </div>
 
       <div className="absolute bottom-0 left-0 right-0">
-        <svg className="w-full h-12 fill-current text-[#002B5B]" viewBox="0 0 1440 48" preserveAspectRatio="none">
+        <svg className="w-full h-12 fill-current text-[#001F3F]" viewBox="0 0 1440 48" preserveAspectRatio="none">
           <path d="M0 48h1440V0c-624 23-936 23-1440 0v48z" />
         </svg>
       </div>
