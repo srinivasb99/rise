@@ -19,6 +19,7 @@ import {
   Smartphone,
   Lock,
   BarChart,
+  Progress,
   X
 } from 'lucide-react';
 
@@ -249,7 +250,7 @@ const services = [
   {
     title: 'Digital Transformation',
     description: 'Transform your business processes with cutting-edge digital solutions.',
-    icon: Transform,
+    icon: Progress,
     secondaryIcon: Rocket,
     detailed: {
       details: [
