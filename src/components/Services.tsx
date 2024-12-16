@@ -5,6 +5,7 @@ import {
   CheckCircle, Users, Briefcase, LineChart, Rocket, Award, ShieldCheck, Layers,
   X
 } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Ensure you have react-router-dom installed
 
 // Animation Variants
 const containerVariants = {
@@ -109,11 +110,11 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
                   <p>{content.serviceFocus}</p>
                 </div>
               )}
-              <a href="/services">
+              <Link to="/services">
                 <button className="mt-4 bg-[#002B5B] text-white px-6 py-3 rounded-full hover:bg-[#003C75] transition-colors duration-300">
                   Get Started
                 </button>
-              </a>
+              </Link>
             </div>
           </motion.div>
         </motion.div>
@@ -348,7 +349,7 @@ export function Services() {
         variants={containerVariants}
         transition={{ duration: 0.6 }}
       >
-        {/* Section Title */}
+        {/* "Our Services" Section */}
         <motion.div
           className="text-center mb-16"
           variants={itemVariants}
@@ -400,7 +401,7 @@ export function Services() {
           })}
         </motion.div>
 
-        {/* Workflow Section */}
+        {/* "Our Workflow" Section */}
         <motion.div
           className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
           initial="hidden"
@@ -420,7 +421,7 @@ export function Services() {
                 key={step.step}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="flex flex-col items-center text-center bg-[#001F3F] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="flex flex-col items-center text-center bg-[#003366] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(step.step, step.detailed, step.icon)}
               >
                 <motion.span
@@ -437,7 +438,7 @@ export function Services() {
           </motion.div>
         </motion.div>
 
-        {/* Stats Section */}
+        {/* "Our Achievements" Section */}
         <motion.div
           className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
           initial="hidden"
@@ -457,7 +458,7 @@ export function Services() {
                 key={stat.label}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="flex flex-col items-center bg-[#001F3F] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                className="flex flex-col items-center bg-[#004080] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(stat.label, stat.detailed, stat.icon)}
               >
                 <motion.span
@@ -474,7 +475,7 @@ export function Services() {
           </motion.div>
         </motion.div>
 
-        {/* Testimonials Section */}
+        {/* "What Our Clients Say" Section */}
         <motion.div
           className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
           initial="hidden"
@@ -494,7 +495,7 @@ export function Services() {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
-                className="p-8 bg-[#001F3F] rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer max-w-md"
+                className="p-8 bg-[#004080] rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer max-w-md"
                 onClick={() => openModal(`${testimonial.name}, ${testimonial.company}`, testimonial.detailed, null)}
               >
                 <p className="text-gray-300 italic">"{testimonial.quote}"</p>
