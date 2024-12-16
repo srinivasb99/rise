@@ -8,9 +8,11 @@ import { ServiceModal } from '../components/services/ServiceModal';
 import { itemVariants, containerVariants, floatingAnimation } from '../utils/animations';
 import { services } from '../data/services';
 import type { Service } from '../data/services';
+import { useNavigate } from 'react-router-dom';
 
 export function ServicesPage() {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const navigate = useNavigate(); // Move this inside the functional component
 
   return (
     <PageWrapper>
