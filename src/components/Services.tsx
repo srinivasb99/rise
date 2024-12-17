@@ -89,7 +89,7 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
-            className="bg-white rounded-lg shadow-lg relative max-w-lg w-full p-6"
+            className="bg-white rounded-lg shadow-lg relative max-w-lg w-full p-6 overflow-y-auto max-h-[90vh]"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
@@ -110,7 +110,7 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
               {content.details && (
                 <div>
                   <h3 className="font-semibold">Details:</h3>
-                  <ul className="list-disc list-inside">
+                  <ul className="list-disc list-inside space-y-1">
                     {content.details.map((detail, index) => (
                       <li key={index}>{detail}</li>
                     ))}
@@ -129,6 +129,48 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
                   <p>{content.serviceFocus}</p>
                 </div>
               )}
+              {content.pricing && (
+                <div>
+                  <h3 className="font-semibold">Pricing:</h3>
+                  <p>{content.pricing}</p>
+                </div>
+              )}
+              {content.caseStudies && content.caseStudies.length > 0 && (
+                <div>
+                  <h3 className="font-semibold">Case Studies:</h3>
+                  <ul className="list-disc list-inside space-y-1">
+                    {content.caseStudies.map((cs, idx) => (
+                      <li key={idx}>
+                        <a href={cs.link} target="_blank" rel="noopener noreferrer" className="text-[#002B5B] hover:underline">
+                          {cs.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {content.additionalInfo && (
+                <div>
+                  <h3 className="font-semibold">Additional Information:</h3>
+                  <p>{content.additionalInfo}</p>
+                </div>
+              )}
+              {content.buttons && content.buttons.length > 0 && (
+                <div className="space-x-2 flex flex-wrap">
+                  {content.buttons.map((button, index) => (
+                    <a 
+                      key={index} 
+                      href={button.link} 
+                      className="mt-4 bg-[#002B5B] text-white px-6 py-3 rounded-full hover:bg-[#003C75] transition-colors duration-300"
+                      target={button.external ? "_blank" : "_self"}
+                      rel={button.external ? "noopener noreferrer" : ""}
+                    >
+                      {button.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+              {/* Existing default button */}
               <a href="/services">
                 <button className="mt-4 bg-[#002B5B] text-white px-6 py-3 rounded-full hover:bg-[#003C75] transition-colors duration-300">
                   Get Started
@@ -156,6 +198,16 @@ const services = [
         'Built to convert visitors into customers with intuitive design.',
         'Features include eCommerce integration, custom forms, and CMS setups.',
         'Post-launch maintenance to ensure long-term website performance.'
+      ],
+      pricing: "Starting at $2,000 - includes custom design, responsive layout, and initial SEO setup.",
+      additionalInfo: "We offer monthly maintenance packages and on-demand support services.",
+      caseStudies: [
+        { title: 'E-Commerce Growth for ABC Retail', link: '/case-studies/abc-retail' },
+        { title: 'Tech Startup Launch for XYZ Innovations', link: '/case-studies/xyz-innovations' }
+      ],
+      buttons: [
+        { label: 'View Portfolio', link: '/portfolio', external: false },
+        { label: 'Request a Quote', link: '/contact', external: false }
       ]
     }
   },
@@ -166,11 +218,21 @@ const services = [
     secondaryIcon: BarChart3,
     detailed: {
       details: [
-        'Advanced Search Engine Optimization (SEO) to improve rankings on Google.',
-        'Keyword research and content strategies tailored to your audience.',
-        'Paid advertising (PPC campaigns) for targeted outreach and ROI.',
-        'Analytics and reporting to track growth, user behavior, and conversions.',
-        'Social media advertising to engage new audiences and retain customers.'
+        'Advanced SEO to improve Google rankings.',
+        'Keyword research and targeted content strategies.',
+        'Paid advertising (PPC campaigns) for targeted outreach.',
+        'Analytics and reporting to track growth and conversions.',
+        'Social media advertising to engage new audiences.'
+      ],
+      pricing: "Custom monthly retainers starting at $500/month.",
+      additionalInfo: "Short-term campaigns and long-term growth strategies available.",
+      caseStudies: [
+        { title: 'Traffic Boost for Local Bakery', link: '/case-studies/local-bakery' },
+        { title: 'Lead Generation for SaaS Company', link: '/case-studies/saas-lead-gen' }
+      ],
+      buttons: [
+        { label: 'Our Marketing Packages', link: '/pricing', external: false },
+        { label: 'Free SEO Audit', link: '/contact', external: false }
       ]
     }
   },
@@ -181,11 +243,19 @@ const services = [
     secondaryIcon: Zap,
     detailed: {
       details: [
-        'Custom logo creation and branding assets (colors, typography, etc.).',
-        'Brand messaging strategies to align with business goals and audience.',
-        'Market research and competitor analysis for strategic positioning.',
-        'Storytelling techniques to foster emotional connections with customers.',
-        'Comprehensive brand guidelines to maintain consistency across platforms.'
+        'Custom logo creation and full branding suites.',
+        'Brand messaging strategies that resonate with audiences.',
+        'Market research and competitor analysis for positioning.',
+        'Emotional storytelling to connect with customers.',
+        'Comprehensive brand guidelines for consistency.'
+      ],
+      pricing: "Branding packages start at $1,500.",
+      additionalInfo: "Options to include brand workshops and training sessions.",
+      caseStudies: [
+        { title: 'Rebranding for a Consulting Firm', link: '/case-studies/consulting-rebrand' }
+      ],
+      buttons: [
+        { label: 'View Brand Guidelines Samples', link: '/resources/brand-guidelines', external: false }
       ]
     }
   },
@@ -196,26 +266,42 @@ const services = [
     secondaryIcon: CheckCircle,
     detailed: {
       details: [
-        'Custom social media calendars to ensure consistent posting.',
-        'High-quality content creation: blogs, videos, infographics, and more.',
-        'Engagement strategies to connect with followers and build brand loyalty.',
-        'Influencer collaborations to expand brand visibility.',
-        'Analytics and reports to measure content performance and audience impact.'
+        'Content calendars to ensure consistent posting.',
+        'High-quality blogs, videos, and infographics.',
+        'Engagement strategies to build brand loyalty.',
+        'Influencer collaborations for expanded reach.',
+        'Analytics to measure content performance.'
+      ],
+      pricing: "Monthly content packages starting at $300.",
+      additionalInfo: "Custom packages available for multiple platforms.",
+      caseStudies: [
+        { title: 'Viral Social Campaign for Startup', link: '/case-studies/viral-campaign' }
+      ],
+      buttons: [
+        { label: 'Social Media Packages', link: '/pricing', external: false },
+        { label: 'Content Samples', link: '/portfolio-content', external: false }
       ]
     }
   },
-  // New Services
   {
     title: 'Mobile App Development',
-    description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.',
+    description: 'Native and cross-platform mobile applications for exceptional user experiences.',
     icon: Smartphone,
-    secondaryIcon: Rocket, // Using Rocket as a secondary icon; feel free to choose another if preferred
+    secondaryIcon: Rocket,
     detailed: {
       details: [
-        'iOS & Android',
-        'Cross-platform',
-        'UI/UX Design',
-        'App Store Optimization'
+        'iOS & Android expertise.',
+        'Cross-platform solutions (React Native, Flutter).',
+        'UI/UX Design tailored to mobile users.',
+        'App Store Optimization and launch support.'
+      ],
+      pricing: "Custom quotes depending on feature set and complexity.",
+      additionalInfo: "Maintenance and upgrade plans available post-launch.",
+      caseStudies: [
+        { title: 'Fitness App Launch', link: '/case-studies/fitness-app' }
+      ],
+      buttons: [
+        { label: 'Schedule a Consultation', link: '/contact', external: false }
       ]
     }
   },
@@ -226,10 +312,18 @@ const services = [
     secondaryIcon: ShieldCheck,
     detailed: {
       details: [
-        'Security Audits',
-        'SSL Certificates',
-        'Data Protection',
-        'Regular Monitoring'
+        'Security Audits to identify vulnerabilities.',
+        'SSL Certificates and encryption protocols.',
+        'Data Protection and compliance solutions.',
+        'Regular monitoring and threat response.'
+      ],
+      pricing: "Monthly security packages starting at $200.",
+      additionalInfo: "One-time audits and ongoing protection plans.",
+      caseStudies: [
+        { title: 'Security Overhaul for E-commerce Site', link: '/case-studies/security-ecommerce' }
+      ],
+      buttons: [
+        { label: 'Security Audit Request', link: '/contact', external: false }
       ]
     }
   },
@@ -240,10 +334,18 @@ const services = [
     secondaryIcon: LineChart,
     detailed: {
       details: [
-        'Custom Dashboards',
-        'Performance Metrics',
-        'User Behavior',
-        'Conversion Tracking'
+        'Custom Dashboards tailored to KPIs.',
+        'Performance Metrics tracking.',
+        'User Behavior analysis.',
+        'Conversion Tracking and A/B Testing.'
+      ],
+      pricing: "Analytics setup starting at $150, monthly reporting packages available.",
+      additionalInfo: "Integration with Google Analytics, Mixpanel, and more.",
+      caseStudies: [
+        { title: 'Data Insights for Healthcare Firm', link: '/case-studies/healthcare-data' }
+      ],
+      buttons: [
+        { label: 'View Demo Dashboard', link: '/demo-dashboard', external: false }
       ]
     }
   },
@@ -254,10 +356,18 @@ const services = [
     secondaryIcon: Rocket,
     detailed: {
       details: [
-        'Process Automation',
-        'Cloud Solutions',
-        'Digital Strategy',
-        'Technology Integration'
+        'Process Automation using the latest tools.',
+        'Cloud Solutions for scalability.',
+        'Digital Strategy consulting.',
+        'Technology Integration for seamless workflows.'
+      ],
+      pricing: "Custom quotes based on organizational size and scope.",
+      additionalInfo: "Long-term consulting partnerships for ongoing transformation.",
+      caseStudies: [
+        { title: 'Automation for Manufacturing Processes', link: '/case-studies/automation-manufacturing' }
+      ],
+      buttons: [
+        { label: 'Learn About Our Approach', link: '/about', external: false }
       ]
     }
   }
@@ -270,7 +380,14 @@ const testimonials = [
     company: "Acme Corp",
     detailed: {
       outcome: "Increased business visibility and measurable results.",
-      serviceFocus: "Website development and digital strategy."
+      serviceFocus: "Website development and digital strategy.",
+      caseStudies: [
+        { title: 'Acme Corp Website Redesign', link: '/case-studies/acme-website' }
+      ],
+      additionalInfo: "Our ongoing partnership includes quarterly reviews and updates.",
+      buttons: [
+        { label: 'Read Full Testimonial', link: '/testimonials#acme-corp', external: false }
+      ]
     }
   },
   {
@@ -279,7 +396,14 @@ const testimonials = [
     company: "Tech Innovators",
     detailed: {
       outcome: "Boosted organic traffic with SEO strategies.",
-      serviceFocus: "SEO & Digital Marketing."
+      serviceFocus: "SEO & Digital Marketing.",
+      caseStudies: [
+        { title: 'Tech Innovators SEO Case Study', link: '/case-studies/tech-innovators-seo' }
+      ],
+      additionalInfo: "Tech Innovators continues to see year-over-year growth.",
+      buttons: [
+        { label: 'Explore Marketing Packages', link: '/pricing', external: false }
+      ]
     }
   },
   {
@@ -288,7 +412,14 @@ const testimonials = [
     company: "Visionary Brands",
     detailed: {
       outcome: "Precise and effective delivery tailored to business goals.",
-      serviceFocus: "Branding & Strategy."
+      serviceFocus: "Branding & Strategy.",
+      caseStudies: [
+        { title: 'Visionary Brands Rebranding', link: '/case-studies/visionary-brands' }
+      ],
+      additionalInfo: "We now have cohesive brand messaging across all platforms.",
+      buttons: [
+        { label: 'View Branding Services', link: '/services', external: false }
+      ]
     }
   }
 ];
@@ -300,10 +431,14 @@ const stats = [
     icon: Layers,
     detailed: {
       details: [
-        'Our team has successfully completed over 120 projects across multiple industries.',
-        'Tailored solutions for local businesses, global enterprises, and startups.',
-        'Projects include web design, digital campaigns, branding, and content strategies.',
-        'Proven track record of exceeding goals and delivering transformative results.'
+        'Over 120 projects across multiple industries.',
+        'Tailored solutions for local businesses and global enterprises.',
+        'Includes web design, digital campaigns, branding, and more.',
+        'Proven track record of exceeding goals.'
+      ],
+      additionalInfo: "See our portfolio for highlights and success stories.",
+      buttons: [
+        { label: 'View Portfolio', link: '/portfolio', external: false }
       ]
     }
   },
@@ -313,10 +448,14 @@ const stats = [
     icon: ShieldCheck,
     detailed: {
       details: [
-        'We are proud to maintain a 95% client satisfaction rate.',
-        'Personalized attention to every client’s unique needs and challenges.',
-        'Regular updates, clear communication, and top-notch execution.',
-        'Results-driven approach to achieve measurable growth and ROI.'
+        'Maintaining a 95% client satisfaction rate.',
+        'Personalized attention to each client’s unique needs.',
+        'Clear communication and top-notch execution.',
+        'Results-driven approach with measurable growth.'
+      ],
+      additionalInfo: "Our customer support team is available 24/7.",
+      buttons: [
+        { label: 'Read Client Testimonials', link: '/testimonials', external: false }
       ]
     }
   },
@@ -326,10 +465,14 @@ const stats = [
     icon: Award,
     detailed: {
       details: [
-        'With over a decade of experience, we combine creativity with expertise.',
-        'Diverse portfolio of solutions spanning industries like retail, tech, and healthcare.',
-        'Skilled professionals who stay updated with the latest trends and technologies.',
-        'Long-lasting partnerships built on trust, results, and innovation.'
+        'Over a decade of combined experience.',
+        'Diverse portfolio spanning various industries.',
+        'Skilled professionals up-to-date with latest trends.',
+        'Long-lasting partnerships built on trust and innovation.'
+      ],
+      additionalInfo: "We invest in continuous learning and professional development.",
+      buttons: [
+        { label: 'Meet the Team', link: '/about', external: false }
       ]
     }
   },
@@ -339,10 +482,14 @@ const stats = [
     icon: Users,
     detailed: {
       details: [
-        'A growing team of over 50 experts committed to your success.',
-        'Professionals specializing in development, strategy, design, and marketing.',
-        'Collaborative workflows to deliver high-quality solutions efficiently.',
-        'Regular team development and learning to stay at the forefront of innovation.'
+        'A growing team of over 50 experts.',
+        'Professionals in development, strategy, design, and marketing.',
+        'Collaborative workflows for efficient delivery.',
+        'Constant skill development and innovation.'
+      ],
+      additionalInfo: "Join our team! We're always looking for talented individuals.",
+      buttons: [
+        { label: 'Careers', link: '/careers', external: false }
       ]
     }
   }
@@ -351,14 +498,18 @@ const stats = [
 const workflowSteps = [
   {
     step: 'Consultation',
-    description: 'In this initial phase, we work to understand your vision and requirements.',
+    description: 'In this initial phase, we understand your vision and requirements.',
     icon: Briefcase,
     detailed: {
       details: [
-        'A deep-dive consultation to identify pain points and opportunities.',
-        'Business goals aligned with project objectives.',
-        'Clear timelines, milestones, and deliverables set for accountability.',
-        'Personalized approach to ensure a smooth workflow.'
+        'Deep-dive consultation to identify goals and challenges.',
+        'Business objectives aligned with project scope.',
+        'Clear timelines, milestones, and deliverables.',
+        'Personalized approach to ensure smooth workflow.'
+      ],
+      additionalInfo: "We offer a free 30-minute consultation for new clients.",
+      buttons: [
+        { label: 'Book a Consultation', link: '/contact', external: false }
       ]
     }
   },
@@ -368,36 +519,48 @@ const workflowSteps = [
     icon: LineChart,
     detailed: {
       details: [
-        'Comprehensive research on target audiences and market trends.',
-        'Data-driven strategies to achieve measurable outcomes.',
-        'Detailed project roadmap with milestones and KPIs.',
-        'Flexible plans that allow room for feedback and adjustments.'
+        'Comprehensive research on target audiences.',
+        'Data-driven strategies for measurable outcomes.',
+        'Detailed project roadmap with milestones.',
+        'Flexible plans for feedback and adjustments.'
+      ],
+      additionalInfo: "We use data analytics tools to refine strategy over time.",
+      buttons: [
+        { label: 'View Strategy Templates', link: '/resources/strategy-templates', external: false }
       ]
     }
   },
   {
     step: 'Execution',
-    description: 'This is where we bring your project to life with precision.',
+    description: 'We bring your project to life with precision.',
     icon: Rocket,
     detailed: {
       details: [
-        'Step-by-step implementation following the approved strategy.',
-        'Development, testing, and refinement to meet quality standards.',
-        'Constant communication with stakeholders for project alignment.',
-        'Agile methodology for adaptability during the process.'
+        'Step-by-step implementation following the approved plan.',
+        'Development, testing, and quality checks.',
+        'Constant communication and updates.',
+        'Agile methodology for adaptability.'
+      ],
+      additionalInfo: "We use project management tools for transparency.",
+      buttons: [
+        { label: 'Project Management FAQs', link: '/faq#project-management', external: false }
       ]
     }
   },
   {
     step: 'Delivery & Support',
-    description: 'We deliver results and provide ongoing support to ensure long-term success.',
+    description: 'We deliver results and provide ongoing support for long-term success.',
     icon: ShieldCheck,
     detailed: {
       details: [
-        'Final project delivery with documentation and training (if needed).',
-        'Post-launch support for monitoring and troubleshooting.',
-        'Maintenance plans to keep websites, campaigns, or content optimized.',
-        'Continuous evaluation to identify areas for further improvement.'
+        'Final delivery with documentation and training.',
+        'Post-launch support and troubleshooting.',
+        'Maintenance plans for continuous optimization.',
+        'Periodic evaluations for ongoing improvement.'
+      ],
+      additionalInfo: "We offer extended support and maintenance contracts.",
+      buttons: [
+        { label: 'Support Plans', link: '/support', external: false }
       ]
     }
   }
