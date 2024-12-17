@@ -8,7 +8,7 @@ import {
   Globe,
   BarChart3,
   Zap,
-  CheckCircle,
+  CheckCircle as CheckIcon,
   Users,
   Briefcase,
   LineChart,
@@ -23,7 +23,6 @@ import {
   X
 } from 'lucide-react';
 
-// Animation Variants
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: { 
@@ -59,7 +58,6 @@ const iconHover = {
   }
 };
 
-// Modal Animation Variants
 const modalVariants = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: { 
@@ -106,38 +104,71 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
               {Icon && <Icon className="w-8 h-8 text-[#002B5B] mr-2" />}
               <h2 id="modal-title" className="text-2xl font-bold text-[#002B5B]">{title}</h2>
             </div>
-            <div className="text-gray-700 space-y-4">
-              {content.details && (
+
+            <div className="text-gray-700 space-y-6">
+              {/* Overview */}
+              {content.overview && (
                 <div>
-                  <h3 className="font-semibold">Details:</h3>
-                  <ul className="list-disc list-inside space-y-1">
-                    {content.details.map((detail, index) => (
-                      <li key={index}>{detail}</li>
+                  <h3 className="font-semibold mb-2">Overview</h3>
+                  <p>{content.overview}</p>
+                </div>
+              )}
+
+              {/* Key Features */}
+              {content.keyFeatures && content.keyFeatures.length > 0 && (
+                <div>
+                  <h3 className="font-semibold mb-2">Key Features</h3>
+                  <ul className="space-y-1">
+                    {content.keyFeatures.map((feature, index) => (
+                      <li key={index} className="flex items-start space-x-2">
+                        <CheckIcon className="w-5 h-5 text-green-600 mt-0.5" />
+                        <span>{feature}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               )}
-              {content.outcome && (
+
+              {/* Process */}
+              {content.process && content.process.length > 0 && (
                 <div>
-                  <h3 className="font-semibold">Outcome:</h3>
-                  <p>{content.outcome}</p>
+                  <h3 className="font-semibold mb-2">Process</h3>
+                  <ul className="space-y-3">
+                    {content.process.map((step, index) => (
+                      <li key={index} className="flex items-start space-x-3">
+                        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold">
+                          {index + 1}
+                        </div>
+                        <div>
+                          <span className="font-semibold">{step.name}</span>
+                          <p className="text-sm text-gray-600">{step.description}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
-              {content.serviceFocus && (
-                <div>
-                  <h3 className="font-semibold">Service Focus:</h3>
-                  <p>{content.serviceFocus}</p>
-                </div>
-              )}
+
+              {/* Pricing */}
               {content.pricing && (
                 <div>
-                  <h3 className="font-semibold">Pricing:</h3>
+                  <h3 className="font-semibold mb-2">Pricing</h3>
                   <p>{content.pricing}</p>
                 </div>
               )}
+
+              {/* Additional Info */}
+              {content.additionalInfo && (
+                <div>
+                  <h3 className="font-semibold mb-2">Additional Information</h3>
+                  <p>{content.additionalInfo}</p>
+                </div>
+              )}
+
+              {/* Case Studies */}
               {content.caseStudies && content.caseStudies.length > 0 && (
                 <div>
-                  <h3 className="font-semibold">Case Studies:</h3>
+                  <h3 className="font-semibold mb-2">Case Studies</h3>
                   <ul className="list-disc list-inside space-y-1">
                     {content.caseStudies.map((cs, idx) => (
                       <li key={idx}>
@@ -149,33 +180,42 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
                   </ul>
                 </div>
               )}
-              {content.additionalInfo && (
-                <div>
-                  <h3 className="font-semibold">Additional Information:</h3>
-                  <p>{content.additionalInfo}</p>
-                </div>
-              )}
-              {content.buttons && content.buttons.length > 0 && (
-                <div className="space-x-2 flex flex-wrap">
-                  {content.buttons.map((button, index) => (
-                    <a 
-                      key={index} 
-                      href={button.link} 
-                      className="mt-4 bg-[#002B5B] text-white px-6 py-3 rounded-full hover:bg-[#003C75] transition-colors duration-300"
+
+              {/* Buttons */}
+              <div className="flex flex-wrap gap-2 justify-start">
+                {/* Custom buttons from content */}
+                {content.buttons && content.buttons.map((button, index) => (
+                  button.action === 'close' ? (
+                    <button
+                      key={index}
+                      onClick={onClose}
+                      className="bg-white border border-[#002B5B] text-[#002B5B] px-6 py-3 rounded-full hover:bg-gray-100 transition-colors duration-300"
+                    >
+                      {button.label}
+                    </button>
+                  ) : (
+                    <a
+                      key={index}
+                      href={button.link}
                       target={button.external ? "_blank" : "_self"}
                       rel={button.external ? "noopener noreferrer" : ""}
+                      className="bg-[#002B5B] text-white px-6 py-3 rounded-full hover:bg-[#003C75] transition-colors duration-300"
                     >
                       {button.label}
                     </a>
-                  ))}
-                </div>
-              )}
-              {/* Existing default button */}
-              <a href="/services">
-                <button className="mt-4 bg-[#002B5B] text-white px-6 py-3 rounded-full hover:bg-[#003C75] transition-colors duration-300">
-                  Get Started
-                </button>
-              </a>
+                  )
+                ))}
+
+                {/* If no close button is provided, add one */}
+                {!content.buttons?.some(b => b.action === 'close') && (
+                  <button
+                    onClick={onClose}
+                    className="bg-white border border-[#002B5B] text-[#002B5B] px-6 py-3 rounded-full hover:bg-gray-100 transition-colors duration-300"
+                  >
+                    Close
+                  </button>
+                )}
+              </div>
             </div>
           </motion.div>
         </motion.div>
@@ -184,7 +224,7 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
   );
 };
 
-// Data Arrays with Detailed Content
+// Updated Data Arrays with consistent modal fields
 const services = [
   {
     title: 'Website Development',
@@ -192,12 +232,30 @@ const services = [
     icon: Code,
     secondaryIcon: Globe,
     detailed: {
-      details: [
-        'Fast, secure, and user-friendly websites optimized for SEO.',
-        'Mobile and desktop responsiveness to ensure a seamless user experience.',
-        'Built to convert visitors into customers with intuitive design.',
-        'Features include eCommerce integration, custom forms, and CMS setups.',
-        'Post-launch maintenance to ensure long-term website performance.'
+      overview: "Custom websites that are fast, secure, and built to convert visitors into customers.",
+      keyFeatures: [
+        "Responsive Design",
+        "SEO Optimization",
+        "Custom Functionality",
+        "Performance Focused"
+      ],
+      process: [
+        {
+          name: "Discovery & Planning",
+          description: "We analyze your requirements and create a detailed project roadmap."
+        },
+        {
+          name: "Design & Prototyping",
+          description: "Creating wireframes and interactive prototypes for your approval."
+        },
+        {
+          name: "Development",
+          description: "Building your website with clean, efficient code and modern technologies."
+        },
+        {
+          name: "Testing & Launch",
+          description: "Rigorous testing and smooth deployment of your website."
+        }
       ],
       pricing: "Starting at $2,000 - includes custom design, responsive layout, and initial SEO setup.",
       additionalInfo: "We offer monthly maintenance packages and on-demand support services.",
@@ -206,8 +264,10 @@ const services = [
         { title: 'Tech Startup Launch for XYZ Innovations', link: '/case-studies/xyz-innovations' }
       ],
       buttons: [
+        { label: 'Get Started', link: '/services', external: false },
         { label: 'View Portfolio', link: '/portfolio', external: false },
-        { label: 'Request a Quote', link: '/contact', external: false }
+        { label: 'Request a Quote', link: '/contact', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -217,12 +277,30 @@ const services = [
     icon: Search,
     secondaryIcon: BarChart3,
     detailed: {
-      details: [
-        'Advanced SEO to improve Google rankings.',
-        'Keyword research and targeted content strategies.',
-        'Paid advertising (PPC campaigns) for targeted outreach.',
-        'Analytics and reporting to track growth and conversions.',
-        'Social media advertising to engage new audiences.'
+      overview: "Advanced strategies to improve your rankings, boost traffic, and maximize ROI.",
+      keyFeatures: [
+        "Keyword Research",
+        "Content Strategies",
+        "PPC Campaigns",
+        "Social Media Advertising"
+      ],
+      process: [
+        {
+          name: "Audit & Strategy",
+          description: "We assess your current visibility and craft a custom marketing plan."
+        },
+        {
+          name: "Implementation",
+          description: "Executing on-page SEO, content marketing, and paid campaigns."
+        },
+        {
+          name: "Monitoring & Optimization",
+          description: "Regular analysis and adjustments to ensure continuous growth."
+        },
+        {
+          name: "Reporting",
+          description: "Transparent reporting on key metrics, conversions, and ROI."
+        }
       ],
       pricing: "Custom monthly retainers starting at $500/month.",
       additionalInfo: "Short-term campaigns and long-term growth strategies available.",
@@ -232,7 +310,8 @@ const services = [
       ],
       buttons: [
         { label: 'Our Marketing Packages', link: '/pricing', external: false },
-        { label: 'Free SEO Audit', link: '/contact', external: false }
+        { label: 'Free SEO Audit', link: '/contact', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -242,12 +321,30 @@ const services = [
     icon: PenTool,
     secondaryIcon: Zap,
     detailed: {
-      details: [
-        'Custom logo creation and full branding suites.',
-        'Brand messaging strategies that resonate with audiences.',
-        'Market research and competitor analysis for positioning.',
-        'Emotional storytelling to connect with customers.',
-        'Comprehensive brand guidelines for consistency.'
+      overview: "Craft a memorable brand image that resonates with your target audience.",
+      keyFeatures: [
+        "Custom Logo & Assets",
+        "Brand Messaging",
+        "Market Research",
+        "Emotional Storytelling"
+      ],
+      process: [
+        {
+          name: "Brand Discovery",
+          description: "Understanding your brand values, audience, and competition."
+        },
+        {
+          name: "Visual Identity",
+          description: "Creating logos, color schemes, typography, and imagery."
+        },
+        {
+          name: "Messaging & Guidelines",
+          description: "Defining clear brand messaging and building cohesive guidelines."
+        },
+        {
+          name: "Launch & Integration",
+          description: "Integrating your new branding across all platforms."
+        }
       ],
       pricing: "Branding packages start at $1,500.",
       additionalInfo: "Options to include brand workshops and training sessions.",
@@ -255,7 +352,8 @@ const services = [
         { title: 'Rebranding for a Consulting Firm', link: '/case-studies/consulting-rebrand' }
       ],
       buttons: [
-        { label: 'View Brand Guidelines Samples', link: '/resources/brand-guidelines', external: false }
+        { label: 'View Brand Guidelines Samples', link: '/resources/brand-guidelines', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -265,12 +363,30 @@ const services = [
     icon: MessageSquare,
     secondaryIcon: CheckCircle,
     detailed: {
-      details: [
-        'Content calendars to ensure consistent posting.',
-        'High-quality blogs, videos, and infographics.',
-        'Engagement strategies to build brand loyalty.',
-        'Influencer collaborations for expanded reach.',
-        'Analytics to measure content performance.'
+      overview: "Attract, engage, and retain followers through high-quality, consistent content.",
+      keyFeatures: [
+        "Content Calendars",
+        "High-Quality Blogs & Videos",
+        "Influencer Collaborations",
+        "Analytics & Performance Tracking"
+      ],
+      process: [
+        {
+          name: "Strategy Development",
+          description: "Identifying channels, topics, and posting schedules."
+        },
+        {
+          name: "Content Creation",
+          description: "Producing engaging blogs, videos, and graphics."
+        },
+        {
+          name: "Community Management",
+          description: "Interacting with followers and nurturing brand loyalty."
+        },
+        {
+          name: "Performance Optimization",
+          description: "Using analytics to refine content strategy and improve results."
+        }
       ],
       pricing: "Monthly content packages starting at $300.",
       additionalInfo: "Custom packages available for multiple platforms.",
@@ -279,99 +395,14 @@ const services = [
       ],
       buttons: [
         { label: 'Social Media Packages', link: '/pricing', external: false },
-        { label: 'Content Samples', link: '/portfolio-content', external: false }
-      ]
-    }
-  },
-  {
-    title: 'Mobile App Development',
-    description: 'Native and cross-platform mobile applications for exceptional user experiences.',
-    icon: Smartphone,
-    secondaryIcon: Rocket,
-    detailed: {
-      details: [
-        'iOS & Android expertise.',
-        'Cross-platform solutions (React Native, Flutter).',
-        'UI/UX Design tailored to mobile users.',
-        'App Store Optimization and launch support.'
-      ],
-      pricing: "Custom quotes depending on feature set and complexity.",
-      additionalInfo: "Maintenance and upgrade plans available post-launch.",
-      caseStudies: [
-        { title: 'Fitness App Launch', link: '/case-studies/fitness-app' }
-      ],
-      buttons: [
-        { label: 'Schedule a Consultation', link: '/contact', external: false }
-      ]
-    }
-  },
-  {
-    title: 'Cybersecurity',
-    description: 'Protect your digital assets with our comprehensive security solutions.',
-    icon: Lock,
-    secondaryIcon: ShieldCheck,
-    detailed: {
-      details: [
-        'Security Audits to identify vulnerabilities.',
-        'SSL Certificates and encryption protocols.',
-        'Data Protection and compliance solutions.',
-        'Regular monitoring and threat response.'
-      ],
-      pricing: "Monthly security packages starting at $200.",
-      additionalInfo: "One-time audits and ongoing protection plans.",
-      caseStudies: [
-        { title: 'Security Overhaul for E-commerce Site', link: '/case-studies/security-ecommerce' }
-      ],
-      buttons: [
-        { label: 'Security Audit Request', link: '/contact', external: false }
-      ]
-    }
-  },
-  {
-    title: 'Analytics & Reporting',
-    description: 'Make data-driven decisions with our detailed analytics and reporting services.',
-    icon: BarChart,
-    secondaryIcon: LineChart,
-    detailed: {
-      details: [
-        'Custom Dashboards tailored to KPIs.',
-        'Performance Metrics tracking.',
-        'User Behavior analysis.',
-        'Conversion Tracking and A/B Testing.'
-      ],
-      pricing: "Analytics setup starting at $150, monthly reporting packages available.",
-      additionalInfo: "Integration with Google Analytics, Mixpanel, and more.",
-      caseStudies: [
-        { title: 'Data Insights for Healthcare Firm', link: '/case-studies/healthcare-data' }
-      ],
-      buttons: [
-        { label: 'View Demo Dashboard', link: '/demo-dashboard', external: false }
-      ]
-    }
-  },
-  {
-    title: 'Digital Transformation',
-    description: 'Transform your business processes with cutting-edge digital solutions.',
-    icon: Heart,
-    secondaryIcon: Rocket,
-    detailed: {
-      details: [
-        'Process Automation using the latest tools.',
-        'Cloud Solutions for scalability.',
-        'Digital Strategy consulting.',
-        'Technology Integration for seamless workflows.'
-      ],
-      pricing: "Custom quotes based on organizational size and scope.",
-      additionalInfo: "Long-term consulting partnerships for ongoing transformation.",
-      caseStudies: [
-        { title: 'Automation for Manufacturing Processes', link: '/case-studies/automation-manufacturing' }
-      ],
-      buttons: [
-        { label: 'Learn About Our Approach', link: '/about', external: false }
+        { label: 'Content Samples', link: '/portfolio-content', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   }
 ];
+
+// For testimonials, stats, and workflow steps, we adapt the structure:
 
 const testimonials = [
   {
@@ -379,14 +410,21 @@ const testimonials = [
     name: "John Doe",
     company: "Acme Corp",
     detailed: {
-      outcome: "Increased business visibility and measurable results.",
-      serviceFocus: "Website development and digital strategy.",
+      overview: "A remarkable increase in visibility and measurable results through strategic website development and digital strategy.",
+      keyFeatures: [
+        "Dedicated Support",
+        "Clear Communication",
+        "Tailored Solutions"
+      ],
+      process: [], // Not applicable, leave empty
+      pricing: null, // Not applicable
+      additionalInfo: "Our ongoing partnership includes quarterly reviews and updates.",
       caseStudies: [
         { title: 'Acme Corp Website Redesign', link: '/case-studies/acme-website' }
       ],
-      additionalInfo: "Our ongoing partnership includes quarterly reviews and updates.",
       buttons: [
-        { label: 'Read Full Testimonial', link: '/testimonials#acme-corp', external: false }
+        { label: 'Read Full Testimonial', link: '/testimonials#acme-corp', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -395,14 +433,21 @@ const testimonials = [
     name: "Jane Smith",
     company: "Tech Innovators",
     detailed: {
-      outcome: "Boosted organic traffic with SEO strategies.",
-      serviceFocus: "SEO & Digital Marketing.",
+      overview: "By implementing robust SEO & marketing strategies, Tech Innovators experienced significant organic growth.",
+      keyFeatures: [
+        "Increased Organic Traffic",
+        "Targeted SEO Tactics",
+        "Ongoing Optimization"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "Tech Innovators continues to see year-over-year growth.",
       caseStudies: [
         { title: 'Tech Innovators SEO Case Study', link: '/case-studies/tech-innovators-seo' }
       ],
-      additionalInfo: "Tech Innovators continues to see year-over-year growth.",
       buttons: [
-        { label: 'Explore Marketing Packages', link: '/pricing', external: false }
+        { label: 'Explore Marketing Packages', link: '/pricing', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -411,14 +456,21 @@ const testimonials = [
     name: "Michael Johnson",
     company: "Visionary Brands",
     detailed: {
-      outcome: "Precise and effective delivery tailored to business goals.",
-      serviceFocus: "Branding & Strategy.",
+      overview: "Through strategic branding, Visionary Brands aligned their brand identity with their business goals.",
+      keyFeatures: [
+        "Cohesive Brand Messaging",
+        "Improved Market Positioning",
+        "Consistent Brand Identity"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "We now have cohesive brand messaging across all platforms.",
       caseStudies: [
         { title: 'Visionary Brands Rebranding', link: '/case-studies/visionary-brands' }
       ],
-      additionalInfo: "We now have cohesive brand messaging across all platforms.",
       buttons: [
-        { label: 'View Branding Services', link: '/services', external: false }
+        { label: 'View Branding Services', link: '/services', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   }
@@ -430,15 +482,19 @@ const stats = [
     value: '120+',
     icon: Layers,
     detailed: {
-      details: [
-        'Over 120 projects across multiple industries.',
-        'Tailored solutions for local businesses and global enterprises.',
-        'Includes web design, digital campaigns, branding, and more.',
-        'Proven track record of exceeding goals.'
+      overview: "A track record of successful projects spanning various industries and solutions.",
+      keyFeatures: [
+        "Diverse Industry Experience",
+        "Customized Solutions",
+        "Proven Results"
       ],
+      process: [],
+      pricing: null,
       additionalInfo: "See our portfolio for highlights and success stories.",
+      caseStudies: [],
       buttons: [
-        { label: 'View Portfolio', link: '/portfolio', external: false }
+        { label: 'View Portfolio', link: '/portfolio', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -447,15 +503,19 @@ const stats = [
     value: '95%',
     icon: ShieldCheck,
     detailed: {
-      details: [
-        'Maintaining a 95% client satisfaction rate.',
-        'Personalized attention to each client’s unique needs.',
-        'Clear communication and top-notch execution.',
-        'Results-driven approach with measurable growth.'
+      overview: "Our commitment to quality, communication, and results has earned us a 95% satisfaction rate.",
+      keyFeatures: [
+        "Personalized Attention",
+        "Transparent Communication",
+        "Measurable Growth"
       ],
+      process: [],
+      pricing: null,
       additionalInfo: "Our customer support team is available 24/7.",
+      caseStudies: [],
       buttons: [
-        { label: 'Read Client Testimonials', link: '/testimonials', external: false }
+        { label: 'Read Client Testimonials', link: '/testimonials', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -464,15 +524,19 @@ const stats = [
     value: '10+',
     icon: Award,
     detailed: {
-      details: [
-        'Over a decade of combined experience.',
-        'Diverse portfolio spanning various industries.',
-        'Skilled professionals up-to-date with latest trends.',
-        'Long-lasting partnerships built on trust and innovation.'
+      overview: "Over a decade of expertise in delivering cutting-edge digital solutions.",
+      keyFeatures: [
+        "Up-to-Date with Trends",
+        "Skilled Professionals",
+        "Long-Term Partnerships"
       ],
+      process: [],
+      pricing: null,
       additionalInfo: "We invest in continuous learning and professional development.",
+      caseStudies: [],
       buttons: [
-        { label: 'Meet the Team', link: '/about', external: false }
+        { label: 'Meet the Team', link: '/about', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -481,15 +545,19 @@ const stats = [
     value: '50+',
     icon: Users,
     detailed: {
-      details: [
-        'A growing team of over 50 experts.',
-        'Professionals in development, strategy, design, and marketing.',
-        'Collaborative workflows for efficient delivery.',
-        'Constant skill development and innovation.'
+      overview: "A growing team of experts dedicated to delivering the best possible results.",
+      keyFeatures: [
+        "Cross-Functional Expertise",
+        "Collaborative Workflows",
+        "Constant Innovation"
       ],
+      process: [],
+      pricing: null,
       additionalInfo: "Join our team! We're always looking for talented individuals.",
+      caseStudies: [],
       buttons: [
-        { label: 'Careers', link: '/careers', external: false }
+        { label: 'Careers', link: '/careers', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   }
@@ -501,15 +569,19 @@ const workflowSteps = [
     description: 'In this initial phase, we understand your vision and requirements.',
     icon: Briefcase,
     detailed: {
-      details: [
-        'Deep-dive consultation to identify goals and challenges.',
-        'Business objectives aligned with project scope.',
-        'Clear timelines, milestones, and deliverables.',
-        'Personalized approach to ensure smooth workflow.'
+      overview: "We begin by getting to know your business goals and challenges.",
+      keyFeatures: [
+        "Thorough Requirements Analysis",
+        "Customized Approach",
+        "Clear Timeline & Deliverables"
       ],
+      process: [],
+      pricing: null,
       additionalInfo: "We offer a free 30-minute consultation for new clients.",
+      caseStudies: [],
       buttons: [
-        { label: 'Book a Consultation', link: '/contact', external: false }
+        { label: 'Book a Consultation', link: '/contact', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -518,15 +590,19 @@ const workflowSteps = [
     description: 'We develop a tailored and actionable plan for success.',
     icon: LineChart,
     detailed: {
-      details: [
-        'Comprehensive research on target audiences.',
-        'Data-driven strategies for measurable outcomes.',
-        'Detailed project roadmap with milestones.',
-        'Flexible plans for feedback and adjustments.'
+      overview: "Data-driven strategies to ensure measurable outcomes.",
+      keyFeatures: [
+        "Market Research",
+        "Target Audience Insights",
+        "Strategic Roadmapping"
       ],
+      process: [],
+      pricing: null,
       additionalInfo: "We use data analytics tools to refine strategy over time.",
+      caseStudies: [],
       buttons: [
-        { label: 'View Strategy Templates', link: '/resources/strategy-templates', external: false }
+        { label: 'View Strategy Templates', link: '/resources/strategy-templates', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -535,15 +611,19 @@ const workflowSteps = [
     description: 'We bring your project to life with precision.',
     icon: Rocket,
     detailed: {
-      details: [
-        'Step-by-step implementation following the approved plan.',
-        'Development, testing, and quality checks.',
-        'Constant communication and updates.',
-        'Agile methodology for adaptability.'
+      overview: "From development to marketing, we implement your plan efficiently.",
+      keyFeatures: [
+        "Agile Methodologies",
+        "Quality Assurance",
+        "Transparent Communication"
       ],
-      additionalInfo: "We use project management tools for transparency.",
+      process: [],
+      pricing: null,
+      additionalInfo: "We use project management tools for real-time updates.",
+      caseStudies: [],
       buttons: [
-        { label: 'Project Management FAQs', link: '/faq#project-management', external: false }
+        { label: 'Project Management FAQs', link: '/faq#project-management', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   },
@@ -552,23 +632,25 @@ const workflowSteps = [
     description: 'We deliver results and provide ongoing support for long-term success.',
     icon: ShieldCheck,
     detailed: {
-      details: [
-        'Final delivery with documentation and training.',
-        'Post-launch support and troubleshooting.',
-        'Maintenance plans for continuous optimization.',
-        'Periodic evaluations for ongoing improvement.'
+      overview: "Seamless handover and long-term support to ensure sustained growth.",
+      keyFeatures: [
+        "Training & Documentation",
+        "Maintenance Plans",
+        "Continuous Optimization"
       ],
+      process: [],
+      pricing: null,
       additionalInfo: "We offer extended support and maintenance contracts.",
+      caseStudies: [],
       buttons: [
-        { label: 'Support Plans', link: '/support', external: false }
+        { label: 'Support Plans', link: '/support', external: false },
+        { label: 'Close', action: 'close' }
       ]
     }
   }
 ];
 
-// Updated Services Component
 export function Services() {
-  // Modal State Management
   const [modalData, setModalData] = useState({ isOpen: false, title: '', content: {}, Icon: null });
 
   const openModal = (title, content, Icon) => {
@@ -640,7 +722,7 @@ export function Services() {
           })}
         </motion.div>
 
-        {/* Our Workflow Section */}
+        {/* Workflow Section */}
         <motion.div
           className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
           initial="hidden"
@@ -677,7 +759,7 @@ export function Services() {
           </motion.div>
         </motion.div>
 
-        {/* Our Achievements Section */}
+        {/* Achievements Section */}
         <motion.div
           className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
           initial="hidden"
@@ -714,7 +796,7 @@ export function Services() {
           </motion.div>
         </motion.div>
 
-        {/* What Our Clients Say Section */}
+        {/* Testimonials Section */}
         <motion.div
           className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
           initial="hidden"
@@ -747,7 +829,6 @@ export function Services() {
         </motion.div>
       </motion.div>
 
-      {/* Modal Component */}
       <Modal 
         isOpen={modalData.isOpen}
         onClose={closeModal}
