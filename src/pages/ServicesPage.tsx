@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 
 export function ServicesPage() {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const navigate = useNavigate();
 
   return (
     <PageWrapper>
@@ -26,7 +25,7 @@ export function ServicesPage() {
           >
             <Sparkles className="w-32 h-32" />
           </motion.div>
-
+          
           <motion.div
             variants={floatingAnimation}
             initial="initial"
@@ -70,6 +69,43 @@ export function ServicesPage() {
             ))}
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="bg-[#002B5B] py-24"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.h2
+              variants={itemVariants}
+              className="text-3xl font-bold text-white mb-6"
+            >
+              Ready to Get Started?
+            </motion.h2>
+            <motion.p
+              variants={itemVariants}
+              className="text-xl text-gray-300 mb-8"
+            >
+              Let's discuss how we can help transform your business
+            </motion.p>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                variant="secondary"
+                size="lg"
+                onClick={() =>
+                  window.open('https://calendly.com/riseonlinesolutions/30min', '_blank')
+                }
+              >
+                Schedule a Consultation
+              </Button>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
 
       <ServiceModal
