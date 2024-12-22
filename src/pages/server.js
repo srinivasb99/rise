@@ -1,5 +1,9 @@
 npm install express body-parser cors nodemailer
 node server.js
+npm install dotenv
+EMAIL_USER=riseonlinesolutions@gmail.com
+EMAIL_PASS=5FiguresAMonth
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
