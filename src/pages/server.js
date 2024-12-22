@@ -1,11 +1,9 @@
 npm install express body-parser cors nodemailer
 node server.js
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-
 const app = express();
 const PORT = 5000;
 
