@@ -243,7 +243,7 @@ const services = [
           description: "Rigorous testing and smooth deployment of your website."
         }
       ],
-      pricing: "Starting at $2,000 - includes custom design, responsive layout, and initial SEO setup.",
+      pricing: "Starting at $200 - includes custom design, responsive layout, and initial SEO setup.",
       additionalInfo: "We offer monthly maintenance packages and on-demand support services.",
       buttons: [
         { label: 'Get Started', link: '/services', external: false },
@@ -284,7 +284,7 @@ const services = [
           description: "Transparent reporting on key metrics, conversions, and ROI."
         }
       ],
-      pricing: "Custom monthly retainers starting at $500/month.",
+      pricing: "Custom monthly retainers starting at $50/month.",
       additionalInfo: "Short-term campaigns and long-term growth strategies available.",
       buttons: [
         { label: 'Our Marketing Packages', link: '/pricing', external: false },
@@ -324,7 +324,7 @@ const services = [
           description: "Integrating your new branding across all platforms."
         }
       ],
-      pricing: "Branding packages start at $1,500.",
+      pricing: "Branding packages start at $150.",
       additionalInfo: "Options to include brand workshops and training sessions.",
       buttons: [
         { label: 'View Brand Guidelines Samples', link: '/resources/brand-guidelines', external: false },
@@ -363,7 +363,7 @@ const services = [
           description: "Using analytics to refine content strategy and improve results."
         }
       ],
-      pricing: "Monthly content packages starting at $300.",
+      pricing: "Monthly content packages starting at $50.",
       additionalInfo: "Custom packages available for multiple platforms.",
       buttons: [
         { label: 'Social Media Packages', link: '/pricing', external: false },
