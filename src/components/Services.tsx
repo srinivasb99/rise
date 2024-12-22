@@ -83,6 +83,7 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={onClose} // Close modal when clicking on the overlay
         >
           <motion.div 
             role="dialog"
@@ -93,6 +94,7 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
             initial="hidden"
             animate="visible"
             exit="exit"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
           >
             <button 
               onClick={onClose}
