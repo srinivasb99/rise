@@ -8,6 +8,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+require('dotenv').config();
+
 const app = express();
 const PORT = 5000;
 
@@ -16,16 +18,13 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Nodemailer Transporter
-require('dotenv').config();
-
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: process.env.riseonlinesolutions@gmail.com,
-    pass: process.env.5FiguresAMonth,
+    user: process.env.EMAIL_USER, // Correct environment variable usage
+    pass: process.env.EMAIL_PASS, // Correct environment variable usage
   },
 });
-
 
 // API Endpoint for Contact Form
 app.post('/api/contact', (req, res) => {
@@ -33,7 +32,7 @@ app.post('/api/contact', (req, res) => {
 
   const mailOptions = {
     from: email,
-    to: 'your-email@gmail.com', // Your destination email
+    to: process.env.EMAIL_USER, // Email where messages will be sent
     subject: `New Contact Form Submission from ${name}`,
     text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`,
   };
@@ -47,6 +46,12 @@ app.post('/api/contact', (req, res) => {
     res.status(200).send('Message sent successfully!');
   });
 });
+
+// Start the Server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 
 // Start the Server
 app.listen(PORT, () => {
