@@ -104,9 +104,8 @@ export function ContactPage() {
               <h2 className="text-2xl font-semibold text-[#002B5B] mb-6">Contact Information</h2>
               <motion.div className="space-y-6">
                 {[
-                  { icon: MapPin, title: 'Office Location', content: '123 Business Street\nNew York, NY 10001' },
-                  { icon: Phone, title: 'Phone', content: '+1 (555) 123-4567' },
-                  { icon: Mail, title: 'Email', content: 'contact@riseonline.com' }
+                  { icon: Phone, title: 'Phone', content: '+1 (561) 405-8631' },
+                  { icon: Mail, title: 'Email', content: 'riseonlinesolutions@gmail.com' }
                 ].map((item, index) => (
                   <motion.div
                     key={item.title}
