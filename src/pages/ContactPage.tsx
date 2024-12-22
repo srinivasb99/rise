@@ -15,26 +15,30 @@ export function ContactPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      // Simulate an API call
-      console.log('Form submitted:', formData);
-      // Optionally, send data to your backend:
-      // await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData),
-      // });
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    const response = await fetch('http://localhost:5000/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
       alert('Message sent successfully!');
       setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('Failed to send message. Please try again later.');
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      throw new Error('Failed to send message');
     }
-  };
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred. Please try again.');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <PageWrapper>
