@@ -166,21 +166,6 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
                 </div>
               )}
 
-              {/* Case Studies */}
-              {content.caseStudies && content.caseStudies.length > 0 && (
-                <div>
-                  <h3 className="font-semibold mb-2">Case Studies</h3>
-                  <ul className="list-disc list-inside space-y-1">
-                    {content.caseStudies.map((cs, idx) => (
-                      <li key={idx}>
-                        <a href={cs.link} target="_blank" rel="noopener noreferrer" className="text-[#002B5B] hover:underline">
-                          {cs.title}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
 
               {/* Buttons */}
               <div className="flex flex-wrap gap-2 justify-start">
@@ -225,7 +210,7 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
   );
 };
 
-// Updated Data Arrays with consistent modal fields
+// Updated Data Arrays with consistent modal fields (caseStudies removed)
 const services = [
   {
     title: 'Website Development',
@@ -260,10 +245,6 @@ const services = [
       ],
       pricing: "Starting at $2,000 - includes custom design, responsive layout, and initial SEO setup.",
       additionalInfo: "We offer monthly maintenance packages and on-demand support services.",
-      caseStudies: [
-        { title: 'E-Commerce Growth for ABC Retail', link: '/case-studies/abc-retail' },
-        { title: 'Tech Startup Launch for XYZ Innovations', link: '/case-studies/xyz-innovations' }
-      ],
       buttons: [
         { label: 'Get Started', link: '/services', external: false },
         { label: 'View Portfolio', link: '/portfolio', external: false },
@@ -305,10 +286,6 @@ const services = [
       ],
       pricing: "Custom monthly retainers starting at $500/month.",
       additionalInfo: "Short-term campaigns and long-term growth strategies available.",
-      caseStudies: [
-        { title: 'Traffic Boost for Local Bakery', link: '/case-studies/local-bakery' },
-        { title: 'Lead Generation for SaaS Company', link: '/case-studies/saas-lead-gen' }
-      ],
       buttons: [
         { label: 'Our Marketing Packages', link: '/pricing', external: false },
         { label: 'Free SEO Audit', link: '/contact', external: false },
@@ -349,9 +326,6 @@ const services = [
       ],
       pricing: "Branding packages start at $1,500.",
       additionalInfo: "Options to include brand workshops and training sessions.",
-      caseStudies: [
-        { title: 'Rebranding for a Consulting Firm', link: '/case-studies/consulting-rebrand' }
-      ],
       buttons: [
         { label: 'View Brand Guidelines Samples', link: '/resources/brand-guidelines', external: false },
         { label: 'Close', action: 'close' }
@@ -391,86 +365,9 @@ const services = [
       ],
       pricing: "Monthly content packages starting at $300.",
       additionalInfo: "Custom packages available for multiple platforms.",
-      caseStudies: [
-        { title: 'Viral Social Campaign for Startup', link: '/case-studies/viral-campaign' }
-      ],
       buttons: [
         { label: 'Social Media Packages', link: '/pricing', external: false },
         { label: 'Content Samples', link: '/portfolio-content', external: false },
-        { label: 'Close', action: 'close' }
-      ]
-    }
-  }
-];
-
-// For testimonials, stats, and workflow steps, we adapt the structure:
-
-const testimonials = [
-  {
-    quote: "Rise Online Solutions transformed our business presence. Their team is professional and results-driven!",
-    name: "John Doe",
-    company: "Acme Corp",
-    detailed: {
-      overview: "A remarkable increase in visibility and measurable results through strategic website development and digital strategy.",
-      keyFeatures: [
-        "Dedicated Support",
-        "Clear Communication",
-        "Tailored Solutions"
-      ],
-      process: [], // Not applicable, leave empty
-      pricing: null, // Not applicable
-      additionalInfo: "Our ongoing partnership includes quarterly reviews and updates.",
-      caseStudies: [
-        { title: 'Acme Corp Website Redesign', link: '/case-studies/acme-website' }
-      ],
-      buttons: [
-        { label: 'Read Full Testimonial', link: '/testimonials#acme-corp', external: false },
-        { label: 'Close', action: 'close' }
-      ]
-    }
-  },
-  {
-    quote: "Excellent service and support! We saw a significant increase in organic traffic within months.",
-    name: "Jane Smith",
-    company: "Tech Innovators",
-    detailed: {
-      overview: "By implementing robust SEO & marketing strategies, Tech Innovators experienced significant organic growth.",
-      keyFeatures: [
-        "Increased Organic Traffic",
-        "Targeted SEO Tactics",
-        "Ongoing Optimization"
-      ],
-      process: [],
-      pricing: null,
-      additionalInfo: "Tech Innovators continues to see year-over-year growth.",
-      caseStudies: [
-        { title: 'Tech Innovators SEO Case Study', link: '/case-studies/tech-innovators-seo' }
-      ],
-      buttons: [
-        { label: 'Explore Marketing Packages', link: '/pricing', external: false },
-        { label: 'Close', action: 'close' }
-      ]
-    }
-  },
-  {
-    quote: "Highly skilled team with a clear understanding of our business needs. Top-notch delivery!",
-    name: "Michael Johnson",
-    company: "Visionary Brands",
-    detailed: {
-      overview: "Through strategic branding, Visionary Brands aligned their brand identity with their business goals.",
-      keyFeatures: [
-        "Cohesive Brand Messaging",
-        "Improved Market Positioning",
-        "Consistent Brand Identity"
-      ],
-      process: [],
-      pricing: null,
-      additionalInfo: "We now have cohesive brand messaging across all platforms.",
-      caseStudies: [
-        { title: 'Visionary Brands Rebranding', link: '/case-studies/visionary-brands' }
-      ],
-      buttons: [
-        { label: 'View Branding Services', link: '/services', external: false },
         { label: 'Close', action: 'close' }
       ]
     }
@@ -492,7 +389,6 @@ const stats = [
       process: [],
       pricing: null,
       additionalInfo: "See our portfolio for highlights and success stories.",
-      caseStudies: [],
       buttons: [
         { label: 'View Portfolio', link: '/portfolio', external: false },
         { label: 'Close', action: 'close' }
@@ -513,9 +409,8 @@ const stats = [
       process: [],
       pricing: null,
       additionalInfo: "Our customer support team is available 24/7.",
-      caseStudies: [],
       buttons: [
-        { label: 'Read Client Testimonials', link: '/testimonials', external: false },
+        // Removed 'Read Client Testimonials' button
         { label: 'Close', action: 'close' }
       ]
     }
@@ -534,7 +429,6 @@ const stats = [
       process: [],
       pricing: null,
       additionalInfo: "We invest in continuous learning and professional development.",
-      caseStudies: [],
       buttons: [
         { label: 'Meet the Team', link: '/about', external: false },
         { label: 'Close', action: 'close' }
@@ -555,7 +449,6 @@ const stats = [
       process: [],
       pricing: null,
       additionalInfo: "Join our team! We're always looking for talented individuals.",
-      caseStudies: [],
       buttons: [
         { label: 'Careers', link: '/careers', external: false },
         { label: 'Close', action: 'close' }
@@ -579,7 +472,6 @@ const workflowSteps = [
       process: [],
       pricing: null,
       additionalInfo: "We offer a free 30-minute consultation for new clients.",
-      caseStudies: [],
       buttons: [
         { label: 'Book a Consultation', link: '/contact', external: false },
         { label: 'Close', action: 'close' }
@@ -600,7 +492,6 @@ const workflowSteps = [
       process: [],
       pricing: null,
       additionalInfo: "We use data analytics tools to refine strategy over time.",
-      caseStudies: [],
       buttons: [
         { label: 'View Strategy Templates', link: '/resources/strategy-templates', external: false },
         { label: 'Close', action: 'close' }
@@ -621,7 +512,6 @@ const workflowSteps = [
       process: [],
       pricing: null,
       additionalInfo: "We use project management tools for real-time updates.",
-      caseStudies: [],
       buttons: [
         { label: 'Project Management FAQs', link: '/faq#project-management', external: false },
         { label: 'Close', action: 'close' }
@@ -642,7 +532,6 @@ const workflowSteps = [
       process: [],
       pricing: null,
       additionalInfo: "We offer extended support and maintenance contracts.",
-      caseStudies: [],
       buttons: [
         { label: 'Support Plans', link: '/support', external: false },
         { label: 'Close', action: 'close' }
@@ -759,8 +648,6 @@ export function Services() {
             ))}
           </motion.div>
         </motion.div>
-
-        
       </motion.div>
 
       <Modal 
