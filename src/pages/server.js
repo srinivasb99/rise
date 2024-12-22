@@ -16,13 +16,16 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Nodemailer Transporter
+require('dotenv').config();
+
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'your-email@gmail.com', // Your email
-    pass: 'your-app-password', // Your email app password
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
+
 
 // API Endpoint for Contact Form
 app.post('/api/contact', (req, res) => {
