@@ -760,74 +760,7 @@ export function Services() {
           </motion.div>
         </motion.div>
 
-        {/* Achievements Section */}
-        <motion.div
-          className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={containerVariants}
-        >
-          <motion.h3 className="text-2xl font-extrabold text-white text-center mb-12" variants={itemVariants}>
-            Our Achievements
-          </motion.h3>
-          <motion.div
-            className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
-            variants={containerVariants}
-          >
-            {stats.map((stat) => (
-              <motion.div
-                key={stat.label}
-                variants={itemVariants}
-                whileHover={{ y: -5 }}
-                className="flex flex-col items-center text-center bg-[#00509E] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                onClick={() => openModal(stat.label, stat.detailed, stat.icon)}
-              >
-                <motion.span
-                  className="rounded-full bg-[#0066CC] p-3 mb-4"
-                  variants={iconHover}
-                  whileHover="hover"
-                >
-                  <stat.icon className="w-16 h-16 text-[#FFFFFF]" />
-                </motion.span>
-                <h4 className="text-3xl font-extrabold text-white">{stat.value}</h4>
-                <p className="text-gray-300 mt-2">{stat.label}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Testimonials Section */}
-        <motion.div
-          className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={containerVariants}
-        >
-          <motion.h3 className="text-2xl font-extrabold text-white text-center mb-12" variants={itemVariants}>
-            What Our Clients Say
-          </motion.h3>
-          <motion.div
-            className="w-full flex flex-wrap justify-center gap-8"
-            variants={containerVariants}
-          >
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                className="p-8 bg-[#00509E] rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer max-w-md"
-                onClick={() => openModal(`${testimonial.name}, ${testimonial.company}`, testimonial.detailed, null)}
-              >
-                <p className="text-gray-300 italic">"{testimonial.quote}"</p>
-                <h4 className="mt-4 font-semibold text-white">
-                  {testimonial.name}, {testimonial.company}
-                </h4>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
+        
       </motion.div>
 
       <Modal 
