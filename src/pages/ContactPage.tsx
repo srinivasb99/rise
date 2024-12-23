@@ -1,45 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '../components/Button';
 import { MapPin, Phone, Mail, Sparkles, Heart } from 'lucide-react';
 import { PageWrapper } from '../components/PageWrapper';
+import { ContactForm } from '../components/contact/ContactForm';
 import { itemVariants, containerVariants, floatingAnimation } from '../utils/animations';
 
 export function ContactPage() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-
-  try {
-    const response = await fetch('http://localhost:5000/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      alert('Message sent successfully!');
-      setFormData({ name: '', email: '', message: '' });
-    } else {
-      throw new Error('Failed to send message');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('An error occurred. Please try again.');
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
-
   return (
     <PageWrapper>
       <div className="pt-16">
@@ -52,7 +18,7 @@ export function ContactPage() {
           >
             <Sparkles className="w-32 h-32" />
           </motion.div>
-
+          
           <motion.div
             variants={floatingAnimation}
             initial="initial"
@@ -88,66 +54,16 @@ export function ContactPage() {
           >
             <motion.div variants={itemVariants}>
               <h2 className="text-2xl font-semibold text-[#002B5B] mb-6">Send us a message</h2>
-              <form className="space-y-6" onSubmit={handleSubmit}>
-                <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#002B5B] focus:ring-[#002B5B]"
-                    required
-                  />
-                </motion.div>
-                <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#002B5B] focus:ring-[#002B5B]"
-                    required
-                  />
-                </motion.div>
-                <motion.div
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-                  <textarea
-                    id="message"
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#002B5B] focus:ring-[#002B5B]"
-                    required
-                  ></textarea>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button type="submit" className="whitespace-nowrap" disabled={isSubmitting}>
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
-                  </Button>
-                </motion.div>
-              </form>
+              <ContactForm />
             </motion.div>
 
             <motion.div variants={itemVariants}>
               <h2 className="text-2xl font-semibold text-[#002B5B] mb-6">Contact Information</h2>
               <motion.div className="space-y-6">
                 {[
-                  { icon: Phone, title: 'Phone', content: '+1 (972) 878-7527' },
-                  { icon: Mail, title: 'Email', content: 'riseonlinesolutions@gmail.com' }
+                  { icon: MapPin, title: 'Office Location', content: '123 Business Street\nNew York, NY 10001' },
+                  { icon: Phone, title: 'Phone', content: '+1 (555) 123-4567' },
+                  { icon: Mail, title: 'Email', content: 'contact@riseonline.com' }
                 ].map((item, index) => (
                   <motion.div
                     key={item.title}
