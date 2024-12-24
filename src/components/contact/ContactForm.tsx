@@ -1,34 +1,38 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { submitContactForm } from '../../utils/contact';
 import { Button } from '../Button';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      message: formData.get('message') as string,
-    };
-
     try {
-      await submitContactForm(data);
+      await submitContactForm(formData);
       setSubmitStatus('success');
-      (e.target as HTMLFormElement).reset();
+      setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -43,6 +47,8 @@ export function ContactForm() {
           type="text"
           id="name"
           name="name"
+          value={formData.name}
+          onChange={handleChange}
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#002B5B] focus:ring-[#002B5B]"
         />
@@ -58,6 +64,8 @@ export function ContactForm() {
           type="email"
           id="email"
           name="email"
+          value={formData.email}
+          onChange={handleChange}
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#002B5B] focus:ring-[#002B5B]"
         />
@@ -72,31 +80,40 @@ export function ContactForm() {
         <textarea
           id="message"
           name="message"
+          value={formData.message}
+          onChange={handleChange}
           rows={4}
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#002B5B] focus:ring-[#002B5B]"
         />
       </motion.div>
 
-      {submitStatus === 'success' && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-green-600"
-        >
-          Message sent successfully!
-        </motion.div>
-      )}
-
-      {submitStatus === 'error' && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-red-600"
-        >
-          Failed to send message. Please try again.
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {submitStatus && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className={`p-4 rounded-md ${
+              submitStatus === 'success' ? 'bg-green-50' : 'bg-red-50'
+            }`}
+          >
+            <div className="flex items-center">
+              {submitStatus === 'success' ? (
+                <>
+                  <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
+                  <p className="text-green-800">Message sent successfully!</p>
+                </>
+              ) : (
+                <>
+                  <XCircle className="h-5 w-5 text-red-400 mr-2" />
+                  <p className="text-red-800">Failed to send message. Please try again.</p>
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <motion.div
         whileHover={{ scale: 1.05 }}
