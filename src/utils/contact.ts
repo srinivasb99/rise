@@ -1,5 +1,6 @@
-import { ref, push } from 'firebase/database';
-import { db } from './firebase';
+import { collection, addDoc, getFirestore } from 'firebase/firestore';
+import { app } from './firebase';
+import { sendEmail } from '../services/email';
 
 interface ContactFormData {
   name: string;
@@ -8,9 +9,21 @@ interface ContactFormData {
 }
 
 export async function submitContactForm(data: ContactFormData) {
-  const messagesRef = ref(db, 'messages');
-  return push(messagesRef, {
-    ...data,
-    timestamp: new Date().toISOString(),
-  });
+  try {
+    const db = getFirestore(app);
+    // Add to Firestore
+    const docRef = await addDoc(collection(db, 'messages'), {
+      ...data,
+      timestamp: new Date(),
+      status: 'unread'
+    });
+
+    // Send email
+    await sendEmail(data);
+
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    throw error;
+  }
 }
