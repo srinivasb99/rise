@@ -10,7 +10,7 @@ export function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,7 +32,7 @@ export function ContactForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -42,7 +42,9 @@ export function ContactForm() {
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          Name
+        </label>
         <input
           type="text"
           id="name"
@@ -59,7 +61,9 @@ export function ContactForm() {
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          Email
+        </label>
         <input
           type="email"
           id="email"
@@ -76,7 +80,9 @@ export function ContactForm() {
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.4 }}
       >
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+          Message
+        </label>
         <textarea
           id="message"
           name="message"
@@ -115,15 +121,8 @@ export function ContactForm() {
         )}
       </AnimatePresence>
 
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <Button 
-          type="submit" 
-          disabled={isSubmitting}
-          className="w-full sm:w-auto"
-        >
+      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </Button>
       </motion.div>
