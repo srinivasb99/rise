@@ -1,6 +1,6 @@
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import { app } from './firebase';
-import { sendEmail } from '../services/email';
+import { sendEmail } from '../services/email.service';
 
 interface ContactFormData {
   name: string;
