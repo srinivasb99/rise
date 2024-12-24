@@ -1,6 +1,5 @@
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import { app } from './firebase';
-import { sendEmail } from '../services/email.service';
 
 interface ContactFormData {
   name: string;
@@ -11,15 +10,15 @@ interface ContactFormData {
 export async function submitContactForm(data: ContactFormData) {
   try {
     const db = getFirestore(app);
+
     // Add to Firestore
     const docRef = await addDoc(collection(db, 'messages'), {
       ...data,
       timestamp: new Date(),
-      status: 'unread'
+      status: 'unread', // Optional: Helps track new messages
     });
 
-    // Send email
-    await sendEmail(data);
+    console.log('Message successfully saved with ID:', docRef.id);
 
     return { success: true, id: docRef.id };
   } catch (error) {
