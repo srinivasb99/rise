@@ -108,7 +108,7 @@ export function ContactForm() {
               {submitStatus === 'success' ? (
                 <>
                   <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
-                  <p className="text-green-800">Message sent successfully!</p>
+                  <p className="text-green-800">Message sent successfully! We will reach back in less than 24 hours.</p>
                 </>
               ) : (
                 <>
