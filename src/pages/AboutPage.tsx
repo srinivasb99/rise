@@ -1,3 +1,5 @@
+// src/pages/AboutPage.tsx
+
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -48,5 +50,7 @@ const AboutPage = () => {
         </div>
     );
 };
+
+export { AboutPage };
 
 export default AboutPage;
