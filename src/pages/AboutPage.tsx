@@ -1,54 +1,127 @@
-// src/pages/AboutPage.tsx
-
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Users, Target, Award, Sparkles, Heart, Zap } from 'lucide-react';
+import { PageWrapper } from '../components/PageWrapper';
+import { itemVariants, floatingAnimation, containerVariants } from '../utils/animations';
 
-const AboutPage = () => {
-    return (
-        <div className="relative bg-gradient-to-b from-[#002B5B] to-white min-h-screen">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="text-center relative z-10"
-                >
-                    <h1 className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl leading-tight">
-                        About Us
-                    </h1>
-                    <p className="mt-6 max-w-3xl mx-auto text-lg text-gray-300">
-                        We are passionate about helping businesses succeed in the digital world. Our team is dedicated to delivering exceptional results through innovative solutions.
-                    </p>
-                </motion.div>
+export function AboutPage() {
+  const features = [
+    { icon: Users, title: 'Our Team', description: 'Expert professionals dedicated to delivering exceptional results' },
+    { icon: Target, title: 'Our Mission', description: 'Empowering businesses through innovative digital solutions' },
+    { icon: Award, title: 'Our Values', description: 'Excellence, integrity, and client success drive everything we do' },
+  ];
 
-                <div className="mt-12 space-y-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2, duration: 0.5 }}
-                        className="bg-white rounded-lg shadow-lg p-6 text-center"
-                    >
-                        <h2 className="text-2xl font-bold text-[#002B5B]">Our Mission</h2>
-                        <p className="mt-4 text-gray-600">
-                            Empowering businesses to thrive online through innovative digital solutions tailored to their unique needs.
-                        </p>
-                    </motion.div>
+  return (
+    <PageWrapper>
+      <div className="pt-16">
+        <div className="bg-[#E0F0FF] py-24 relative overflow-hidden">
+          <motion.div
+            variants={floatingAnimation}
+            initial="initial"
+            animate="animate"
+            className="absolute top-10 right-10 text-[#002B5B] opacity-10"
+          >
+            <Sparkles className="w-32 h-32" />
+          </motion.div>
+          
+          <motion.div
+            variants={floatingAnimation}
+            initial="initial"
+            animate="animate"
+            className="absolute bottom-10 left-10 text-[#002B5B] opacity-10"
+          >
+            <Heart className="w-24 h-24" />
+          </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4, duration: 0.5 }}
-                        className="bg-white rounded-lg shadow-lg p-6 text-center"
-                    >
-                        <h2 className="text-2xl font-bold text-[#002B5B]">Our Team</h2>
-                        <p className="mt-4 text-gray-600">
-                            A group of passionate professionals committed to delivering exceptional results and fostering long-term success.
-                        </p>
-                    </motion.div>
-                </div>
-            </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="text-center"
+              variants={containerVariants}
+              initial="initial"
+              animate="animate"
+            >
+              <motion.h1 
+                variants={itemVariants}
+                className="text-4xl font-bold text-[#002B5B]"
+              >
+                About Us
+              </motion.h1>
+              <motion.p 
+                variants={itemVariants}
+                className="mt-4 text-xl text-gray-600"
+              >
+                We're passionate about helping businesses succeed in the digital world
+              </motion.p>
+            </motion.div>
+          </div>
         </div>
-    );
-};
 
-export default AboutPage;
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-12"
+            variants={containerVariants}
+            initial="initial"
+            animate="animate"
+          >
+            {features.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <motion.div 
+                  key={feature.title}
+                  className="text-center"
+                  variants={itemVariants}
+                  whileHover={{ y: -10 }}
+                >
+                  <motion.div 
+                    className="flex justify-center"
+                    whileHover={{ scale: 1.2, rotate: 360 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  >
+                    <Icon className="h-12 w-12 text-[#002B5B]" />
+                  </motion.div>
+                  <h3 className="mt-4 text-xl font-semibold text-[#002B5B]">{feature.title}</h3>
+                  <p className="mt-2 text-gray-600">{feature.description}</p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+          <motion.div 
+            className="mt-24 bg-white rounded-lg shadow-xl p-8"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <motion.div
+                variants={itemVariants}
+                whileHover={{ scale: 1.02 }}
+                className="space-y-6"
+              >
+                <h2 className="text-3xl font-bold text-[#002B5B]">Our Story</h2>
+                <p className="text-gray-600">
+                  Founded with a vision to transform how businesses operate in the digital age, 
+                  we've grown into a team of passionate experts dedicated to delivering 
+                  exceptional results for our clients.
+                </p>
+              </motion.div>
+              <motion.div
+                variants={itemVariants}
+                whileHover={{ scale: 1.02 }}
+                className="space-y-6"
+              >
+                <h2 className="text-3xl font-bold text-[#002B5B]">Our Approach</h2>
+                <p className="text-gray-600">
+                  We combine creativity with technical expertise to deliver solutions 
+                  that not only look great but drive real business results. Every project 
+                  is an opportunity to exceed expectations.
+                </p>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </PageWrapper>
+  );
+}
