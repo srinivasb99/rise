@@ -7,6 +7,8 @@ export function HomePage() {
     <>
       <Hero />
       <Services />
-    </>
-  );
-}
+        </div>
+    );
+};
+
+export default HomePage;
