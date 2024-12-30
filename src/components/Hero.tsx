@@ -17,9 +17,9 @@ const floatingAnimation = {
 
 export function Hero() {
   return (
-    <div className="relative bg-[#E0F0FF] pt-24 overflow-hidden">
+    <div className="relative bg-gradient-to-b from-[#002B5B] to-white pt-24 overflow-hidden">
       <motion.div
-        className="absolute top-20 right-10 text-[#002B5B] opacity-10"
+        className="absolute top-20 right-10 text-[#001F3F] opacity-10"
         variants={floatingAnimation}
         initial="initial"
         animate="animate"
@@ -28,7 +28,7 @@ export function Hero() {
       </motion.div>
       
       <motion.div
-        className="absolute bottom-20 left-10 text-[#002B5B] opacity-10"
+        className="absolute bottom-20 left-10 text-[#001F3F] opacity-10"
         variants={floatingAnimation}
         initial="initial"
         animate="animate"
@@ -50,7 +50,7 @@ export function Hero() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="mb-8"
           >
-            <Rocket className="mx-auto h-16 w-16 text-[#002B5B]" />
+            <Rocket className="mx-auto h-16 w-16 text-[#FFFFFF]" />
           </motion.div>
 
           <motion.div
@@ -59,9 +59,9 @@ export function Hero() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="space-y-4 mb-8"
           >
-            <h1 className="text-4xl tracking-tight font-extrabold text-[#002B5B] sm:text-5xl md:text-6xl leading-tight">
+            <h1 className="text-4xl tracking-tight font-extrabold text-[#FFFFFF] sm:text-5xl md:text-6xl leading-tight">
               <span className="block mb-2">Elevate Your</span>
-              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-[#002B5B] to-[#0056b3] pb-2">
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-[#FFFFFF] to-[#0056b3] pb-2">
                 Digital Presence
               </span>
             </h1>
@@ -71,7 +71,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            className="mt-3 max-w-md mx-auto text-base text-gray-600 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"
+            className="mt-3 max-w-md mx-auto text-base text-gray-700 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"
           >
             Transform your business with cutting-edge web solutions. We deliver innovative digital strategies that drive growth and engagement.
           </motion.p>
@@ -88,7 +88,7 @@ export function Hero() {
             >
               <Button
                 size="lg"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto bg-[#0056b3] text-white hover:bg-[#003d80]"
                 onClick={() => window.location.href = 'https://calendly.com/riseonlinesolutions'}
               >
                 <Calendar className="h-5 w-5" />
@@ -103,7 +103,7 @@ export function Hero() {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto mt-3 sm:mt-0"
+                className="w-full sm:w-auto mt-3 sm:mt-0 border-[#0056b3] text-[#0056b3] hover:bg-[#0056b3] hover:text-white"
                 onClick={() => window.location.href = '/services'}
               >
                 <span>Learn More</span>
@@ -115,7 +115,7 @@ export function Hero() {
       </div>
 
       <div className="absolute bottom-0 left-0 right-0">
-        <svg className="w-full h-12 fill-current text-[#001F3F]" viewBox="0 0 1440 48" preserveAspectRatio="none">
+        <svg className="w-full h-12 fill-current text-[#002B5B]" viewBox="0 0 1440 48" preserveAspectRatio="none">
           <path d="M0 48h1440V0c-624 23-936 23-1440 0v48z" />
         </svg>
       </div>
