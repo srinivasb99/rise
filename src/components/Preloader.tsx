@@ -1,38 +1,51 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const Preloader = ({ onFinish }: { onFinish: () => void }) => {
-  const [isVisible, setIsVisible] = useState(true);
+export const Preloader = () => {
+  const [showPreloader, setShowPreloader] = useState(true);
 
   useEffect(() => {
+    // Set a timer to remove preloader after 2 seconds (adjust as needed).
     const timer = setTimeout(() => {
-      setIsVisible(false);
-      onFinish();
-    }, 2000); // 2-second duration for the animation
+      setShowPreloader(false);
+    }, 2000);
+
     return () => clearTimeout(timer);
-  }, [onFinish]);
+  }, []);
 
   return (
-    isVisible && (
-      <motion.div
-        className="fixed inset-0 bg-[#002B5B] flex items-center justify-center z-50"
-        initial={{ opacity: 1 }}
-        animate={{ opacity: 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <motion.h1
-          className="text-4xl font-extrabold text-white"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 20, opacity: 0 }}
-          transition={{ duration: 1 }}
+    <AnimatePresence>
+      {showPreloader && (
+        <motion.div
+          key="preloader"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: 'easeInOut' }}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: '#000', // black overlay
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
-          Rise Online Solutions
-        </motion.h1>
-      </motion.div>
-    )
+          {/* The text animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            style={{ color: '#fff', fontSize: '2rem', fontWeight: 'bold' }}
+          >
+            Rise Online
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
-
-export default Preloader;
