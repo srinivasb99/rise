@@ -1,0 +1,61 @@
+/* Preloader.css */
+.preloader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000; /* black background */
+  z-index: 9999;
+  overflow: hidden; /* so slash doesn't cause scrolling */
+}
+
+/* The silver slash near the top.
+   We'll position it diagonally with transform: rotate(...).
+   We use a linear gradient for a metallic effect.
+*/
+.slash-design {
+  position: absolute;
+  top: -100px;  /* adjust as needed */
+  left: -150px; /* adjust to push the slash to the right angle */
+  width: 200%;
+  height: 250px; 
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.1) 0%,
+    #aaa 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  /* Adjust gradient colors to get a nice silverish band */
+
+  transform: rotate(10deg);
+  /* tweak angle so it looks like your screenshot */
+}
+
+/* The text (bottom-right corner) with a metallic gradient, 
+   or just keep it #fff and apply a subtle text-shadow for a "silver" effect.
+*/
+.preloader-text {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  /* If you have a custom font, set it here:
+     font-family: 'HeavnFont', sans-serif; 
+  */
+
+  /* Metallic gradient text trick */
+  background: linear-gradient(
+    to bottom,
+    #e0e0e0 0%,
+    #cccccc 50%,
+    #999999 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Subtle shadow around text for extra “glow” */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
