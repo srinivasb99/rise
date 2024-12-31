@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import './Preloader.css'; // We’ll put some CSS there for the slash + text style
+import '../styles/Preloader.css';
+
 
 export const Preloader: React.FC = () => {
   const [showPreloader, setShowPreloader] = useState(true);
