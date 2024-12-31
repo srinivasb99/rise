@@ -10,6 +10,9 @@ import { ContactPage } from './pages/ContactPage';
 import { ConsultationPage } from './pages/ConsultationPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { TermsPage } from './pages/TermsPage';
+import Preloader from "./components/Preloader"; // Update the path as needed
+import MainLayout from "./layouts/MainLayout"; // Your main content layout
+
 
 function AppWrapper() {
   const location = useLocation();
@@ -35,6 +38,19 @@ function AppWrapper() {
     </div>
   );
 }
+
+function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <>
+      <AnimatePresence>
+        {!isLoaded && <Preloader onFinish={() => setIsLoaded(true)} />}
+      </AnimatePresence>
+      {isLoaded && <MainLayout />}
+    </>
+  );
+} 
 
 export default function App() {
   return (
