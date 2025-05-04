@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
+// src/App.tsx
+import React from 'react'; // Removed useState, useEffect as Preloader handles its own logic
 import {
-  Routes, // Router is now in main.tsx
+  Routes,
   Route,
   useLocation,
-  Navigate // Import Navigate for redirection
+  // Navigate is used within ProtectedRoute now
 } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
+// Core Layout Components
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { Preloader } from './components/Preloader';
+
+// Page Components (Using your page structure)
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ServicesPage } from './pages/ServicesPage';
@@ -16,54 +21,43 @@ import { ContactPage } from './pages/ContactPage';
 import { ConsultationPage } from './pages/ConsultationPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { TermsPage } from './pages/TermsPage';
-import LoginPage from './pages/LoginPage'; // Import LoginPage
-import SignupPage from './pages/SignupPage'; // Import SignupPage
-import DashboardPage from './pages/DashboardPage'; // Import DashboardPage
 
-import { Preloader } from './components/Preloader';
-import { useAuth } from './context/AuthContext'; // Import useAuth
+// Auth Components (Using the components we created)
+import { Login } from './components/Login';
+import { Signup } from './components/Signup';
+import { Dashboard } from './components/Dashboard';
 
-// Simple Protected Route Component within App.tsx
-const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const { currentUser, loading } = useAuth();
-  const location = useLocation();
+// Auth Helper Component
+import { ProtectedRoute } from './components/ProtectedRoute'; // Import the separate component
 
-  if (loading) {
-    // You might want to show a global loading spinner here
-    // For now, just return null or a minimal loading indicator
-    return <div>Loading authentication state...</div>;
-  }
+// Placeholder for 404 Page
+const NotFoundPage = () => (
+    <div className="pt-16 min-h-screen flex flex-col justify-center items-center text-center px-4">
+        <h1 className="text-4xl font-bold text-[#002B5B] mb-4">404</h1>
+        <p className="text-xl text-gray-700">Oops! The page you're looking for doesn't exist.</p>
+        {/* You could add a link back to the home page here */}
+    </div>
+);
 
-  if (!currentUser) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
+// NOTE: Ensure AuthProvider wraps <App /> in your main entry point (e.g., main.tsx or index.tsx)
+// As per your original comment, Router is in main.tsx, so AuthProvider should be there too.
 
-  return children;
-};
-
-
-// Main App component (Removed the extra AppWrapper and Router)
 function App() {
-  const location = useLocation();
+  const location = useLocation(); // Get location for AnimatePresence key and conditional Footer
 
-  // Preloader logic (kept as is)
-  const [preloaderDone, setPreloaderDone] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPreloaderDone(true);
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, []);
+  // Preloader logic is now handled within the Preloader component itself
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      {/* Preloader will manage its own display and fade-out */}
       <Preloader />
+
+      {/* Navbar is present on all pages */}
       <Navbar />
+
+      {/* Main content area where pages are rendered */}
       <main className="flex-grow">
+        {/* AnimatePresence enables animations between route changes */}
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             {/* Public Routes */}
@@ -75,29 +69,32 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/terms" element={<TermsPage />} />
 
-            {/* Auth Routes */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
+            {/* Auth Routes - Using Login and Signup components */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
 
-            {/* Protected Dashboard Route */}
+            {/* Protected Dashboard Route - Using Dashboard component */}
             <Route
               path="/dashboard"
               element={
+                // ProtectedRoute component handles auth check and redirection
                 <ProtectedRoute>
-                  <DashboardPage />
+                  <Dashboard />
                 </ProtectedRoute>
               }
             />
 
-            {/* You might want to add a 404 Not Found route here */}
-            {/* <Route path="*" element={<NotFoundPage />} /> */}
+            {/* Catch-all route for 404 Not Found pages */}
+            <Route path="*" element={<NotFoundPage />} />
 
           </Routes>
         </AnimatePresence>
       </main>
-      <Footer />
+
+      {/* Footer - Conditionally rendered (hidden on login/signup) */}
+      {location.pathname !== '/login' && location.pathname !== '/signup' && <Footer />}
     </div>
   );
 }
 
-export default App; // Export App directly
+export default App; // Export App component
