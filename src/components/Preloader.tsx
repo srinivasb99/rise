@@ -1,8 +1,8 @@
 // src/components/Preloader.tsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext'; // Import theme context
-import { cn } from '../utils/cn'; // Assuming cn utility exists
+import { useTheme } from '../context/ThemeContext';
+import { cn } from '../utils/cn';
 
 // Define animation variants for the text pulsing effect
 const textPulseVariants: Variants = {
@@ -35,27 +35,43 @@ const containerVariants: Variants = {
 
 export const Preloader: React.FC = () => {
   const [showPreloader, setShowPreloader] = useState(true);
-  // Note: useTheme hook is kept in case you want to adjust text color differently in future,
-  // but currently text color uses brand primary which should work on both backgrounds.
-  // const { theme } = useTheme();
+  // const { theme } = useTheme(); // Kept in case needed later
 
+  // Effect for the timer to hide the preloader
   useEffect(() => {
-    // Control how long the preloader stays on screen (Reduced Timing)
-    const preloaderDuration = 1800; // e.g., 1.8 seconds (in ms)
+    // Control how long the preloader stays on screen
+    const preloaderDuration = 1800; // 1.8 seconds
     const timer = setTimeout(() => {
       setShowPreloader(false);
+      // Restore scroll slightly BEFORE the animation ends,
+      // ensuring it's available as soon as content might be visible.
+      // Alternatively, use the second useEffect below which is more direct.
+      // document.body.style.overflow = ''; // Can put it here or in separate effect
     }, preloaderDuration);
 
-    // Prevent body scroll while preloader is active
-    document.body.style.overflow = 'hidden';
+    return () => clearTimeout(timer); // Clear timeout on unmount
+  }, []); // Runs only once on mount
 
-    // Cleanup function
-    return () => {
-      clearTimeout(timer);
-      // Restore body scroll when preloader is removed
+  // Effect to manage body scroll based on preloader visibility
+  useEffect(() => {
+    if (showPreloader) {
+      // Prevent body scroll while preloader is active
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore body scroll IMMEDIATELY when showPreloader becomes false
+      // This allows scrolling even during the exit animation
       document.body.style.overflow = '';
+    }
+
+    // Cleanup function for safety: Ensure scroll is restored if component unmounts unexpectedly
+    // while still visible (less likely with this setup, but good practice).
+    return () => {
+        // Check if it was hidden before unmounting, just in case
+        if (document.body.style.overflow === 'hidden') {
+             document.body.style.overflow = '';
+        }
     };
-  }, []);
+  }, [showPreloader]); // This effect runs whenever showPreloader changes
 
   return (
     <AnimatePresence>
@@ -75,8 +91,8 @@ export const Preloader: React.FC = () => {
           {/* Animated Text Container */}
           <motion.h1
             className={cn(
-                "text-4xl sm:text-5xl md:text-6xl font-extrabold", // Increased text size
-                "text-primary dark:text-primary-light" // Use brand colors for text (adjust dark if needed)
+                "text-4xl sm:text-5xl md:text-6xl font-extrabold", // Text size
+                "text-primary dark:text-primary-light" // Use brand colors for text
             )}
             variants={textPulseVariants} // Apply pulsing animation
             initial="initial"
