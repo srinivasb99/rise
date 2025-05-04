@@ -1,53 +1,118 @@
-// src/components/Services.tsx
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Code, Search, PenTool, MessageSquare, Globe, BarChart3, Zap, CheckCircle, CheckIcon, Users, Briefcase, LineChart, Rocket, Award, ShieldCheck, Layers, Smartphone, Lock, BarChart, Heart, X
+  Code,
+  Search,
+  PenTool,
+  MessageSquare,
+  Globe,
+  BarChart3,
+  Zap,
+  CheckCircle,
+  CheckIcon,
+  Users,
+  Briefcase,
+  LineChart,
+  Rocket,
+  Award,
+  ShieldCheck,
+  Layers,
+  Smartphone,
+  Lock,
+  BarChart,
+  Heart,
+  X
 } from 'lucide-react';
-import { cn } from '../utils/cn'; // Assuming cn utility
 
-// ... (animations remain the same)
-const containerVariants = { /* ... */ };
-const itemVariants = { /* ... */ };
-const iconHover = { /* ... */ };
-const modalVariants = { /* ... */ };
+const containerVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      type: "spring", 
+      stiffness: 50,
+      damping: 20,
+      staggerChildren: 0.2
+    }
+  }
+};
 
-// Update Modal Component for Dark Mode
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { type: "spring", stiffness: 100 }
+  }
+};
+
+const iconHover = {
+  hover: {
+    scale: 1.2,
+    rotate: 360,
+    transition: {
+      type: "spring",
+      stiffness: 260,
+      damping: 20
+    }
+  }
+};
+
+const modalVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { 
+    opacity: 1, 
+    scale: 1,
+    transition: { type: 'spring', stiffness: 300, damping: 25 }
+  },
+  exit: { 
+    opacity: 0, 
+    scale: 0.8,
+    transition: { type: 'spring', stiffness: 300, damping: 25 }
+  }
+};
+
+// Reusable Modal Component
 const Modal = ({ isOpen, onClose, title, content, Icon }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        // Overlay
-        <motion.div
-          className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center z-50 px-4"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          onClick={onClose}
+        <motion.div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose} // Close modal when clicking on the overlay
         >
-          {/* Modal Content - Add dark mode styles */}
-          <motion.div
-            role="dialog" aria-modal="true" aria-labelledby="modal-title"
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg relative max-w-lg w-full p-6 overflow-y-auto max-h-[90vh]"
-            variants={modalVariants} initial="hidden" animate="visible" exit="exit"
-            onClick={(e) => e.stopPropagation()}
+          <motion.div 
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+            className="bg-white rounded-lg shadow-lg relative max-w-lg w-full p-6 overflow-y-auto max-h-[90vh]"
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
           >
-            {/* Close Button */}
-            <button
-              onClick={onClose} aria-label="Close Modal"
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            > <X className="w-6 h-6" /> </button>
-
-            {/* Modal Header */}
+            <button 
+              onClick={onClose}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              aria-label="Close Modal"
+            >
+              <X className="w-6 h-6" />
+            </button>
             <div className="flex items-center mb-4">
-              {Icon && <Icon className="w-8 h-8 text-[#002B5B] dark:text-blue-400 mr-3" />}
-              <h2 id="modal-title" className="text-2xl font-bold text-[#002B5B] dark:text-gray-100">{title}</h2>
+              {Icon && <Icon className="w-8 h-8 text-[#002B5B] mr-2" />}
+              <h2 id="modal-title" className="text-2xl font-bold text-[#002B5B]">{title}</h2>
             </div>
 
-            {/* Modal Body - Update text colors */}
-            <div className="text-gray-700 dark:text-gray-300 space-y-6">
+            <div className="text-gray-700 space-y-6">
               {/* Overview */}
               {content.overview && (
                 <div>
-                  <h3 className="font-semibold mb-2 text-gray-800 dark:text-gray-200">Overview</h3>
+                  <h3 className="font-semibold mb-2">Overview</h3>
                   <p>{content.overview}</p>
                 </div>
               )}
@@ -55,12 +120,11 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
               {/* Key Features */}
               {content.keyFeatures && content.keyFeatures.length > 0 && (
                 <div>
-                   <h3 className="font-semibold mb-2 text-gray-800 dark:text-gray-200">Key Features</h3>
-                   <ul className="space-y-1">
+                  <h3 className="font-semibold mb-2">Key Features</h3>
+                  <ul className="space-y-1">
                     {content.keyFeatures.map((feature, index) => (
                       <li key={index} className="flex items-start space-x-2">
-                         {/* Check icon color might not need change if green is ok on dark */}
-                        <CheckIcon className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <CheckIcon className="w-5 h-5 text-green-600 mt-0.5" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -68,20 +132,19 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
                 </div>
               )}
 
-               {/* Process Steps */}
-               {content.process && content.process.length > 0 && (
+              {/* Process */}
+              {content.process && content.process.length > 0 && (
                 <div>
-                  <h3 className="font-semibold mb-2 text-gray-800 dark:text-gray-200">Process</h3>
+                  <h3 className="font-semibold mb-2">Process</h3>
                   <ul className="space-y-3">
                     {content.process.map((step, index) => (
                       <li key={index} className="flex items-start space-x-3">
-                        {/* Adjust step circle colors */}
-                        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300 font-bold flex-shrink-0">
+                        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold">
                           {index + 1}
                         </div>
                         <div>
-                          <span className="font-semibold text-gray-800 dark:text-gray-200">{step.name}</span>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">{step.description}</p>
+                          <span className="font-semibold">{step.name}</span>
+                          <p className="text-sm text-gray-600">{step.description}</p>
                         </div>
                       </li>
                     ))}
@@ -91,27 +154,54 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
 
               {/* Pricing */}
               {content.pricing && (
-                  <div>
-                      <h3 className="font-semibold mb-2 text-gray-800 dark:text-gray-200">Pricing</h3>
-                      <p>{content.pricing}</p>
-                  </div>
+                <div>
+                  <h3 className="font-semibold mb-2">Pricing</h3>
+                  <p>{content.pricing}</p>
+                </div>
               )}
-              {/* Add more sections if needed */}
 
-              {/* Modal Footer Buttons - Leverage updated Button component */}
-              <div className="flex flex-wrap gap-2 justify-start pt-4 border-t border-gray-200 dark:border-gray-700">
-                 {content.buttons?.map((button, index) => (
+              {/* Additional Info */}
+              {content.additionalInfo && (
+                <div>
+                  <h3 className="font-semibold mb-2">Additional Information</h3>
+                  <p>{content.additionalInfo}</p>
+                </div>
+              )}
+
+
+              {/* Buttons */}
+              <div className="flex flex-wrap gap-2 justify-start">
+                {/* Custom buttons from content */}
+                {content.buttons && content.buttons.map((button, index) => (
                   button.action === 'close' ? (
-                    <Button key={index} onClick={onClose} variant="outline" size="sm">{button.label}</Button>
+                    <button
+                      key={index}
+                      onClick={onClose}
+                      className="bg-white border border-[#002B5B] text-[#002B5B] px-6 py-3 rounded-full hover:bg-gray-100 transition-colors duration-300"
+                    >
+                      {button.label}
+                    </button>
                   ) : (
-                    <a key={index} href={button.link} target={button.external ? "_blank" : "_self"} rel={button.external ? "noopener noreferrer" : ""}>
-                       <Button variant="primary" size="sm">{button.label}</Button>
+                    <a
+                      key={index}
+                      href={button.link}
+                      target={button.external ? "_blank" : "_self"}
+                      rel={button.external ? "noopener noreferrer" : ""}
+                      className="bg-[#002B5B] text-white px-6 py-3 rounded-full hover:bg-[#003C75] transition-colors duration-300"
+                    >
+                      {button.label}
                     </a>
                   )
                 ))}
-                {/* Default close button */}
+
+                {/* If no close button is provided, add one */}
                 {!content.buttons?.some(b => b.action === 'close') && (
-                    <Button onClick={onClose} variant="outline" size="sm">Close</Button>
+                  <button
+                    onClick={onClose}
+                    className="bg-white border border-[#002B5B] text-[#002B5B] px-6 py-3 rounded-full hover:bg-gray-100 transition-colors duration-300"
+                  >
+                    Close
+                  </button>
                 )}
               </div>
             </div>
@@ -122,66 +212,400 @@ const Modal = ({ isOpen, onClose, title, content, Icon }) => {
   );
 };
 
+// Updated Data Arrays with consistent modal fields (caseStudies removed)
+const services = [
+  {
+    title: 'Website Development',
+    description: 'Custom websites tailored to meet your business needs.',
+    icon: Code,
+    secondaryIcon: Globe,
+    detailed: {
+      overview: "Custom websites that are fast, secure, and built to convert visitors into customers.",
+      keyFeatures: [
+        "Responsive Design",
+        "SEO Optimization",
+        "Custom Functionality",
+        "Performance Focused"
+      ],
+      process: [
+        {
+          name: "Discovery & Planning",
+          description: "We analyze your requirements and create a detailed project roadmap."
+        },
+        {
+          name: "Design & Prototyping",
+          description: "Creating wireframes and interactive prototypes for your approval."
+        },
+        {
+          name: "Development",
+          description: "Building your website with clean, efficient code and modern technologies."
+        },
+        {
+          name: "Testing & Launch",
+          description: "Rigorous testing and smooth deployment of your website."
+        }
+      ],
+      pricing: "Starting at $200 - includes custom design, responsive layout, and initial SEO setup.",
+      additionalInfo: "We offer monthly maintenance packages and on-demand support services.",
+      buttons: [
+        { label: 'Get Started', link: '/services', external: false },
+        { label: 'View Portfolio', link: '/portfolio', external: false },
+        { label: 'Request a Quote', link: '/contact', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  },
+  {
+    title: 'SEO & Digital Marketing',
+    description: 'Enhance your online visibility and drive organic growth.',
+    icon: Search,
+    secondaryIcon: BarChart3,
+    detailed: {
+      overview: "Advanced strategies to improve your rankings, boost traffic, and maximize ROI.",
+      keyFeatures: [
+        "Keyword Research",
+        "Content Strategies",
+        "PPC Campaigns",
+        "Social Media Advertising"
+      ],
+      process: [
+        {
+          name: "Audit & Strategy",
+          description: "We assess your current visibility and craft a custom marketing plan."
+        },
+        {
+          name: "Implementation",
+          description: "Executing on-page SEO, content marketing, and paid campaigns."
+        },
+        {
+          name: "Monitoring & Optimization",
+          description: "Regular analysis and adjustments to ensure continuous growth."
+        },
+        {
+          name: "Reporting",
+          description: "Transparent reporting on key metrics, conversions, and ROI."
+        }
+      ],
+      pricing: "Custom monthly retainers starting at $50/month.",
+      additionalInfo: "Short-term campaigns and long-term growth strategies available.",
+      buttons: [
+        { label: 'Our Marketing Packages', link: '/pricing', external: false },
+        { label: 'Free SEO Audit', link: '/contact', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  },
+  {
+    title: 'Branding & Strategy',
+    description: 'Build a strong and unique brand identity.',
+    icon: PenTool,
+    secondaryIcon: Zap,
+    detailed: {
+      overview: "Craft a memorable brand image that resonates with your target audience.",
+      keyFeatures: [
+        "Custom Logo & Assets",
+        "Brand Messaging",
+        "Market Research",
+        "Emotional Storytelling"
+      ],
+      process: [
+        {
+          name: "Brand Discovery",
+          description: "Understanding your brand values, audience, and competition."
+        },
+        {
+          name: "Visual Identity",
+          description: "Creating logos, color schemes, typography, and imagery."
+        },
+        {
+          name: "Messaging & Guidelines",
+          description: "Defining clear brand messaging and building cohesive guidelines."
+        },
+        {
+          name: "Launch & Integration",
+          description: "Integrating your new branding across all platforms."
+        }
+      ],
+      pricing: "Branding packages start at $150.",
+      additionalInfo: "Options to include brand workshops and training sessions.",
+      buttons: [
+        { label: 'View Brand Guidelines Samples', link: '/resources/brand-guidelines', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  },
+  {
+    title: 'Content & Social Media',
+    description: 'Grow your audience with engaging content and managed campaigns.',
+    icon: MessageSquare,
+    secondaryIcon: CheckCircle,
+    detailed: {
+      overview: "Attract, engage, and retain followers through high-quality, consistent content.",
+      keyFeatures: [
+        "Content Calendars",
+        "High-Quality Blogs & Videos",
+        "Influencer Collaborations",
+        "Analytics & Performance Tracking"
+      ],
+      process: [
+        {
+          name: "Strategy Development",
+          description: "Identifying channels, topics, and posting schedules."
+        },
+        {
+          name: "Content Creation",
+          description: "Producing engaging blogs, videos, and graphics."
+        },
+        {
+          name: "Community Management",
+          description: "Interacting with followers and nurturing brand loyalty."
+        },
+        {
+          name: "Performance Optimization",
+          description: "Using analytics to refine content strategy and improve results."
+        }
+      ],
+      pricing: "Monthly content packages starting at $50.",
+      additionalInfo: "Custom packages available for multiple platforms.",
+      buttons: [
+        { label: 'Social Media Packages', link: '/pricing', external: false },
+        { label: 'Content Samples', link: '/portfolio-content', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  }
+];
 
-// ... (services, stats, workflowSteps data remains the same)
-const services = [ /* ... your service data ... */ ];
-const workflowSteps = [ /* ... your workflow data ... */ ];
+const stats = [
+  {
+    label: '120+ Projects Completed',
+    value: '120+',
+    icon: Layers,
+    detailed: {
+      overview: "A track record of successful projects spanning various industries and solutions.",
+      keyFeatures: [
+        "Diverse Industry Experience",
+        "Customized Solutions",
+        "Proven Results"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "See our portfolio for highlights and success stories.",
+      buttons: [
+        { label: 'View Portfolio', link: '/portfolio', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  },
+  {
+    label: '95% Satisfied Clients',
+    value: '95%',
+    icon: ShieldCheck,
+    detailed: {
+      overview: "Our commitment to quality, communication, and results has earned us a 95% satisfaction rate.",
+      keyFeatures: [
+        "Personalized Attention",
+        "Transparent Communication",
+        "Measurable Growth"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "Our customer support team is available 24/7.",
+      buttons: [
+        // Removed 'Read Client Testimonials' button
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  },
+  {
+    label: '10+ Years of Experience',
+    value: '10+',
+    icon: Award,
+    detailed: {
+      overview: "Over a decade of expertise in delivering cutting-edge digital solutions.",
+      keyFeatures: [
+        "Up-to-Date with Trends",
+        "Skilled Professionals",
+        "Long-Term Partnerships"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "We invest in continuous learning and professional development.",
+      buttons: [
+        { label: 'Meet the Team', link: '/about', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  },
+  {
+    label: '50+ Team Members',
+    value: '50+',
+    icon: Users,
+    detailed: {
+      overview: "A growing team of experts dedicated to delivering the best possible results.",
+      keyFeatures: [
+        "Cross-Functional Expertise",
+        "Collaborative Workflows",
+        "Constant Innovation"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "Join our team! We're always looking for talented individuals.",
+      buttons: [
+        { label: 'Careers', link: '/careers', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  }
+];
+
+const workflowSteps = [
+  {
+    step: 'Consultation',
+    description: 'In this initial phase, we understand your vision and requirements.',
+    icon: Briefcase,
+    detailed: {
+      overview: "We begin by getting to know your business goals and challenges.",
+      keyFeatures: [
+        "Thorough Requirements Analysis",
+        "Customized Approach",
+        "Clear Timeline & Deliverables"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "We offer a free 30-minute consultation for new clients.",
+      buttons: [
+        { label: 'Book a Consultation', link: '/contact', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  },
+  {
+    step: 'Strategy',
+    description: 'We develop a tailored and actionable plan for success.',
+    icon: LineChart,
+    detailed: {
+      overview: "Data-driven strategies to ensure measurable outcomes.",
+      keyFeatures: [
+        "Market Research",
+        "Target Audience Insights",
+        "Strategic Roadmapping"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "We use data analytics tools to refine strategy over time.",
+      buttons: [
+        { label: 'View Strategy Templates', link: '/resources/strategy-templates', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  },
+  {
+    step: 'Execution',
+    description: 'We bring your project to life with precision.',
+    icon: Rocket,
+    detailed: {
+      overview: "From development to marketing, we implement your plan efficiently.",
+      keyFeatures: [
+        "Agile Methodologies",
+        "Quality Assurance",
+        "Transparent Communication"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "We use project management tools for real-time updates.",
+      buttons: [
+        { label: 'Project Management FAQs', link: '/faq#project-management', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  },
+  {
+    step: 'Delivery & Support',
+    description: 'We deliver results and provide ongoing support for long-term success.',
+    icon: ShieldCheck,
+    detailed: {
+      overview: "Seamless handover and long-term support to ensure sustained growth.",
+      keyFeatures: [
+        "Training & Documentation",
+        "Maintenance Plans",
+        "Continuous Optimization"
+      ],
+      process: [],
+      pricing: null,
+      additionalInfo: "We offer extended support and maintenance contracts.",
+      buttons: [
+        { label: 'Support Plans', link: '/support', external: false },
+        { label: 'Close', action: 'close' }
+      ]
+    }
+  }
+];
 
 export function Services() {
   const [modalData, setModalData] = useState({ isOpen: false, title: '', content: {}, Icon: null });
-  // ... (openModal, closeModal functions remain the same)
-   const openModal = (title, content, Icon) => {
+
+  const openModal = (title, content, Icon) => {
     setModalData({ isOpen: true, title, content, Icon });
   };
+
   const closeModal = () => {
     setModalData({ isOpen: false, title: '', content: {}, Icon: null });
   };
 
-
   return (
-    // Update main background
-    <div className="py-24 bg-[#001F3F] dark:bg-gray-950 w-full">
+    <div className="py-24 bg-[#001F3F] w-full">
       <motion.div
-        className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24"
-        initial="hidden" animate="visible" variants={containerVariants}
+        className="w-full px-4 sm:px-6 lg:px-8 space-y-24"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        transition={{ duration: 0.6 }}
       >
-        {/* Section Title - Update text colors */}
-        <motion.div className="text-center mb-16" variants={itemVariants}>
-          <h2 className="text-3xl font-extrabold text-white dark:text-gray-100 sm:text-4xl">
+        {/* Section Title */}
+        <motion.div
+          className="text-center mb-16"
+          variants={itemVariants}
+        >
+          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
             Our Services
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-300 dark:text-gray-400">
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-300">
             Comprehensive digital solutions to help your business thrive online.
           </p>
         </motion.div>
 
         {/* Services Section */}
-        <motion.div className="w-full grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4" variants={containerVariants}>
+        <motion.div
+          className="w-full grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
+          variants={containerVariants}
+        >
           {services.map((service) => {
             const Icon = service.icon;
             const SecondaryIcon = service.secondaryIcon;
             return (
-              // Update service card styles
               <motion.div
-                key={service.title} variants={itemVariants} whileHover={{ y: -5 }}
-                className="relative group bg-[#003366] dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300 cursor-pointer"
+                key={service.title}
+                variants={itemVariants}
+                whileHover={{ y: -5 }}
+                className="relative group bg-[#003366] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(service.title, service.detailed, service.icon)}
               >
-                {/* Update secondary icon appearance */}
                 <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
-                   <SecondaryIcon className="w-20 h-20 text-white dark:text-gray-500" />
+                  <SecondaryIcon className="w-20 h-20 text-[#FFFFFF]" />
                 </div>
-                {/* Update primary icon background */}
-                 <motion.span
-                  className="rounded-lg inline-flex p-3 bg-[#004080] dark:bg-gray-700 text-white dark:text-blue-300 group-hover:bg-[#00509E] dark:group-hover:bg-gray-600 transition-colors duration-300 mb-4 block"
-                  variants={iconHover} whileHover="hover"
-                > <Icon className="h-6 w-6" aria-hidden="true" /> </motion.span>
-                 {/* Update text colors */}
+                <motion.span
+                  className="rounded-lg inline-flex p-3 bg-[#004080] text-[#FFFFFF] group-hover:bg-[#00509E] group-hover:text-white transition-colors duration-300 mb-4 block"
+                  variants={iconHover}
+                  whileHover="hover"
+                >
+                  <Icon className="h-6 w-6" aria-hidden="true" />
+                </motion.span>
                 <div>
-                  <h3 className="text-xl font-bold text-white dark:text-gray-100">
+                  <h3 className="text-xl font-bold text-white">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-base text-gray-300 dark:text-gray-400">
+                  <p className="mt-2 text-base text-gray-300">
                     {service.description}
                   </p>
                 </div>
@@ -192,37 +616,43 @@ export function Services() {
 
         {/* Workflow Section */}
         <motion.div
-          className="w-full mt-24 py-12 px-4 sm:px-6 lg:px-8" // Removed redundant bg color
-          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerVariants}
+          className="w-full mt-24 bg-[#001F3F] py-12 px-4 sm:px-6 lg:px-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={containerVariants}
         >
-           {/* Update title color */}
-           <motion.h3 className="text-2xl font-extrabold text-white dark:text-gray-100 text-center mb-12" variants={itemVariants}>
+          <motion.h3 className="text-2xl font-extrabold text-white text-center mb-12" variants={itemVariants}>
             Our Workflow
           </motion.h3>
-          <motion.div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" variants={containerVariants}>
+          <motion.div
+            className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+            variants={containerVariants}
+          >
             {workflowSteps.map((step) => (
-              // Update workflow card styles
               <motion.div
-                key={step.step} variants={itemVariants} whileHover={{ y: -5 }}
-                className="flex flex-col items-center text-center bg-[#004080] dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition-all duration-300 cursor-pointer"
+                key={step.step}
+                variants={itemVariants}
+                whileHover={{ y: -5 }}
+                className="flex flex-col items-center text-center bg-[#004080] p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                 onClick={() => openModal(step.step, step.detailed, step.icon)}
               >
-                {/* Update icon background and color */}
-                 <motion.span
-                  className="rounded-full bg-[#00509E] dark:bg-gray-700 p-3 mb-4"
-                  variants={iconHover} whileHover="hover"
-                > <step.icon className="w-12 h-12 text-white dark:text-blue-300" /> </motion.span>
-                 {/* Update text colors */}
-                <h4 className="text-lg font-bold text-white dark:text-gray-100">{step.step}</h4>
-                <p className="text-gray-300 dark:text-gray-400 mt-2">{step.description}</p>
+                <motion.span
+                  className="rounded-full bg-[#00509E] p-3 mb-4"
+                  variants={iconHover}
+                  whileHover="hover"
+                >
+                  <step.icon className="w-12 h-12 text-[#FFFFFF]" />
+                </motion.span>
+                <h4 className="text-lg font-bold text-white">{step.step}</h4>
+                <p className="text-gray-300 mt-2">{step.description}</p>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
       </motion.div>
 
-      {/* Modal Instance */}
-      <Modal
+      <Modal 
         isOpen={modalData.isOpen}
         onClose={closeModal}
         title={modalData.title}
