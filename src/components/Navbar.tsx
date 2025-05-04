@@ -94,7 +94,6 @@ export function Navbar() {
             <Link to="/" className={cn('transition-colors', isActive('/') ? 'text-primary dark:text-blue-300 font-medium' : 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white')}>Home</Link>
             <Link to="/about" className={cn('transition-colors', isActive('/about') ? 'text-primary dark:text-blue-300 font-medium' : 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white')}>About</Link>
             <Link to="/services" className={cn('transition-colors', isActive('/services') ? 'text-primary dark:text-blue-300 font-medium' : 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white')}>Services</Link>
-            <Link to="/contact" className={cn('transition-colors', isActive('/contact') ? 'text-primary dark:text-blue-300 font-medium' : 'text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white')}>Contact</Link>
 
             {/* Conditional Auth Links/Buttons */}
             {currentUser ? (
@@ -149,7 +148,6 @@ export function Navbar() {
             <Link to="/" className={cn('block px-3 py-2 rounded-md text-base font-medium transition-colors', isActive('/') ? 'text-primary bg-blue-50 dark:text-blue-300 dark:bg-gray-800' : 'text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-blue-50 dark:hover:text-white dark:hover:bg-gray-800')} onClick={() => setIsOpen(false)}>Home</Link>
             <Link to="/about" className={cn('block px-3 py-2 rounded-md text-base font-medium transition-colors', isActive('/about') ? 'text-primary bg-blue-50 dark:text-blue-300 dark:bg-gray-800' : 'text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-blue-50 dark:hover:text-white dark:hover:bg-gray-800')} onClick={() => setIsOpen(false)}>About</Link>
             <Link to="/services" className={cn('block px-3 py-2 rounded-md text-base font-medium transition-colors', isActive('/services') ? 'text-primary bg-blue-50 dark:text-blue-300 dark:bg-gray-800' : 'text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-blue-50 dark:hover:text-white dark:hover:bg-gray-800')} onClick={() => setIsOpen(false)}>Services</Link>
-            <Link to="/contact" className={cn('block px-3 py-2 rounded-md text-base font-medium transition-colors', isActive('/contact') ? 'text-primary bg-blue-50 dark:text-blue-300 dark:bg-gray-800' : 'text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-blue-50 dark:hover:text-white dark:hover:bg-gray-800')} onClick={() => setIsOpen(false)}>Contact</Link>
 
             {/* Mobile Conditional Auth Links */}
             <div className="border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
