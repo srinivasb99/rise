@@ -23,7 +23,6 @@ export function Footer() {
               <li><Link to="/" className="text-sm text-gray-300 hover:text-white dark:text-gray-400 dark:hover:text-gray-200">Home</Link></li>
               <li><Link to="/about" className="text-sm text-gray-300 hover:text-white dark:text-gray-400 dark:hover:text-gray-200">About</Link></li>
               <li><Link to="/services" className="text-sm text-gray-300 hover:text-white dark:text-gray-400 dark:hover:text-gray-200">Services</Link></li>
-              <li><Link to="/contact" className="text-sm text-gray-300 hover:text-white dark:text-gray-400 dark:hover:text-gray-200">Contact</Link></li>
             </ul>
           </div>
           {/* Column 3 */}
@@ -49,7 +48,6 @@ export function Footer() {
               <a href="#" className="text-gray-300 hover:text-white dark:text-gray-400 dark:hover:text-gray-200">
                 <Linkedin size={20} />
               </a>
-              <a href="mailto:contact@riseonline.com" className="text-gray-300 hover:text-white dark:text-gray-400 dark:hover:text-gray-200">
                 <Mail size={20} />
               </a>
             </div>
