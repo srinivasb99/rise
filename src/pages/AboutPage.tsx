@@ -1,10 +1,11 @@
 // src/pages/AboutPage.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, Target, Award, Sparkles, Heart } from 'lucide-react'; // Removed Zap as it wasn't used
+import { Users, Target, Award, Sparkles, Heart } from 'lucide-react';
 import { PageWrapper } from '../components/PageWrapper';
-import { itemVariants, floatingAnimation, containerVariants } from '../utils/animations'; // Assuming these are correctly defined
-import { cn } from '../utils/cn'; // Assuming cn utility
+// Make sure to import iconHover if you use it
+import { itemVariants, floatingAnimation, containerVariants, iconHover } from '../utils/animations';
+import { cn } from '../utils/cn'; // Assuming cn utility exists
 
 export function AboutPage() {
   const features = [
@@ -14,54 +15,58 @@ export function AboutPage() {
   ];
 
   return (
-    <PageWrapper className="bg-white dark:bg-gray-900 transition-colors duration-300"> {/* Base page background */}
+    <PageWrapper className="bg-white dark:bg-gray-900 transition-colors duration-300">
       <div className="pt-16"> {/* Offset for fixed navbar */}
 
         {/* Top Section */}
-        <div className="bg-[#E0F0FF] dark:bg-gradient-to-b dark:from-[#071324] dark:to-[#030912] py-24 relative overflow-hidden transition-colors duration-300">
-          {/* Floating Icons - Adjust color/opacity */}
+        <div className={cn(
+            "bg-primary-light dark:bg-gradient-to-b dark:from-[#071324] dark:to-[#030912]", // Backgrounds
+            "py-20 sm:py-24 relative overflow-hidden transition-colors duration-300" // Padding & Styling
+        )}>
+          {/* Floating Icons */}
           <motion.div
             variants={floatingAnimation} initial="initial" animate="animate"
-            className="absolute top-10 right-10 text-[#002B5B]/[0.1] dark:text-blue-300/10"
-          >
-            <Sparkles className="w-32 h-32" />
-          </motion.div>
+            className="absolute top-10 right-10 text-primary/[0.08] dark:text-blue-300/10 pointer-events-none" // Updated opacity syntax
+          > <Sparkles className="w-24 h-24 sm:w-32 sm:h-32" /> </motion.div>
           <motion.div
             variants={floatingAnimation} initial="initial" animate="animate"
-            className="absolute bottom-10 left-10 text-[#002B5B]/[0.1] dark:text-blue-300/10"
-             transition={{ delay: 0.5 }} // Add slight delay
-          >
-            <Heart className="w-24 h-24" />
-          </motion.div>
+            className="absolute bottom-10 left-10 text-primary/[0.08] dark:text-blue-300/10 pointer-events-none"
+            transition={{ delay: 0.5 }}
+          > <Heart className="w-20 h-20 sm:w-24 sm:h-24" /> </motion.div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"> {/* Ensure content is above icons */}
+          {/* Header Content */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <motion.div
               className="text-center"
-              variants={containerVariants} initial="initial" animate="animate"
+              variants={containerVariants}
+              initial="initial"
+              // Use 'visible' state key from variants
+              animate="visible"
             >
-              {/* Heading - Dark mode text */}
               <motion.h1
-                variants={itemVariants}
-                className="text-4xl font-bold text-[#002B5B] dark:text-gray-100"
+                variants={itemVariants} // Uses initial/visible from itemVariants
+                className="text-4xl sm:text-5xl font-bold text-primary dark:text-gray-100"
               >
                 About Us
               </motion.h1>
-              {/* Subheading - Dark mode text */}
               <motion.p
-                variants={itemVariants}
-                className="mt-4 text-xl text-gray-600 dark:text-gray-300"
+                variants={itemVariants} // Uses initial/visible from itemVariants
+                className="mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
               >
-                We're passionate about helping businesses succeed in the digital world
+                We're passionate about helping businesses succeed in the digital world through innovation and expertise.
               </motion.p>
             </motion.div>
           </div>
         </div>
 
         {/* Features Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-12"
-            variants={containerVariants} initial="initial" animate="animate"
+            className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12" // Adjusted gap
+            variants={containerVariants}
+            initial="initial"
+             // Use 'visible' state key here as well
+            animate="visible"
           >
             {features.map((feature) => {
               const Icon = feature.icon;
@@ -69,20 +74,19 @@ export function AboutPage() {
                 <motion.div
                   key={feature.title}
                   className="text-center"
-                  variants={itemVariants}
-                  whileHover={{ y: -10 }}
+                  variants={itemVariants} // Animates each feature card
+                  whileHover={{ y: -8 }} // Subtle lift on hover
                 >
+                  {/* Icon with hover animation */}
                   <motion.div
-                    className="flex justify-center mb-4" // Added margin bottom
-                    whileHover={{ scale: 1.2, rotate: 15 }} // Simplified rotation
-                    transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                    className="inline-block p-4 mb-4 rounded-full bg-primary-light dark:bg-gray-700 shadow" // Added background and shadow
+                    variants={iconHover} // Use the imported iconHover variant
+                    whileHover="hover" // Trigger the 'hover' state defined in iconHover
                   >
-                     {/* Icon Color - Dark Mode */}
-                    <Icon className="h-12 w-12 text-[#002B5B] dark:text-blue-400" />
+                    <Icon className="h-10 w-10 sm:h-12 sm:h-12 text-primary dark:text-blue-400" />{/* Dark icon color */}
                   </motion.div>
-                   {/* Text Color - Dark Mode */}
-                  <h3 className="mt-4 text-xl font-semibold text-[#002B5B] dark:text-gray-100">{feature.title}</h3>
-                  <p className="mt-2 text-gray-600 dark:text-gray-400">{feature.description}</p>
+                  <h3 className="mt-2 text-xl font-semibold text-primary dark:text-gray-100">{feature.title}</h3>{/* Dark text */}
+                  <p className="mt-2 text-base text-gray-600 dark:text-gray-400">{feature.description}</p>{/* Dark text */}
                 </motion.div>
               );
             })}
@@ -90,38 +94,38 @@ export function AboutPage() {
 
           {/* Story/Approach Section */}
           <motion.div
-            className="mt-24 bg-white dark:bg-gray-800 rounded-lg shadow-xl dark:border dark:border-gray-700 p-8 sm:p-12 transition-colors duration-300" // Dark mode card styles
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }} // Trigger animation sooner
-            transition={{ duration: 0.6 }}
+            className={cn(
+                "mt-20 sm:mt-24 p-8 sm:p-12 rounded-xl shadow-xl", // Base styles
+                "bg-white dark:bg-gray-800", // Dark bg
+                "dark:border dark:border-gray-700", // Dark border
+                "transition-colors duration-300"
+            )}
+            // Use viewport animation for this section
+            initial="initial" // Corresponds to 'initial' in itemVariants/fadeInUp etc.
+            whileInView="visible" // Corresponds to 'visible' in itemVariants/fadeInUp etc.
+            viewport={{ once: true, amount: 0.2 }} // Trigger animation when 20% visible
+            transition={{ duration: 0.6 }} // Control duration directly if needed
+            // Apply containerVariants to stagger children if desired, or animate the whole block
+            // variants={containerVariants} // Option 1: Stagger children below
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12">
               {/* Story */}
-              <motion.div
-                variants={itemVariants}
-                // whileHover={{ scale: 1.02 }} - removed hover scale for simplicity
-                className="space-y-4" // Adjusted spacing
-              >
-                 {/* Text Color - Dark Mode */}
-                <h2 className="text-3xl font-bold text-[#002B5B] dark:text-gray-100">Our Story</h2>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed"> {/* Adjusted line height */}
+              {/* Option 2: Animate each column individually if not using container stagger */}
+              <motion.div className="space-y-4" variants={fadeInUp}>
+                <h2 className="text-2xl sm:text-3xl font-bold text-primary dark:text-gray-100">Our Story</h2>{/* Dark text */}
+                <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">{/* Dark text */}
                   Founded with a vision to transform how businesses operate in the digital age,
                   we've grown into a team of passionate experts dedicated to delivering
-                  exceptional results for our clients.
+                  exceptional results for our clients through collaboration and cutting-edge technology.
                 </p>
               </motion.div>
               {/* Approach */}
-              <motion.div
-                variants={itemVariants}
-                className="space-y-4"
-              >
-                 {/* Text Color - Dark Mode */}
-                <h2 className="text-3xl font-bold text-[#002B5B] dark:text-gray-100">Our Approach</h2>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                  We combine creativity with technical expertise to deliver solutions
-                  that not only look great but drive real business results. Every project
-                  is an opportunity to exceed expectations.
+              <motion.div className="space-y-4" variants={fadeInUp}>
+                <h2 className="text-2xl sm:text-3xl font-bold text-primary dark:text-gray-100">Our Approach</h2>{/* Dark text */}
+                <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">{/* Dark text */}
+                  We combine strategic thinking with creative design and technical expertise to deliver solutions
+                  that not only look stunning but drive real, measurable business results. Every project
+                  is an opportunity for partnership and exceeding expectations.
                 </p>
               </motion.div>
             </div>
